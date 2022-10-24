@@ -1,5 +1,5 @@
-# simuladorConcursosMVC
-Webapp de gerenciador de questões concursos
+# gerenciador de Questões com Spring MVC
+Webapp para gerenciar as questões dos meus apps de simulados de concursos engenharia.
 
 ## Tecnologias utilizadas
 1- Java
