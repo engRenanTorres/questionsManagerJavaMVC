@@ -1,5 +1,6 @@
 package br.com.engrenantorres.questionmanager.controller;
 
+import br.com.engrenantorres.questionmanager.dto.NewQuestionDTO;
 import br.com.engrenantorres.questionmanager.model.Banca;
 import br.com.engrenantorres.questionmanager.model.SubjectArea;
 import br.com.engrenantorres.questionmanager.repository.BancaRepository;
@@ -35,7 +36,7 @@ public class QuestionFormController {
     return "question-form";
   }
   @PostMapping
-  public String insert(){
+  public String insert(NewQuestionDTO newQuestion){
     return "question-form";
   }
 }
