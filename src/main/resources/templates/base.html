@@ -1,0 +1,95 @@
+<head th:fragment="head">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="Renan Torres">
+  <meta name="generator" content="Jekyll v3.8.6">
+  <title>Engenharia de concursos</title>
+
+  <link rel="canonical" href="https://getbootstrap.com/docs/4.4/examples/blog/">
+
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="../static/css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"/>
+
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="../static/images/favicon.png" th:href="@{images/favicon.png}"/>
+  <meta name="theme-color" content="#563d7c">
+
+  <!-- Custom styles for this template -->
+  <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
+  <!-- Custom styles for this template -->
+  <link href="../static/css/index.css" rel="stylesheet" th:href="@{css/index.css}"/>
+
+</head>
+
+<body>
+  <header th:fragment="header">
+    <div class="row justify-content-between align-items-center">
+      <div class="col-md-4 col-sm-12 pt-1">
+        <a class="text-muted"
+           th:text="#{home.subscribe}"
+           href="signup.html"
+           th:href="@{/signup}"
+           th:if="${session.currentUser == null}"
+        >
+          <i class="bx bx-user-plus nav_icon" style="font-size: 1.5rem;"></i>
+          Subscribe
+        </a>
+      </div>
+      <div class="col-md-4 col-sm-12 text-center">
+        <!-- <a class="question-header-logo text-dark" href="#">Large</a> -->
+        <img src="../static/images/page-logo.png" alt="Logo" height="100px"
+             th:src="@{images/page-logo.png}"/>
+      </div>
+      <div class="col-md-4 col-sm-12  d-flex justify-content-end align-items-center">
+
+        <a class="btn btn-sm btn-outline-secondary"
+           th:text="#{home.login}" href="login.html"
+           th:href="@{/login}" th:if="${session.currentUser == null}">
+          <i class="bx bx-log-in nav_icon"></i>
+          Sign up
+        </a>
+
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle"
+                  type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false"
+                  th:if="${session.currentUser != null}">
+            <span th:text="${session.currentUser.name}">  </span>
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#">
+              Perfil
+            </a>
+            <a class="dropdown-item" href="/questionForm" th:href="@{/questionForm}">
+              Insert Question
+            </a>
+            <a class="dropdown-item" href="#">Histórico</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="index.html" th:href="@{/login/logout}">
+              Logout
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+</body>
+
+<!--
+-- Pode inserir parametros -- exemplo com valor abaixo --
+<div th:fragment="titulo(valor)">
+  <h1 th:text="${valor}"> </h1>
+</div>
+
+a div receberá da seguinte forma:
+<div th:replace="~{base :: titulo('Aqui ficaria o título desejado')}">
+</div>
+
+------------------ th:insert complementa a div -------------------
+<div th:insert="~{base :: titulo('Meus Pedidos')}"></div>
+
+-->

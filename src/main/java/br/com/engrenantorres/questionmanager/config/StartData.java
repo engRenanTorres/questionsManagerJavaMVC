@@ -31,25 +31,6 @@ public class StartData implements CommandLineRunner {
 
   }
 
-  private void addInitialQuestionData() {
-/*    if(questionRepository.count() == 0) {
-      Question question = new Question();
-      question.setEnunciado("Quem sou eu?");
-      question.setAlternativa1("a) Eu");
-      question.setAlternativa2("b) Tu");
-      question.setAlternativa1("c) Ele");
-      question.setAlternativa1("d) Nós");
-      question.setAlternativa1("e) Vós");
-      Optional<Banca> banca = bancaRepository.findById(1L);
-      question.setBanca(banca);
-      Optional<SubjectArea> area = areaRepository.findById(1L);
-      question.setCargo(area);
-
-
-      List<Question> questions = Arrays.asList(question);
-      questionRepository.saveAll(questions);
-    }*/
-  }
 
   private void addInitialAreasData() {
     if(areaRepository.count() == 0) {
@@ -78,6 +59,40 @@ public class StartData implements CommandLineRunner {
 
       List<Banca> bancas = Arrays.asList(banca, banca2);
       bancaRepository.saveAll(bancas);
+    }
+  }
+  private void addInitialQuestionData() {
+    if(questionRepository.count() == 0) {
+      List<SubjectArea> areas = areaRepository.findAll();
+      List<Banca> bancas = bancaRepository.findAll();
+
+      Question question = new Question();
+      question.setEnunciado("Quem sou eu?");
+      question.setAlternativa1("a) Eu");
+      question.setAlternativa2("b) Tu");
+      question.setAlternativa3("c) Ele");
+      question.setAlternativa4("d) Nós");
+      question.setAlternativa5("e) Vós");
+      Banca banca = bancas.get(0);
+      question.setBanca(banca);
+      SubjectArea area = areas.get(0);
+      question.setCargo(area);
+
+      Question question1 = new Question();
+      Banca banca2 = bancas.get(1);
+      question1.setBanca(banca2);
+      SubjectArea area2 = areas.get(1);
+      question1.setCargo(area2);
+      question1.setEnunciado("Quem és tu?");
+      question1.setAlternativa1("a) Eu");
+      question1.setAlternativa2("b) Tu");
+      question1.setAlternativa3("c) Ele");
+      question1.setAlternativa4("d) Nós");
+      question1.setAlternativa5("e) Vós");
+
+
+      List<Question> questions = Arrays.asList(question, question1);
+      questionRepository.saveAll(questions);
     }
   }
 }

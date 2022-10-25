@@ -1,76 +1,14 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org" lang="pt-br">
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="Renan Torres">
-  <meta name="generator" content="Jekyll v3.8.6">
-  <title>Engenharia de concursos</title>
-
-  <link rel="canonical" href="https://getbootstrap.com/docs/4.4/examples/blog/">
-
-
-  <!-- Bootstrap core CSS -->
-  <link rel="stylesheet" href="../static/css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}"/>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"/>
-
-
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="../static/images/favicon.png" th:href="@{images/favicon.png}"/>
-  <meta name="theme-color" content="#563d7c">
-
-  <!-- Custom styles for this template -->
-  <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
-  <!-- Custom styles for this template -->
-  <link href="../static/css/index.css" rel="stylesheet" th:href="@{css/index.css}"/>
+<head th:replace="~{base :: head}">
 
 </head>
 <body class="body-pd">
 <div class="container">
 
-  <header class="question-header py-3" id="header">
-    <div class="row flex-nowrap justify-content-between align-items-center">
-      <div class="col-4 pt-1">
-        <a class="text-muted"
-           th:text="#{home.subscribe}"
-           href="signup.html"
-           th:href="@{/signup}"
-           th:if="${session.currentUser == null}">
-          <i class="bx bx-user-plus nav_icon" style="font-size: 1.5rem;"></i>
-          Subscribe
-        </a>
-      </div>
-      <div class="col-4 text-center">
-        <!-- <a class="question-header-logo text-dark" href="#">Large</a> -->
-        <img src="../static/images/page-logo.png" alt="Logo" height="100px" th:src="@{images/page-logo.png}"/>
-      </div>
-      <div class="col-4 d-flex justify-content-end align-items-center">
-
-        <a class="btn btn-sm btn-outline-secondary"
-           th:text="#{home.login}" href="login.html"
-           th:href="@{/login}" th:if="${session.currentUser == null}">
-          <i class="bx bx-log-in nav_icon"></i>
-          Sign up
-        </a>
-
-        <div class="dropdown">
-          <button class="btn btn-secondary dropdown-toggle"
-                  type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                  aria-haspopup="true" aria-expanded="false"
-                  th:if="${session.currentUser != null}">
-            <span th:text="${session.currentUser.name}">  </span>
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="#">Perfil</a>
-            <a class="dropdown-item" href="#">Estatísticas</a>
-            <a class="dropdown-item" href="#">Histórico</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="index.html" th:href="@{/login/logout}">Logout</a>
-          </div>
-        </div>
-      </div>
+  <header class="question-header py-3" id="header" >
+    <div th:replace="~{base :: header}">
     </div>
   </header>
 
@@ -98,36 +36,76 @@
       <div class="question-post">
         <h2 class="question-post-title" th:text="#{home.area}" >Edit question</h2>
 
-        <form action="/question-form" method="post">
+        <form th:object="${newQuestionDTO}" action="/question-form" method="post">
           <div class="form-group d-flex flex-column">
             <label>Cargo</label>
-            <select class="form-select" aria-label="Select engineer area" >
+            <select class="form-select" aria-label="Select engineer area" name="cargo" th:field="*{cargo}" >
               <option value="1" th:each="sarea: ${areas}" th:value="${sarea.id}" th:text="${sarea.name}">One</option>
             </select>
           </div>
 
           <div class="form-group d-flex flex-column">
             <label>Banca</label>
-            <select class="form-select" aria-label="Select banca" >
+            <select class="form-select" aria-label="Select banca" name="banca" th:field="*{banca}">
               <option value="1" th:each="sbanca: ${bancas}" th:value="${sbanca.id}" th:text="${sbanca.name}">One</option>
             </select>
           </div>
 
-
           <div class="form-group">
-            <label for="enunciado">Enunciado</label>
-            <textarea name="enunciado" id="enunciado" rows="10" class="form-control" required></textarea>
+            <label for="enunciado" >Enunciado</label>
+            <textarea th:field="*{enunciado}" id="enunciado"
+                      rows="10" th:errorclass="is-invalid"
+                      class="form-control"></textarea>
+            <small class="invalid-feedback" th:errors="*{enunciado}">
+              Mensagem de possíveis erros no enunciado
+            </small>
           </div>
-          <small>Informe o enunciado da questão</small>
 
           <div class="form-group">
             <label for="alternativa1" >Alternativa (a)</label>
-            <textarea name="alternativa1" id="alternativa1" rows="3" class="form-control"
-                      placeholder="a) ..."
-                      required>
+            <textarea th:errorclass="is-invalid" th:field="*{alternativa1}"
+                      id="alternativa1" rows="3" class="form-control">
+            </textarea>
+            <small class="invalid-feedback" th:errors="*{alternativa1}">
+              Mensagem de possíveis erros na alternativa
+            </small>
+
+          </div>
+          <div class="form-group">
+            <label for="alternativa2" >Alternativa (b)</label>
+            <textarea th:errorclass="is-invalid" th:field="*{alternativa2}" id="alternativa2"
+                      rows="3" class="form-control">
 
             </textarea>
-            <small>Informe a alternativa a) da questão</small>
+            <small class="invalid-feedback" th:errors="*{alternativa2}">
+              Mensagem de possíveis erros na alternativa
+            </small>
+          </div>
+          <div class="form-group">
+            <label for="alternativa3" >Alternativa (c)</label>
+            <textarea th:field="*{alternativa3}" id="alternativa3" rows="3" class="form-control">
+            </textarea>
+          </div>
+          <div class="form-group">
+            <label for="alternativa4" >Alternativa (d)</label>
+            <textarea id="alternativa4" th:field="*{alternativa4}" rows="3" class="form-control">
+            </textarea>
+          </div>
+          <div class="form-group">
+            <label for="alternativa5" >Alternativa (e)</label>
+            <textarea id="alternativa5" th:field="*{alternativa5}" rows="3" class="form-control">
+            </textarea>
+          </div>
+          <div class="form-group">
+            <label for="resposta" >Resposta</label>
+            <select class="form-select" aria-label="Select banca" th:field="*{resposta}" id="resposta">
+              <option value="a"  >a)</option>
+              <option value="b"  >b)</option>
+              <option value="c"  >c)</option>
+              <option value="d"  >d)</option>
+              <option value="e"  >e)</option>
+            </select>
+            <small>Informe a resposta da pergunta</small>
           </div>
           <button class="btn btn-primary" type="submit">
             Salvar
