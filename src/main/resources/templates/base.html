@@ -43,7 +43,7 @@
       <div class="col-md-4 col-sm-12 text-center">
         <!-- <a class="question-header-logo text-dark" href="#">Large</a> -->
         <img src="../static/images/page-logo.png" alt="Logo" height="100px"
-             th:src="@{images/page-logo.png}"/>
+             th:src="@{/images/page-logo.png}"/>
       </div>
       <div class="col-md-4 col-sm-12  d-flex justify-content-end align-items-center">
 
@@ -81,7 +81,7 @@
     <div>
       <div class="nav-scroller py-1 mb-2">
         <nav class="nav d-flex flex-row justify-content-around">
-          <a class="p2 text-muted" th:each="area: ${areas}">
+          <a class="p2 text-muted" th:each="area: ${areas}" th:href="@{/questions-list/{id}(id=${area.id})}">
             <span th:text="${area.name}">Areas</span>
           </a>
         </nav>
@@ -103,6 +103,10 @@
 </body>
 
 <!--
+th:classappend="${status} == "ok"
+th:switch = ${status}
+th:case = "ok"
+
 -- Pode inserir parametros -- exemplo com valor abaixo --
 <div th:fragment="titulo(valor)">
   <h1 th:text="${valor}"> </h1>

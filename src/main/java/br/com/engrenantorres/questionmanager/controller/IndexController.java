@@ -54,6 +54,6 @@ public class IndexController {
   }
   @ExceptionHandler(IllegalArgumentException.class)
   public String onError(){
-    return "redirect:/";
+    return "redirect:/questions-list";
   }
 }

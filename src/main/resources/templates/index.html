@@ -59,7 +59,7 @@
               </div>
               <div class="badge badge-secondary">
                 <span>updated at</span>
-                <span>2014</span>
+                <span th:text="${#temporals.format(question.date,'dd/MM/yyyy')}">2014</span>
               </div>
             </div>
 

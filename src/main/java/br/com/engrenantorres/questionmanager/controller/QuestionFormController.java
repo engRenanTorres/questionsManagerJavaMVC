@@ -48,6 +48,6 @@ public class QuestionFormController {
     Question question = newQuestion.toQuestion();
     questionRepository.save(question);
 
-    return "questions-list";
+    return "redirect:/questions-list";
   }
 }
