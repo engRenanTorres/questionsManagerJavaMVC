@@ -1,7 +1,11 @@
 package br.com.engrenantorres.questionmanager.model;
 
+import br.com.engrenantorres.questionmanager.repository.QuestionRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Entity
@@ -24,7 +28,8 @@ public class Question {
   private Integer ano = 2022;
   private String concurso = "";
   private String assunto = "";
-  private String resposta = "";
+  @Enumerated(EnumType.STRING)
+  private Answers resposta = Answers.a;
   private String observacao = "";
   private LocalDateTime date = LocalDateTime.now();
 
@@ -127,11 +132,11 @@ public class Question {
     this.assunto = assunto;
   }
 
-  public String getResposta() {
+  public Answers getResposta() {
     return resposta;
   }
 
-  public void setResposta(String resposta) {
+  public void setResposta(Answers resposta) {
     this.resposta = resposta;
   }
 
@@ -149,5 +154,12 @@ public class Question {
 
   public void setDate(LocalDateTime date) {
     this.date = date;
+  }
+
+  @Autowired
+  private static QuestionRepository questionRepository;
+
+  public static List<Question> getAll(){
+    return questionRepository.findAll();
   }
 }

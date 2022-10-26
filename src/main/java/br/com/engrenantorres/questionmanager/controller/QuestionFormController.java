@@ -29,7 +29,7 @@ public class QuestionFormController {
   SubjectAreaRepository subjectAreaRepository;
 
   @GetMapping
-  public String form(Model model, NewQuestionDTO newQuestion) {
+  public String form(Model model, NewQuestionDTO newQuestionDTO) {
 
     List<SubjectArea> areas = subjectAreaRepository.findAll();
     List<Banca> bancas = bancaRepository.findAll();
@@ -38,6 +38,7 @@ public class QuestionFormController {
     model.addAttribute("bancas",bancas);
     return "question-form";
   }
+
   @PostMapping
   public String insert(@Valid NewQuestionDTO newQuestion, BindingResult bindingResult){
     if(bindingResult.hasErrors()) {
@@ -47,6 +48,6 @@ public class QuestionFormController {
     Question question = newQuestion.toQuestion();
     questionRepository.save(question);
 
-    return "question-form";
+    return "questions-list";
   }
 }

@@ -12,21 +12,6 @@
     </div>
   </header>
 
-  <div class="nav-scroller py-1 mb-2">
-    <nav class="nav d-flex flex-row justify-content-around">
-      <a class="p2 text-muted" href="#" th:each="area: ${areas}">
-        <span th:text="${area.name}">Areas</span>
-      </a>
-    </nav>
-  </div>
-
-  <div class="alert alert-success alert-dismissible fade show"
-       role="alert" th:if="${successMessage != null}">
-    <span th:text="${successMessage}"></span>
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
 
 </div>
 
@@ -40,14 +25,16 @@
           <div class="form-group d-flex flex-column">
             <label>Cargo</label>
             <select class="form-select" aria-label="Select engineer area" name="cargo" th:field="*{cargo}" >
-              <option value="1" th:each="sarea: ${areas}" th:value="${sarea.id}" th:text="${sarea.name}">One</option>
+              <option value="1" th:each="sarea: ${areas}"
+                      th:value="${sarea.id}" th:text="${sarea.name}">One</option>
             </select>
           </div>
 
           <div class="form-group d-flex flex-column">
             <label>Banca</label>
             <select class="form-select" aria-label="Select banca" name="banca" th:field="*{banca}">
-              <option value="1" th:each="sbanca: ${bancas}" th:value="${sbanca.id}" th:text="${sbanca.name}">One</option>
+              <option value="1" th:each="sbanca: ${bancas}"
+                      th:value="${sbanca.id}" th:text="${sbanca.name}">One</option>
             </select>
           </div>
 
@@ -55,7 +42,7 @@
             <label for="enunciado" >Enunciado</label>
             <textarea th:field="*{enunciado}" id="enunciado"
                       rows="10" th:errorclass="is-invalid"
-                      class="form-control"></textarea>
+                      class="form-control" required></textarea>
             <small class="invalid-feedback" th:errors="*{enunciado}">
               Mensagem de possíveis erros no enunciado
             </small>
@@ -64,36 +51,39 @@
           <div class="form-group">
             <label for="alternativa1" >Alternativa (a)</label>
             <textarea th:errorclass="is-invalid" th:field="*{alternativa1}"
-                      id="alternativa1" rows="3" class="form-control">
+                      id="alternativa1" rows="3" class="form-control" required>
             </textarea>
-            <small class="invalid-feedback" th:errors="*{alternativa1}">
+            <small class="invalid-feedback" th:errors="*{alternativa1}" >
               Mensagem de possíveis erros na alternativa
             </small>
 
           </div>
           <div class="form-group">
             <label for="alternativa2" >Alternativa (b)</label>
-            <textarea th:errorclass="is-invalid" th:field="*{alternativa2}" id="alternativa2"
-                      rows="3" class="form-control">
+            <textarea th:errorclass="is-invalid" th:field="*{alternativa2}"
+                      id="alternativa2" rows="3" class="form-control" required>
 
             </textarea>
-            <small class="invalid-feedback" th:errors="*{alternativa2}">
+            <small class="invalid-feedback" th:errors="*{alternativa2}" >
               Mensagem de possíveis erros na alternativa
             </small>
           </div>
           <div class="form-group">
             <label for="alternativa3" >Alternativa (c)</label>
-            <textarea th:field="*{alternativa3}" id="alternativa3" rows="3" class="form-control">
+            <textarea th:field="*{alternativa3}" id="alternativa3"
+                      rows="3" class="form-control" required>
             </textarea>
           </div>
           <div class="form-group">
             <label for="alternativa4" >Alternativa (d)</label>
-            <textarea id="alternativa4" th:field="*{alternativa4}" rows="3" class="form-control">
+            <textarea id="alternativa4" th:field="*{alternativa4}"
+                      rows="3" class="form-control" required>
             </textarea>
           </div>
           <div class="form-group">
             <label for="alternativa5" >Alternativa (e)</label>
-            <textarea id="alternativa5" th:field="*{alternativa5}" rows="3" class="form-control">
+            <textarea id="alternativa5" th:field="*{alternativa5}"
+                      rows="3" class="form-control" required>
             </textarea>
           </div>
           <div class="form-group">
@@ -152,8 +142,6 @@
     <a href="#" th:text="#{home.backToTop}">Back to top</a>
   </p>
 </footer>
-
-<script src="../static/js/sidebar.js" th:src="@{js/sidebar.js}"></script>
 
 
 </body>

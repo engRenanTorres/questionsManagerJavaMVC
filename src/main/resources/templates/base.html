@@ -10,23 +10,24 @@
 
 
   <!-- Bootstrap core CSS -->
-  <link rel="stylesheet" href="../static/css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}"/>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"/>
+  <link rel="stylesheet" href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest//css/boxicons.min.css"/>
 
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="../static/images/favicon.png" th:href="@{images/favicon.png}"/>
+  <link rel="icon" type="image/png" href="../static/images/favicon.png" th:href="@{/images/favicon.png}"/>
+
   <meta name="theme-color" content="#563d7c">
 
   <!-- Custom styles for this template -->
   <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
   <!-- Custom styles for this template -->
-  <link href="../static/css/index.css" rel="stylesheet" th:href="@{css/index.css}"/>
+  <link href="../static/css/index.css" rel="stylesheet" th:href="@{/css/index.css}"/>
 
 </head>
 
 <body>
-  <header th:fragment="header">
+  <div th:fragment="header">
     <div class="row justify-content-between align-items-center">
       <div class="col-md-4 col-sm-12 pt-1">
         <a class="text-muted"
@@ -76,7 +77,29 @@
         </div>
       </div>
     </div>
-  </header>
+
+    <div>
+      <div class="nav-scroller py-1 mb-2">
+        <nav class="nav d-flex flex-row justify-content-around">
+          <a class="p2 text-muted" th:each="area: ${areas}">
+            <span th:text="${area.name}">Areas</span>
+          </a>
+        </nav>
+      </div>
+      <div class="nav-scroller py-1 mb-2">
+        <nav class="nav d-flex flex-row justify-content-around">
+          <a class="nav-item nav-link" href="/questionForm" th:href="@{/questions-list}">
+            View Questions
+          </a>
+          <a class="nav-item nav-link" href="/questionForm" th:href="@{/question-form}">
+            Insert Question
+          </a>
+        </nav>
+      </div>
+    </div>
+  </div>
+
+
 </body>
 
 <!--

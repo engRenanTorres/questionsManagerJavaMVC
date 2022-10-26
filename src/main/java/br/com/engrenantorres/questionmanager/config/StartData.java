@@ -1,5 +1,6 @@
 package br.com.engrenantorres.questionmanager.config;
 
+import br.com.engrenantorres.questionmanager.model.Answers;
 import br.com.engrenantorres.questionmanager.model.Banca;
 import br.com.engrenantorres.questionmanager.model.Question;
 import br.com.engrenantorres.questionmanager.model.SubjectArea;
@@ -73,6 +74,7 @@ public class StartData implements CommandLineRunner {
       question.setAlternativa3("c) Ele");
       question.setAlternativa4("d) Nós");
       question.setAlternativa5("e) Vós");
+      question.setResposta(Answers.a);
       Banca banca = bancas.get(0);
       question.setBanca(banca);
       SubjectArea area = areas.get(0);
@@ -89,6 +91,7 @@ public class StartData implements CommandLineRunner {
       question1.setAlternativa3("c) Ele");
       question1.setAlternativa4("d) Nós");
       question1.setAlternativa5("e) Vós");
+      question.setResposta(Answers.b);
 
 
       List<Question> questions = Arrays.asList(question, question1);

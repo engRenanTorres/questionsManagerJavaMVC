@@ -1,5 +1,6 @@
 package br.com.engrenantorres.questionmanager.dto;
 
+import br.com.engrenantorres.questionmanager.model.Answers;
 import br.com.engrenantorres.questionmanager.model.Banca;
 import br.com.engrenantorres.questionmanager.model.Question;
 import br.com.engrenantorres.questionmanager.model.SubjectArea;
@@ -19,7 +20,8 @@ public class NewQuestionDTO {
   private String alternativa3 = "";
   private String alternativa4 = "";
   private String alternativa5 = "";
-  private String resposta = "";
+  private Answers resposta = Answers.a;
+
 
   public SubjectArea getCargo() {
     return cargo;
@@ -85,11 +87,11 @@ public class NewQuestionDTO {
     this.alternativa5 = alternativa5;
   }
 
-  public String getResposta() {
+  public Answers getResposta() {
     return resposta;
   }
 
-  public void setResposta(String resposta) {
+  public void setResposta(Answers resposta) {
     this.resposta = resposta;
   }
 
