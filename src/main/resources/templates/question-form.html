@@ -24,7 +24,7 @@
         <form th:object="${newQuestionDTO}" action="/question-form" method="post">
 
           <div class="row my-1">
-            <div class="form-group col-2">
+            <div class="form-group col-2" th:if="*{id}!=0">
               <label>id</label>
               <input type="text" th:field="*{id}" class="form-control" readonly>
             </div>

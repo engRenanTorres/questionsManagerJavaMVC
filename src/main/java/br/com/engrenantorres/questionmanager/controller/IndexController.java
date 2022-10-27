@@ -30,78 +30,89 @@ public class IndexController {
 
   private Integer paginationSize = 5;
 
+
   @GetMapping
-  public String index(Model model,
-                      @RequestParam(name= "page",required = false, defaultValue = "0")Integer page) {
-
-    List<SubjectArea> areas = areaRepository.findAll();
-    model.addAttribute("areas",areas);
-    HandlePagination(model, page, 0L);
-
-    return "index";
-  }
-
-
-  @GetMapping("/{areaId}")
   public String filter(
-    @PathVariable("areaId") Long areaId ,
+    @RequestParam(name="areaId",required = false,defaultValue = "0") Long areaId,
     Model model,
-    @RequestParam(name= "page",required = false, defaultValue = "0")Integer page) {
-    Optional<SubjectArea> optionalAreas = areaRepository.findById(areaId);
+    @RequestParam(name = "page", required = false, defaultValue = "0") Integer page) {
 
-    optionalAreas.ifPresent(area -> {
-      HandlePagination(model, page, areaId);
-      }
-    );
+    injectBancaAndAreaAttsFromBD(model);
+
+    HandleAttributes(model, page, areaId);
 
     return "index";
   }
+
   @GetMapping("/edit/{questionId}")
   public String edit(
-    @PathVariable("questionId") Long questionId ,
+    @PathVariable("questionId") Long questionId,
     Model model,
-    @RequestParam(name= "page",required = false, defaultValue = "0")Integer page) {
+    @RequestParam(name = "page", required = false, defaultValue = "0") Integer page) {
     Optional<Question> question = questionRepository.findById(questionId);
-    question.ifPresent(question1 -> {
-      NewQuestionDTO questionDTO = new NewQuestionDTO(question1);
-      model.addAttribute("newQuestionDTO", questionDTO);
-    });
-    injectAttributesFromBD(model);
+    injectQuestionDataIntoEditForm(model, question);
+
+    injectBancaAndAreaAttsFromBD(model);
 
     return "question-form";
   }
 
+
   @GetMapping("/delete/{questionId}")
   public String remove(
-    @PathVariable("questionId") Long questionId ,
+    @PathVariable("questionId") Long questionId,
     Model model,
-    @RequestParam(name= "page",required = false, defaultValue = "0")Integer page) {
+    @RequestParam(name = "page", required = false, defaultValue = "0") Integer page) {
     questionRepository.deleteById(questionId);
-    HandlePagination(model, page, 0L);
+    HandleAttributes(model, page, 0L);
     return "redirect:/questions-list";
   }
+
   @ExceptionHandler(IllegalArgumentException.class)
-  public String onError(){
+  public String onError() {
     return "redirect:/questions-list";
   }
+  private void injectQuestionDataIntoEditForm(Model model, Optional<Question> question) {
+    question.ifPresent(question1 -> {
+      NewQuestionDTO questionDTO = new NewQuestionDTO(question1);
+      model.addAttribute("newQuestionDTO", questionDTO);
+    });
+  }
 
-  private void HandlePagination(Model model, Integer page, Long areaId) {
-    Page<Question> questions = questionRepository.findAll(PageRequest.of(page,paginationSize));
-    Integer nextPage = (page >= (questions.getTotalElements() - 1)/paginationSize) ? page : page + 1;
+  private void HandleAttributes(Model model, Integer page, Long areaId) {
+    Page<Question> questions;
+    questions = getQuestionsApplyingFilterIfExist(model, page, areaId);
+
+    injectQuestionsAttributes(model, page, questions);
+  }
+
+  private void injectQuestionsAttributes(Model model, Integer page, Page<Question> questions) {
+    Integer nextPage = (page >= (questions.getTotalElements() - 1) / paginationSize) ? page : page + 1;
     Integer previousPage = (page <= 0) ? 0 : page - 1;
-
     model.addAttribute("questions", questions);
     model.addAttribute("nextPage", nextPage);
     model.addAttribute("previousPage", previousPage);
-    model.addAttribute("isFirst",questions.isFirst());
-    model.addAttribute("isLast",questions.isLast());
-    if(areaId == 0)  model.addAttribute("areaId", "nulo");
-      else model.addAttribute("areaId", areaId);
+    model.addAttribute("isFirst", questions.isFirst());
+    model.addAttribute("isLast", questions.isLast());
   }
-  private void injectAttributesFromBD(Model model) {
+
+  private Page<Question> getQuestionsApplyingFilterIfExist(Model model, Integer page, Long areaId) {
+    Page<Question> questions;
+    if (areaId == 0) {
+      model.addAttribute("areaId", "nulo");
+      questions = questionRepository.findAll(PageRequest.of(page, paginationSize));
+    } else {
+      model.addAttribute("areaId", areaId);
+      Optional<SubjectArea> area = areaRepository.findById(areaId);
+      questions = questionRepository.findByCargo(area.get(), PageRequest.of(page, paginationSize));
+    }
+    return questions;
+  }
+
+  private void injectBancaAndAreaAttsFromBD(Model model) {
     List<SubjectArea> areas = areaRepository.findAll();
     List<Banca> bancas = bancaRepository.findAll();
-    model.addAttribute("areas",areas);
-    model.addAttribute("bancas",bancas);
+    model.addAttribute("areas", areas);
+    model.addAttribute("bancas", bancas);
   }
 }

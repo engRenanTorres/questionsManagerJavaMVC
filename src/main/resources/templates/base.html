@@ -80,7 +80,7 @@
     <div>
       <div class="nav-scroller py-1 mb-2">
         <nav class="nav d-flex flex-row justify-content-around">
-          <a class="p2 text-muted" th:each="area: ${areas}" th:href="@{/questions-list/{id}(id=${area.id})}">
+          <a class="p2 text-muted" th:each="area: ${areas}" th:href="@{/questions-list/?areaId={id}(id=${area.id})}">
             <span th:text="${area.name}">Areas</span>
           </a>
         </nav>
