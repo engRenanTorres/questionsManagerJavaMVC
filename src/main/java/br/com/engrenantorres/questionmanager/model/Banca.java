@@ -1,9 +1,13 @@
 package br.com.engrenantorres.questionmanager.model;
 
+import br.com.engrenantorres.questionmanager.repository.BancaRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.Optional;
 
 @Entity
 public class Banca {
@@ -31,6 +35,12 @@ public class Banca {
 
   public void setAbout(String about) {
     this.about = about;
+  }
+  @Autowired
+  private static BancaRepository bancaRepository;
+
+  public static Optional<Banca> findById(Long id) {
+    return bancaRepository.findById(id);
   }
 
 

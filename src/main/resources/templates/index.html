@@ -87,19 +87,40 @@
 
 
   </div><!-- /.row -->
-  <nav class="question-pagination">
-    <a class="btn btn-outline-primary"
-       href="#"
-    >
-      <i class="bx bx-skip-previous nav_icon" style="font-size: 1.5rem;"></i>
-      <span th:text="#{question.before}">Older</span>
-    </a>
-    <a class="btn btn-outline-primary"
-       href="#">
-      <i class="bx bx-skip-next nav_icon" style="font-size: 1.5rem;"></i>
-      <span th:text="#{question.next}">Newer</span>
-    </a>
-  </nav>
+  <div th:switch="${areaId}">
+    <nav th:case="nulo" class="question-pagination">
+      <a class="btn btn-outline-primary"
+         th:classappend="${isFirst} ? 'disabled'"
+         th:href="@{'/questions-list/?page=' + ${previousPage}}"
+         href="#">
+        <i class="bx bx-skip-previous nav_icon" style="font-size: 1.5rem;"></i>
+        <span th:text="#{question.before}">Older</span>
+      </a>
+      <a class="btn btn-outline-primary"
+         th:classappend="${isLast} ? 'disabled'"
+         th:href="@{'/questions-list/?page=' + ${nextPage}}"
+         href="#">
+        <i class="bx bx-skip-next nav_icon" style="font-size: 1.5rem;"></i>
+        <span th:text="#{question.next}">Newer</span>
+      </a>
+    </nav>
+    <nav th:case="${areaId}" class="question-pagination">
+      <a class="btn btn-outline-primary"
+         th:classappend="${isFirst} ? 'disabled'"
+         th:href="@{'/questions-list/' + ${areaId} + '/?page=' + ${previousPage}}"
+         href="#">
+        <i class="bx bx-skip-previous nav_icon" style="font-size: 1.5rem;"></i>
+        <span th:text="#{question.before}">Older</span>
+      </a>
+      <a class="btn btn-outline-primary"
+         th:classappend="${isLast} ? 'disabled'"
+         th:href="@{'/questions-list/' + ${areaId} + '/?page=' + ${nextPage}}"
+         href="#">
+        <i class="bx bx-skip-next nav_icon" style="font-size: 1.5rem;"></i>
+        <span th:text="#{question.next}">Newer</span>
+      </a>
+    </nav>
+  </div>
 
 </main><!-- /.container -->
 

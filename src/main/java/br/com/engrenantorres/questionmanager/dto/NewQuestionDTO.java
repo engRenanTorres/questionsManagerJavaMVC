@@ -17,8 +17,11 @@ public class NewQuestionDTO {
   private String alternativa1 = "";
   @NotBlank
   private String alternativa2 = "";
+  @NotBlank
   private String alternativa3 = "";
+  @NotBlank
   private String alternativa4 = "";
+  @NotBlank
   private String alternativa5 = "";
   private Answers resposta = Answers.a;
 

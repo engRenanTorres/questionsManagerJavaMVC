@@ -30,24 +30,30 @@ public class QuestionFormController {
 
   @GetMapping
   public String form(Model model, NewQuestionDTO newQuestionDTO) {
-
-    List<SubjectArea> areas = subjectAreaRepository.findAll();
-    List<Banca> bancas = bancaRepository.findAll();
-
-    model.addAttribute("areas",areas);
-    model.addAttribute("bancas",bancas);
+    injectAttributesFromBD(model);
     return "question-form";
   }
-
   @PostMapping
-  public String insert(@Valid NewQuestionDTO newQuestion, BindingResult bindingResult){
+  public String insert(@Valid NewQuestionDTO newQuestionDTO, BindingResult bindingResult, Model model){
     if(bindingResult.hasErrors()) {
+      injectAttributesFromBD(model);
       return "question-form";
     }
 
-    Question question = newQuestion.toQuestion();
-    questionRepository.save(question);
+    saveQuestionInDB(newQuestionDTO);
 
     return "redirect:/questions-list";
+  }
+
+  private void saveQuestionInDB(NewQuestionDTO newQuestionDTO) {
+    Question question = newQuestionDTO.toQuestion();
+    questionRepository.save(question);
+  }
+
+  private void injectAttributesFromBD(Model model) {
+    List<SubjectArea> areas = subjectAreaRepository.findAll();
+    List<Banca> bancas = bancaRepository.findAll();
+    model.addAttribute("areas",areas);
+    model.addAttribute("bancas",bancas);
   }
 }

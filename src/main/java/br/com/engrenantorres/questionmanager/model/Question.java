@@ -4,6 +4,7 @@ import br.com.engrenantorres.questionmanager.repository.QuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -19,10 +20,15 @@ public class Question {
   @ManyToOne
   private SubjectArea cargo = new SubjectArea();
   private String enunciado = "";
+
   private String alternativa1 = "";
+
   private String alternativa2 = "";
+
   private String alternativa3 = "";
+
   private String alternativa4 = "";
+
   private String alternativa5 = "";
 
   private Integer ano = 2022;

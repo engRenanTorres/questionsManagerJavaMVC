@@ -104,8 +104,8 @@
 
 <!--
 th:classappend="${status} == "ok"
-th:switch = ${status}
-th:case = "ok"
+<th:block th:switch = ${status}>
+ <th:case = "ok"
 
 -- Pode inserir parametros -- exemplo com valor abaixo --
 <div th:fragment="titulo(valor)">
