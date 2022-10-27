@@ -22,21 +22,30 @@
         <h2 class="question-post-title" th:text="#{home.area}" >Edit question</h2>
 
         <form th:object="${newQuestionDTO}" action="/question-form" method="post">
-          <div class="form-group d-flex flex-column">
-            <label>Cargo</label>
-            <select class="form-select" aria-label="Select engineer area" name="cargo" th:field="*{cargo}" >
-              <option value="1" th:each="sarea: ${areas}"
-                      th:value="${sarea.id}" th:text="${sarea.name}">One</option>
-            </select>
+
+          <div class="row my-1">
+            <div class="form-group col-2">
+              <label>id</label>
+              <input type="text" th:field="*{id}" class="form-control" readonly>
+            </div>
+
+            <div class="form-group col-5 d-flex flex-column">
+              <label>Cargo</label>
+              <select class="custom-select" aria-label="Select engineer area" name="cargo" th:field="*{cargo}" >
+                <option value="1" th:each="sarea: ${areas}"
+                        th:value="${sarea.id}" th:text="${sarea.name}">One</option>
+              </select>
+            </div>
+
+            <div class="form-group col-5 d-flex flex-column">
+              <label>Banca</label>
+              <select class="custom-select" aria-label="Select banca" name="banca" th:field="*{banca}">
+                <option value="1" th:each="sbanca: ${bancas}"
+                        th:value="${sbanca.id}" th:text="${sbanca.name}">One</option>
+              </select>
+            </div>
           </div>
 
-          <div class="form-group d-flex flex-column">
-            <label>Banca</label>
-            <select class="form-select" aria-label="Select banca" name="banca" th:field="*{banca}">
-              <option value="1" th:each="sbanca: ${bancas}"
-                      th:value="${sbanca.id}" th:text="${sbanca.name}">One</option>
-            </select>
-          </div>
 
           <div class="form-group">
             <label for="enunciado" >Enunciado</label>

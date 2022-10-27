@@ -1,7 +1,10 @@
 package br.com.engrenantorres.questionmanager.controller;
 
+import br.com.engrenantorres.questionmanager.dto.NewQuestionDTO;
+import br.com.engrenantorres.questionmanager.model.Banca;
 import br.com.engrenantorres.questionmanager.model.Question;
 import br.com.engrenantorres.questionmanager.model.SubjectArea;
+import br.com.engrenantorres.questionmanager.repository.BancaRepository;
 import br.com.engrenantorres.questionmanager.repository.QuestionRepository;
 import br.com.engrenantorres.questionmanager.repository.SubjectAreaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +25,9 @@ public class IndexController {
   private QuestionRepository questionRepository;
   @Autowired
   private SubjectAreaRepository areaRepository;
+  @Autowired
+  BancaRepository bancaRepository;
+
   private Integer paginationSize = 5;
 
   @GetMapping
@@ -50,10 +56,35 @@ public class IndexController {
 
     return "index";
   }
+  @GetMapping("/edit/{questionId}")
+  public String edit(
+    @PathVariable("questionId") Long questionId ,
+    Model model,
+    @RequestParam(name= "page",required = false, defaultValue = "0")Integer page) {
+    Optional<Question> question = questionRepository.findById(questionId);
+    question.ifPresent(question1 -> {
+      NewQuestionDTO questionDTO = new NewQuestionDTO(question1);
+      model.addAttribute("newQuestionDTO", questionDTO);
+    });
+    injectAttributesFromBD(model);
+
+    return "question-form";
+  }
+
+  @GetMapping("/delete/{questionId}")
+  public String remove(
+    @PathVariable("questionId") Long questionId ,
+    Model model,
+    @RequestParam(name= "page",required = false, defaultValue = "0")Integer page) {
+    questionRepository.deleteById(questionId);
+    HandlePagination(model, page, 0L);
+    return "redirect:/questions-list";
+  }
   @ExceptionHandler(IllegalArgumentException.class)
   public String onError(){
     return "redirect:/questions-list";
   }
+
   private void HandlePagination(Model model, Integer page, Long areaId) {
     Page<Question> questions = questionRepository.findAll(PageRequest.of(page,paginationSize));
     Integer nextPage = (page >= (questions.getTotalElements() - 1)/paginationSize) ? page : page + 1;
@@ -66,5 +97,11 @@ public class IndexController {
     model.addAttribute("isLast",questions.isLast());
     if(areaId == 0)  model.addAttribute("areaId", "nulo");
       else model.addAttribute("areaId", areaId);
+  }
+  private void injectAttributesFromBD(Model model) {
+    List<SubjectArea> areas = areaRepository.findAll();
+    List<Banca> bancas = bancaRepository.findAll();
+    model.addAttribute("areas",areas);
+    model.addAttribute("bancas",bancas);
   }
 }

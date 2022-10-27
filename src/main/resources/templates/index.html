@@ -10,9 +10,6 @@
 
   </div>
 
-
-
-
   <div class="alert alert-success alert-dismissible fade show"
        role="alert" th:if="${successMessage != null}">
     <span th:text="${successMessage}"></span>
@@ -82,6 +79,15 @@
             <li><a href="#">LinkedIn</a></li>
           </ol>
         </div>
+
+        <a href="index.html" class="btn btn-light btn-small"
+          th:href="@{/questions-list/edit/{questionId}(questionId=${question.id})} ">
+          <i class="bx bx-edit" style="font-size: 1.5rem;"></i> Edit
+        </a>
+        <a href="index.html" class="btn btn-light btn-small"
+           th:href="@{/questions-list/delete/{questionId}(questionId=${question.id})} ">
+          <i class="bx bx-trash" style="font-size: 1.5rem;"></i> Delete
+        </a>
       </aside><!-- /.question-sidebar -->
 
 
@@ -129,7 +135,5 @@
     <a href="#" th:text="#{home.backToTop}">Back to top</a>
   </p>
 </footer>
-
-
 </body>
 </html>

@@ -9,6 +9,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 public class NewQuestionDTO {
+  private Long id = 0L;
   private SubjectArea cargo = new SubjectArea();
   private Banca banca = new Banca();
   @NotBlank
@@ -25,6 +26,29 @@ public class NewQuestionDTO {
   private String alternativa5 = "";
   private Answers resposta = Answers.a;
 
+  public NewQuestionDTO() {
+  }
+
+  public NewQuestionDTO(Question question) {
+    this.id = question.getId();
+    this.cargo = question.getCargo();
+    this.banca = question.getBanca();
+    this.enunciado = question.getEnunciado();
+    this.alternativa1 = question.getAlternativa1();
+    this.alternativa2 = question.getAlternativa2();
+    this.alternativa3 = question.getAlternativa3();
+    this.alternativa4 = question.getAlternativa4();
+    this.alternativa5 = question.getAlternativa5();
+    this.resposta = question.getResposta();
+  }
+
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
 
   public SubjectArea getCargo() {
     return cargo;
@@ -98,16 +122,19 @@ public class NewQuestionDTO {
     this.resposta = resposta;
   }
 
+
+
   public Question toQuestion() {
     Question question = new Question();
+    question.setId(id);
     question.setCargo(cargo);
     question.setBanca(banca);
     question.setEnunciado(enunciado);
     question.setAlternativa1(alternativa1);
     question.setAlternativa2(alternativa2);
     question.setAlternativa3(alternativa3);
-    question.setAlternativa3(alternativa4);
-    question.setAlternativa3(alternativa5);
+    question.setAlternativa4(alternativa4);
+    question.setAlternativa5(alternativa5);
     question.setResposta(resposta);
     return question;
   }

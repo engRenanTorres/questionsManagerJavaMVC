@@ -26,7 +26,7 @@ public class QuestionFormController {
   @Autowired
   BancaRepository bancaRepository;
   @Autowired
-  SubjectAreaRepository subjectAreaRepository;
+  SubjectAreaRepository areaRepository;
 
   @GetMapping
   public String form(Model model, NewQuestionDTO newQuestionDTO) {
@@ -51,7 +51,7 @@ public class QuestionFormController {
   }
 
   private void injectAttributesFromBD(Model model) {
-    List<SubjectArea> areas = subjectAreaRepository.findAll();
+    List<SubjectArea> areas = areaRepository.findAll();
     List<Banca> bancas = bancaRepository.findAll();
     model.addAttribute("areas",areas);
     model.addAttribute("bancas",bancas);
