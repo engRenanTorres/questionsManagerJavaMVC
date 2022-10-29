@@ -1,6 +1,7 @@
 package br.com.engrenantorres.questionmanager.model;
 
 import br.com.engrenantorres.questionmanager.repository.QuestionRepository;
+import org.hibernate.annotations.Fetch;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
@@ -39,8 +40,15 @@ public class Question {
   private String observacao = "";
   private LocalDateTime date = LocalDateTime.now();
 
+  @ManyToOne(fetch = FetchType.LAZY)
+  QuestionAuthor questionAuthor = new QuestionAuthor();
+  public QuestionAuthor getQuestionAuthor() {
+    return questionAuthor;
+  }
 
-
+  public void setQuestionAuthor(QuestionAuthor questionAuthor) {
+    this.questionAuthor = questionAuthor;
+  }
 
   public Long getId() {
     return id;

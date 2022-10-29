@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,10 +33,14 @@ public class IndexController {
 
 
   @GetMapping
-  public String filter(
+  public String list(
     @RequestParam(name="areaId",required = false,defaultValue = "0") Long areaId,
     Model model,
-    @RequestParam(name = "page", required = false, defaultValue = "0") Integer page) {
+    @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
+    Principal principal
+    ) {
+
+    model.addAttribute("userName", principal.getName());
 
     injectBancaAndAreaAttsFromBD(model);
 
