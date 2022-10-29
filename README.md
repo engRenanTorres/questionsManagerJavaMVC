@@ -6,9 +6,9 @@ Webapp para gerenciar as questões dos meus apps de simulados de concursos engen
 - Baixe o projeto com git clone.
 - Configure o Banco de Dados em *src/main/resources/application.properties*
 - Caso não tenho o MySQL instalado. Pode utilizar o H2 como BD provisório (Os dados 
-- somem quando fecha a aplicação). 
+somem quando fecha a aplicação). 
 
-Para isso copie cole as configurações abaixo:
+Para isso copie e cole as configurações abaixo dentro do application.properties:
 
   *spring.datasource.url=jdbc:h2:mem:simuladorconcurso
   spring.datasource.driverClassName=org.h2.Driver
