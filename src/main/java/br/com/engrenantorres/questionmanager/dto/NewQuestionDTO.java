@@ -1,9 +1,6 @@
 package br.com.engrenantorres.questionmanager.dto;
 
-import br.com.engrenantorres.questionmanager.model.Answers;
-import br.com.engrenantorres.questionmanager.model.Banca;
-import br.com.engrenantorres.questionmanager.model.Question;
-import br.com.engrenantorres.questionmanager.model.SubjectArea;
+import br.com.engrenantorres.questionmanager.model.*;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -124,8 +121,8 @@ public class NewQuestionDTO {
 
 
 
-  public Question toQuestion() {
-    Question question = new Question();
+  public Question toQuestion(User author) {
+    Question question = new Question(author);
     question.setId(id);
     question.setCargo(cargo);
     question.setBanca(banca);

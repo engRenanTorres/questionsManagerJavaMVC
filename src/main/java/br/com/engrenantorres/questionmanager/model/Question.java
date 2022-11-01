@@ -41,13 +41,20 @@ public class Question {
   private LocalDateTime date = LocalDateTime.now();
 
   @ManyToOne(fetch = FetchType.LAZY)
-  QuestionAuthor questionAuthor = new QuestionAuthor();
-  public QuestionAuthor getQuestionAuthor() {
-    return questionAuthor;
+  private User author;
+
+  public Question(User author) {
+    this.author = author;
+  }
+  public Question() {
   }
 
-  public void setQuestionAuthor(QuestionAuthor questionAuthor) {
-    this.questionAuthor = questionAuthor;
+  public User getAuthor() {
+    return author;
+  }
+
+  public void setAuthor(User author) {
+    this.author = author;
   }
 
   public Long getId() {

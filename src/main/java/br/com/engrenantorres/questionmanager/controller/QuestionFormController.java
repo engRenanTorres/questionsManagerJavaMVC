@@ -4,10 +4,13 @@ import br.com.engrenantorres.questionmanager.dto.NewQuestionDTO;
 import br.com.engrenantorres.questionmanager.model.Banca;
 import br.com.engrenantorres.questionmanager.model.Question;
 import br.com.engrenantorres.questionmanager.model.SubjectArea;
+import br.com.engrenantorres.questionmanager.model.User;
 import br.com.engrenantorres.questionmanager.repository.BancaRepository;
 import br.com.engrenantorres.questionmanager.repository.QuestionRepository;
 import br.com.engrenantorres.questionmanager.repository.SubjectAreaRepository;
+import br.com.engrenantorres.questionmanager.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -24,12 +28,18 @@ public class QuestionFormController {
   @Autowired
   private QuestionRepository questionRepository;
   @Autowired
-  BancaRepository bancaRepository;
+  private BancaRepository bancaRepository;
   @Autowired
-  SubjectAreaRepository areaRepository;
+  private SubjectAreaRepository areaRepository;
+  @Autowired
+  private UserRepository userRepository;
 
   @GetMapping
-  public String form(Model model, NewQuestionDTO newQuestionDTO) {
+  public String form(Model model,
+                     NewQuestionDTO newQuestionDTO,
+                     Principal principal
+  ) {
+    model.addAttribute("userName", principal.getName());
     injectAttributesFromBD(model);
     return "question-form";
   }
@@ -40,13 +50,14 @@ public class QuestionFormController {
       return "question-form";
     }
 
-    saveQuestionInDB(newQuestionDTO);
-
+    String username = SecurityContextHolder.getContext().getAuthentication().getName();
+    User user = userRepository.findByUsername(username);
+    saveQuestionInDB(newQuestionDTO, user);
     return "redirect:/questions-list";
   }
 
-  private void saveQuestionInDB(NewQuestionDTO newQuestionDTO) {
-    Question question = newQuestionDTO.toQuestion();
+  private void saveQuestionInDB(NewQuestionDTO newQuestionDTO, User author) {
+    Question question = newQuestionDTO.toQuestion(author);
     questionRepository.save(question);
   }
 

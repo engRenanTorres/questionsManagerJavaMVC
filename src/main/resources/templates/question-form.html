@@ -21,7 +21,7 @@
       <div class="question-post">
         <h2 class="question-post-title" th:text="#{home.area}" >Edit question</h2>
 
-        <form th:object="${newQuestionDTO}" action="/question-form" method="post">
+        <form th:object="${newQuestionDTO}" th:action="@{/question-form}" method="post">
 
           <div class="row my-1">
             <div class="form-group col-2" th:if="*{id}!=0">

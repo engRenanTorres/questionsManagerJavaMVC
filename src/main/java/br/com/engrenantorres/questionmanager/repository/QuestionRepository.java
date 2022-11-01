@@ -18,9 +18,8 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
   List<Question> findAll();
   List<Question> findByCargo(SubjectArea areaSelected);
   Page<Question> findByCargo(SubjectArea areaSelected, Pageable pageable);
-/*  @Query("SELECT q FROM Question q JOIN q.questionAuthor qa JOIN qa.user u" +
-    "WHERE u.username = :username")
-  List<Question> findAllByAuthor(@Param("username") String username);*/
+  @Query("SELECT q FROM Question q JOIN q.author a WHERE a.username = :username")
+  List<Question> findAllByAuthor(@Param("username") String username);
 
 /*  --Para ter queries personalizadas-- Precisa criar uma Class
   @PersistenceContext
