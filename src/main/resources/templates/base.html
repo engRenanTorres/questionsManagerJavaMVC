@@ -34,6 +34,7 @@
            href="signup.html"
            th:href="@{/signup}"
            th:if="${session.currentUser == null}"
+           sec:authorize="!isAuthenticated()"
         >
           <i class="bx bx-user-plus nav_icon" style="font-size: 1.5rem;"></i>
           Subscribe
@@ -61,10 +62,13 @@
             <span th:text="${userName}">User Name</span>
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="#">
-              Perfil
+            <a class="dropdown-item" href="/questions-list/my-questions" th:href="@{/questions-list/my-questions}">
+              My Questions
             </a>
-            <a class="dropdown-item" href="/questionForm" th:href="@{/questionForm}">
+            <a class="dropdown-item" href="/questions-list" th:href="@{/questions-list}">
+              List All Questions
+            </a>
+            <a class="dropdown-item" href="/question-form" th:href="@{/question-form}">
               Insert Question
             </a>
             <a class="dropdown-item" href="#">Histórico</a>
@@ -89,16 +93,7 @@
           </a>
         </nav>
       </div>
-      <div class="nav-scroller py-1 mb-2">
-        <nav class="nav d-flex flex-row justify-content-around">
-          <a class="nav-item nav-link" href="/questionForm" th:href="@{/questions-list}">
-            View Questions
-          </a>
-          <a class="nav-item nav-link" href="/questionForm" th:href="@{/question-form}">
-            Insert Question
-          </a>
-        </nav>
-      </div>
+
     </div>
   </div>
 

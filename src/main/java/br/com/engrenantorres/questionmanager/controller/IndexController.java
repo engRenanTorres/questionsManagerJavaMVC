@@ -7,6 +7,7 @@ import br.com.engrenantorres.questionmanager.model.SubjectArea;
 import br.com.engrenantorres.questionmanager.repository.BancaRepository;
 import br.com.engrenantorres.questionmanager.repository.QuestionRepository;
 import br.com.engrenantorres.questionmanager.repository.SubjectAreaRepository;
+import br.com.engrenantorres.questionmanager.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -45,6 +46,29 @@ public class IndexController {
     injectBancaAndAreaAttsFromBD(model);
 
     HandleAttributes(model, page, areaId);
+
+    return "index";
+  }
+
+  @GetMapping("/my-questions")
+  public String listMyQuestions(
+    @RequestParam(name="areaId",required = false,defaultValue = "0") Long areaId,
+    Model model,
+    @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
+    Principal principal
+  ) {
+
+    String username = principal.getName();
+    model.addAttribute("userName", username);
+
+
+    injectBancaAndAreaAttsFromBD(model);
+
+    Page<Question> questions;
+    model.addAttribute("areaId", "nulo");
+    questions = questionRepository.findAllByAuthor(username,PageRequest.of(page, paginationSize));
+
+    injectQuestionsAttributes(model, page, questions);
 
     return "index";
   }
