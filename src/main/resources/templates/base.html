@@ -48,7 +48,7 @@
 
         <a class="btn btn-sm btn-outline-secondary"
            th:text="#{home.login}" href="login.html"
-           th:href="@{/login}" th:if="${session.currentUser == null}">
+           th:href="@{/login}" sec:authorize="!isAuthenticated()">
           <i class="bx bx-log-in nav_icon"></i>
           Sign up
         </a>
@@ -57,8 +57,8 @@
           <button class="btn btn-secondary dropdown-toggle"
                   type="button" id="dropdownMenuButton" data-toggle="dropdown"
                   aria-haspopup="true" aria-expanded="false"
-                  th:if="${session.currentUser != null}">
-            <span th:text="${session.currentUser.name}">  </span>
+                  sec:authorize="isAuthenticated()">
+            <span th:text="${userName}">User Name</span>
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <a class="dropdown-item" href="#">
@@ -69,9 +69,13 @@
             </a>
             <a class="dropdown-item" href="#">Histórico</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="index.html" th:href="@{/login/logout}">
+            <a onclick="document.querySelector('#form-login').submit()" class="dropdown-item"
+               href="#form-login">
               Logout
             </a>
+            <!-- Por segurança, o log tem que ser por método post.
+            Logo o link está invocando o submit do form para fazer a chamada post  no form-->
+            <form id="form-login" th:action="@{/logout}" method="post"/>
           </div>
         </div>
       </div>
@@ -100,6 +104,15 @@
 
 
 </body>
+
+<div th:fragment="scripts">
+  <script src="../static/vendor/jquery/jquery.min.js"
+          th:src="@{/vendor/jquery/jquery.min.js}"></script>
+  <script src="../static/vendor/bootstrap/js/bootstrap.bundle.min.js"
+          th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+
+</div>
 
 
 <!--
