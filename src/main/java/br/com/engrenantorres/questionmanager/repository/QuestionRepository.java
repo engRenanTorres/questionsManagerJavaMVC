@@ -2,8 +2,8 @@ package br.com.engrenantorres.questionmanager.repository;
 
 import br.com.engrenantorres.questionmanager.model.Question;
 import br.com.engrenantorres.questionmanager.model.SubjectArea;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -16,7 +16,8 @@ import java.util.List;
 public interface QuestionRepository extends JpaRepository<Question, Long> {
 
   List<Question> findAll();
-  Page<Question> findByCargo(SubjectArea areaSelected, Pageable pageable);
+  @Cacheable("questionsC")
+  Page<Question> findByCargoOrderByDateAsc(SubjectArea areaSelected, Pageable pageable);
   @Query("SELECT q FROM Question q JOIN q.author a WHERE a.username = :username")
   Page<Question> findAllByAuthor(@Param("username") String username, Pageable pageable);
 

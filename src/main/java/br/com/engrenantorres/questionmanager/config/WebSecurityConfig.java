@@ -29,7 +29,7 @@ public class WebSecurityConfig {
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http
       .authorizeHttpRequests((requests) -> requests
-        .antMatchers("/", "/home").permitAll()
+        .antMatchers("/", "/home","/js/**","/static/**", "/css/**", "/images/**","/vendor/**","/fonts/**").permitAll()
         .anyRequest().authenticated()
       )
       .formLogin(form -> form
@@ -37,13 +37,12 @@ public class WebSecurityConfig {
         .defaultSuccessUrl("/questions-list",true)
         .permitAll()
       )
-      .logout(logout -> logout.logoutUrl("/logout"));
+      .logout(logout ->
+        logout.logoutUrl("/logout")
+          .logoutSuccessUrl("/login")
+      );
 
     return http.build();
-  }
-  @Bean
-  public WebSecurityCustomizer webSecurityCustomizer() {
-    return (web) -> web.ignoring().antMatchers( "/static/**", "/css/**", "/images/**","/vendor/**","/fonts/**");
   }
 
   @Bean

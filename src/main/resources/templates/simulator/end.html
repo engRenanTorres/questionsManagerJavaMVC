@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,
+        initial-scale=1.0">
+        <title>Fim</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div class="container">
+            <div id="end" class="flex-center flex-column">
+                <h1 id="finalScore">0</h1>
+                <form class="end-form-container">
+                    <h2 id="end-text">Digite seu nome para salvar sua nota</h2>
+                    <input type="text" name="name" id="username" placeholder="Digite seu nome">
+                    <button class="btn" id="saveScoreBtn" type="submit" onclick="saveHighScore(event)"
+                    disabled> Salvar </button>
+                </form>
+                <a href="./game.html" class="btn">Jogar novamente</a>
+                <a href="./index.html" class="btn">Voltar a Tela inicial<i class="fas fa-home"></i></a>
+            </div>
+            <script src="end.js"></script>
+        </div>
+    </body>
+
+</html>

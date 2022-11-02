@@ -1,0 +1,234 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="Renan Torres">
+  <meta name="generator" content="Jekyll v3.8.6">
+  <title>Engenharia de concursos</title>
+
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}"/>
+  <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+        th:href="@{https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css}"/>
+
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="../static/images/favicon.png" th:href="@{/images/favicon.png}"/>
+
+  <meta name="theme-color" content="#563d7c">
+
+  <!-- Custom styles for this template -->
+  <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
+  <!-- Custom styles for this template -->
+  <link href="../static/css/index.css" rel="stylesheet" th:href="@{/css/index.css}"/>
+  <link rel="stylesheet" href="../static/css/game.css" th:href="@{/css/game.css}">
+</head>
+<body onload="onLoad()" class="body-pd">
+<div class="container">
+
+  <header class="mb-5">
+    <div class="row justify-content-between align-items-center">
+      <div class="col-md-4 col-sm-12 pt-1">
+        <a class="text-muted"
+           th:text="#{home.subscribe}"
+           href="signup.html"
+           th:href="@{/signup}"
+           th:if="${session.currentUser == null}"
+           sec:authorize="!isAuthenticated()"
+        >
+          <i class="bx bx-user-plus nav_icon" style="font-size: 1.5rem;"></i>
+          Subscribe
+        </a>
+      </div>
+      <div class="col-md-4 col-sm-12 text-center">
+        <!-- <a class="question-header-logo text-dark" href="#">Large</a> -->
+        <img src="../static/images/page-logo.png" alt="Logo" height="100px"
+             th:src="@{/images/page-logo.png}"/>
+      </div>
+      <div class="col-md-4 col-sm-12  d-flex justify-content-end align-items-center">
+
+        <a class="btn btn-sm btn-outline-secondary"
+           th:text="#{home.login}" href="login.html"
+           th:href="@{/login}" sec:authorize="!isAuthenticated()">
+          <i class="bx bx-log-in nav_icon"></i>
+          Sign up
+        </a>
+
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle"
+                  type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false"
+                  sec:authorize="isAuthenticated()">
+            <span th:text="${userName}">User Name</span>
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="/questions-list/my-questions" th:href="@{/questions-list/my-questions}">
+              My Questions
+            </a>
+            <a class="dropdown-item" href="/questions-list" th:href="@{/questions-list}">
+              List All Questions
+            </a>
+            <a class="dropdown-item" href="/question-form" th:href="@{/question-form}">
+              Insert Question
+            </a>
+            <a class="dropdown-item" href="#">Histórico</a>
+            <div class="dropdown-divider"></div>
+            <a onclick="document.querySelector('#form-login').submit()" class="dropdown-item"
+               href="#form-login">
+              Logout
+            </a>
+            <!-- Por segurança, o log tem que ser por método post.
+            Logo o link está invocando o submit do form para fazer a chamada post  no form-->
+            <form id="form-login" th:action="@{/logout}" method="post"></form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </header>
+
+  <div class="alert alert-success alert-dismissible fade show"
+       role="alert" th:if="${successMessage != null}">
+    <span th:text="${successMessage}"></span>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+</div>
+
+<main role="main" class="container">
+  <div class="row" th:each="question: ${questions}">
+      <div class="col-md-8 col-sm-12 question-main">
+
+        <div  class="card question-post" >
+          <!--          <h2 class="question-post-title card-header" th:text="${question.cargo.name}">
+                      Question Area
+                    </h2>
+
+                    <div class="card-body">
+                      <p th:text="${question.enunciado}">This question post shows a few different types of content that’s
+                        supported and styled with Bootstrap. Basic
+                        typography, images, and code are all supported.</p>
+                      <hr>
+                      <blockquote>
+                        <p th:text="${question.alternativa1}">a) alternative.</p>
+                      </blockquote>
+                      <blockquote>
+                        <p th:text="${question.alternativa2}">b) alternative.</p>
+                      </blockquote>
+                      <blockquote>
+                        <p th:text="${question.alternativa3}">c) alternative.</p>
+                      </blockquote>
+                      <blockquote>
+                        <p th:text="${question.alternativa4}">d) alternative.</p>
+                      </blockquote>
+                      <blockquote>
+                        <p th:text="${question.alternativa5}">e) alternative.</p>
+                      </blockquote>-->
+
+            <div id="game" class="justify-center flex-column">
+              <div id="hud" class="question-post-title card-header">
+                <div class="hud-item col-md-6 col-sm-12">
+                  <p id="progressText" class="hud-prefix">
+                    Question
+                  </p>
+                  <div id="progressBar">
+                    <div id="progressBarFull">
+                    </div>
+                  </div>
+                </div>
+                <div class="hud-item col-md-6 col-sm-12">
+                  <p class="hud-prefix">Pontuação</p>
+                  <h1 class="hud-main-text" id="score">0</h1>
+                </div>
+              </div>
+
+              <div class="card-body">
+
+                <p id="question">Qual a resposta?</p>
+                <div class="choice-container">
+                  <p class="choice-prefix">A</p>
+                  <p class="choice-text" data-number="1">Alternativa 1</p>
+                </div>
+                <div class="choice-container">
+                  <p class="choice-prefix">B</p>
+                  <p class="choice-text" data-number="2">Alternativa 2</p>
+                </div>
+                <div class="choice-container">
+                  <p class="choice-prefix">C</p>
+                  <p class="choice-text" data-number="3">Alternativa 3</p>
+                </div>
+                <div class="choice-container">
+                  <p class="choice-prefix">D</p>
+                  <p class="choice-text" data-number="4">Alternativa 4</p>
+                </div>
+                <div class="choice-container">
+                  <p class="choice-prefix">E</p>
+                  <p class="choice-text" data-number="5">Alternativa 5</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="card-footer text-muted">
+              <div class="badge badge-secondary">
+                Enviada por: <span></span>
+              </div>
+              <div class="badge badge-secondary">
+                <span>updated at</span>
+                <span th:text="${#temporals.format(question.date,'dd/MM/yyyy')}">2014</span>
+              </div>
+            </div>
+
+        <!--  </div>-->
+
+
+        </div><!-- /.question-post -->
+
+      </div><!-- /.question-main -->
+
+      <aside class="col-md-4 col-sm-12 question-sidebar">
+        <div class="p-4 mb-3 bg-light rounded">
+          <h4 class="font-italic" th:text="#{question.author}">About Author</h4>
+          <p class="mb-0" th:text="${question.banca.name}">Etiam porta.</p>
+          <hr/>
+          <h4 class="font-italic" th:text="#{home.socialMidia}">Social Network</h4>
+          <ol class="list-unstyled">
+            <li><a href="#">Facebook</a></li>
+            <li><a href="#">Twitter</a></li>
+            <li><a href="#">LinkedIn</a></li>
+          </ol>
+        </div>
+      </aside><!-- /.question-sidebar -->
+
+  </div><!-- /.row -->
+
+</main><!-- /.container -->
+
+<footer class="question-footer">
+  <p>
+    <a href="#" th:text="#{home.backToTop}">Back to top</a>
+  </p>
+</footer>
+  <div th:replace="~{base :: scripts}">
+
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+  <script src="/js/game.js" th:src="@{/js/game.js}"></script>
+  <script>
+      async function onLoad() {
+      try {
+        const response = await axios.get('http://localhost:8080/api/questions/all');
+        console.log(response);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  </script>
+</body>
+
+</html>

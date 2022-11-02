@@ -1,28 +1,27 @@
 package br.com.engrenantorres.questionmanager.controller;
 
-import br.com.engrenantorres.questionmanager.dto.NewQuestionDTO;
 import br.com.engrenantorres.questionmanager.model.Banca;
 import br.com.engrenantorres.questionmanager.model.Question;
 import br.com.engrenantorres.questionmanager.model.SubjectArea;
 import br.com.engrenantorres.questionmanager.repository.BancaRepository;
 import br.com.engrenantorres.questionmanager.repository.QuestionRepository;
 import br.com.engrenantorres.questionmanager.repository.SubjectAreaRepository;
-import br.com.engrenantorres.questionmanager.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/questions-list")
-public class IndexController {
+@RequestMapping("/simulator")
+public class SimulatorController {
   @Autowired
   private QuestionRepository questionRepository;
   @Autowired
@@ -30,83 +29,23 @@ public class IndexController {
   @Autowired
   BancaRepository bancaRepository;
 
-  private Integer paginationSize = 5;
 
-
-  @GetMapping
-  public String list(
-    @RequestParam(name="areaId",required = false,defaultValue = "0") Long areaId,
-    Model model,
-    @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
-    Principal principal
-    ) {
-
-    model.addAttribute("userName", principal.getName());
-
-    injectBancaAndAreaAttsFromBD(model);
-
-    HandleAttributes(model, page, areaId);
-
-    return "index";
-  }
-
-  @GetMapping("/my-questions")
-  public String listMyQuestions(
+  @GetMapping("init")
+  public String getSimulator(
     @RequestParam(name="areaId",required = false,defaultValue = "0") Long areaId,
     Model model,
     @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
     Principal principal
   ) {
 
-    String username = principal.getName();
-    model.addAttribute("userName", username);
-
+    model.addAttribute("userName", principal.getName());
 
     injectBancaAndAreaAttsFromBD(model);
 
-    Page<Question> questions;
-    model.addAttribute("areaId", "nulo");
-    questions = questionRepository.findAllByAuthor(username,PageRequest.of(page, paginationSize));
-
-    injectQuestionsAttributes(model, page, questions);
-
-    return "index";
+    HandleAttributes(model, page, areaId);
+    return "simulator/simulator";
   }
 
-  @GetMapping("/edit/{questionId}")
-  public String edit(
-    @PathVariable("questionId") Long questionId,
-    Model model,
-    @RequestParam(name = "page", required = false, defaultValue = "0") Integer page) {
-    Optional<Question> question = questionRepository.findById(questionId);
-    injectQuestionDataIntoEditForm(model, question);
-
-    injectBancaAndAreaAttsFromBD(model);
-
-    return "question-form";
-  }
-
-
-  @GetMapping("/delete/{questionId}")
-  public String remove(
-    @PathVariable("questionId") Long questionId,
-    Model model,
-    @RequestParam(name = "page", required = false, defaultValue = "0") Integer page) {
-    questionRepository.deleteById(questionId);
-    HandleAttributes(model, page, 0L);
-    return "redirect:/questions-list";
-  }
-
-  @ExceptionHandler(IllegalArgumentException.class)
-  public String onError() {
-    return "redirect:/questions-list";
-  }
-  private void injectQuestionDataIntoEditForm(Model model, Optional<Question> question) {
-    question.ifPresent(question1 -> {
-      NewQuestionDTO questionDTO = new NewQuestionDTO(question1);
-      model.addAttribute("newQuestionDTO", questionDTO);
-    });
-  }
 
   private void HandleAttributes(Model model, Integer page, Long areaId) {
     Page<Question> questions;
@@ -116,7 +55,7 @@ public class IndexController {
   }
 
   private void injectQuestionsAttributes(Model model, Integer page, Page<Question> questions) {
-    Integer nextPage = (page >= (questions.getTotalElements() - 1) / paginationSize) ? page : page + 1;
+    Integer nextPage = (page >= (questions.getTotalElements() - 1) / 1) ? page : page + 1;
     Integer previousPage = (page <= 0) ? 0 : page - 1;
     model.addAttribute("questions", questions);
     model.addAttribute("nextPage", nextPage);
@@ -129,11 +68,11 @@ public class IndexController {
     Page<Question> questions;
     if (areaId == 0) {
       model.addAttribute("areaId", "nulo");
-      questions = questionRepository.findAll(PageRequest.of(page, paginationSize));
+      questions = questionRepository.findAll(PageRequest.of(page, 1));
     } else {
       model.addAttribute("areaId", areaId);
       Optional<SubjectArea> area = areaRepository.findById(areaId);
-      questions = questionRepository.findByCargo(area.get(), PageRequest.of(page, paginationSize));
+      questions = questionRepository.findByCargoOrderByDateAsc(area.get(), PageRequest.of(page, 1));
     }
     return questions;
   }
