@@ -217,17 +217,10 @@
   <div th:replace="~{base :: scripts}">
 
   </div>
-  <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js" ></script>
   <script src="/js/game.js" th:src="@{/js/game.js}"></script>
   <script>
-      async function onLoad() {
-      try {
-        const response = await axios.get('http://localhost:8080/api/questions/all');
-        console.log(response);
-      } catch (error) {
-        console.error(error);
-      }
-    }
+
   </script>
 </body>
 

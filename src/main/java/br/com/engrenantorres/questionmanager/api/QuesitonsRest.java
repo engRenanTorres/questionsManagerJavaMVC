@@ -2,6 +2,8 @@ package br.com.engrenantorres.questionmanager.api;
 
 import br.com.engrenantorres.questionmanager.model.Question;
 import br.com.engrenantorres.questionmanager.repository.QuestionRepository;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +19,8 @@ public class QuesitonsRest {
 
   @GetMapping("all")
   public List<Question> getAllQuestions() {
-    return questionRepository.findAll();
+    List<Question> all = questionRepository.findAll();
+    return all;
   }
 
 }

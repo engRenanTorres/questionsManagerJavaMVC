@@ -1,3 +1,4 @@
+//const axios = require('axios').default;
 
 const question = document.querySelector('#question');
 const choices = Array.from(document.querySelectorAll('.choice-text'));
@@ -12,6 +13,20 @@ let questionCounter = 0;
 let availableQuestion = [];
 
 let questionAPI=[];
+const SCORE_POINTS = 100;
+let MAX_QUESTIONS = 1;
+
+async function onLoad() {
+    try {
+        const response = await axios.get('http://localhost:8080/api/questions/all');
+        questions = response.data;
+        MAX_QUESTIONS = questions.length;
+        console.log(response);
+        startGame();
+    } catch (error) {
+        console.error(error);
+    }
+}
 
 axios
     .get('http://localhost:8080/api/questions/all')
@@ -29,11 +44,6 @@ axios
     });
 
 
-
-
-
-
-
 let questions = [
     {
         question: 'Quem é o maior eng do brasil?',
@@ -43,29 +53,9 @@ let questions = [
         choice4: 'Noira',
         choice5: 'Mezenga',
         answer: 1
-    },
-    {
-        question: 'Quem é o mais bonito do brasil?',
-        choice1:'Renan',
-        choice2: 'Diego',
-        choice3: 'Peçanha',
-        choice4: 'Noira',
-        choice5: 'Mezenga',
-        answer: 1
-    },
-    {
-        question: 'Quem é o mais feio do brasil?',
-        choice1:'Renan',
-        choice2: 'Diego',
-        choice3: 'Peçanha',
-        choice4: 'Noira',
-        choice5: 'Mezenga',
-        answer: 4
-    },
+    }
 ]
 
-const SCORE_POINTS = 100;
-const MAX_QUESTIONS = 3;
 
 startGame = () => {
     questionCounter = 0;
@@ -85,11 +75,11 @@ getNewQuestion = () => {
     
     const questionsIndex = Math.floor(Math.random() * availableQuestion.length);
     currentQuestion = availableQuestion[questionsIndex];
-    question.innerText = currentQuestion.question;
+    question.innerText = currentQuestion.enunciado;
 
     choices.forEach(choice => {
         const number = choice.dataset['number'];
-        choice.innerText = currentQuestion['choice' + number];
+        choice.innerText = currentQuestion['alternativa' + number];
     });
     availableQuestion.splice(questionsIndex,1);
     acceptingAnswers = true;
@@ -102,8 +92,9 @@ choices.forEach(choice => {
         acceptingAnswers = false;
         const selectedChoice = e.target;
         const selectedAnswer = selectedChoice.dataset['number'];
-        let classToApply = selectedAnswer == currentQuestion.answer ? 'correct' : 'incorrect';
-        
+        let classToApply = Number(selectedAnswer)+96 == currentQuestion.resposta.charCodeAt(0) ? 'correct' : 'incorrect';
+        console.log( Number(selectedAnswer)+96 + "" + currentQuestion.resposta.charCodeAt(0));
+
         if(classToApply === 'correct') {
             incrementScore(SCORE_POINTS);
         }
@@ -121,4 +112,3 @@ incrementScore = num => {
     scoreText.innerText = score;
 }
 
-startGame();

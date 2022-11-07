@@ -1,6 +1,7 @@
 package br.com.engrenantorres.questionmanager.model;
 
 import br.com.engrenantorres.questionmanager.repository.QuestionRepository;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Fetch;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -41,6 +42,7 @@ public class Question {
   private LocalDateTime date = LocalDateTime.now();
 
   @ManyToOne(fetch = FetchType.LAZY)
+  @JsonIgnore
   private User author;
 
   public Question(User author) {
