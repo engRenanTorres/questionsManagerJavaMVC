@@ -10,12 +10,12 @@ somem quando fecha a aplicação).
 
 Para isso copie e cole as configurações abaixo dentro do application.properties:
 
-  *spring.datasource.url=jdbc:h2:mem:simuladorconcurso
-  spring.datasource.driverClassName=org.h2.Driver
-  spring.datasource.username=sa
-  spring.datasource.password=
-  spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
-  spring.h2.console.enabled=true*
+spring.jpa.hibernate.ddl-auto=update
+spring.datasource.url=jdbc:mysql://localhost:3306/{*nome da tabela*}
+spring.datasource.username={*nome do usuário no bd*}
+spring.datasource.password={*password no bd*}
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+#spring.jpa.show-sql: true
 
 - Abra o projeto com seu editor favorito.
 - Vá até o arquivo *src/main/java/br/com/engrenantorres/questionmanager/QuestionmanagerApplication.java*
