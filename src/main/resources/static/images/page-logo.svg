@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="85.599998mm"
+   height="53.98mm"
+   viewBox="0 0 85.599998 53.98"
+   version="1.1"
+   id="svg99189"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   sodipodi:docname="page-logo.svg"
+   shape-rendering="crispEdges"
+   inkscape:export-filename="C:\Dev\ProjetosPessoais\Java\springmvc\questionmanager\questionmanager\src\main\resources\static\images\page-logo2.png"
+   inkscape:export-xdpi="667"
+   inkscape:export-ydpi="667"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview99191"
+     pagecolor="#ffffff"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:pageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="false"
+     inkscape:document-units="mm"
+     showgrid="false"
+     units="mm"
+     inkscape:zoom="2.9362514"
+     inkscape:cx="155.64062"
+     inkscape:cy="130.09785"
+     inkscape:window-width="1124"
+     inkscape:window-height="1000"
+     inkscape:window-x="787"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="g1107" />
+  <defs
+     id="defs99186" />
+  <g
+     inkscape:label="Camada 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       id="g1107"
+       transform="matrix(0.18567251,0,0,-0.18567251,15.766587,18.034119)"
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-opacity:1">
+      <path
+         d="M 15.665894,35.393334 -15.954989,-1.8147115 c -0.256269,-0.301622 -0.642476,-0.46775 -1.043121,-0.445365 l -49.362363,2.59678804 c -1.335484,0.070692 -1.666346,1.85568936 -0.439146,2.38117226 L 14.183629,37.327964 c 1.225997,0.524306 2.3389,-0.927256 1.482265,-1.93463 m 7.423365,-119.225998 -34.543307,77.5077442 c -0.190096,0.431227 -0.119111,0.930789 0.188892,1.291325 L 23.841221,36.275818 c 0.761585,0.89662 2.249868,0.365245 2.243853,-0.801187 L 25.5208,-83.340151 c -0.0048,-1.345523 -1.884113,-1.723736 -2.431541,-0.492513 m -7.252519,-3.64774 -89.342651,80.3908232 c -0.878291,0.789403 -0.263488,2.219757 0.925213,2.15731 l 54.801751,-2.884269 c 0.481256,-0.02474 0.903557,-0.313406 1.094856,-0.744633 L 17.858013,-86.067721 c 0.548632,-1.232427 -1.01184,-2.322261 -2.021273,-1.412683 m 12.459701,-12.182761 0.686992,144.461016 c 0.0048,0.898976 -0.936041,1.50458 -1.775832,1.145224 L -82.107149,-0.77552445 C -82.94694,-1.1348795 -83.132222,-2.2223735 -82.458464,-2.8303325 L 26.16809,-100.57156 c 0.812117,-0.73167 2.123538,-0.17083 2.128351,0.908395"
+         style="fill:#04a49c;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.19061;stroke-opacity:1"
+         id="path1109" />
+      <text
+         xml:space="preserve"
+         style="font-size:38.177px;line-height:1.25;font-family:'Coco Gothic';-inkscape-font-specification:'Coco Gothic';fill:#04a49c;fill-opacity:1;stroke:none;stroke-width:1.30149"
+         x="-2.8303795"
+         y="25.111084"
+         id="text103539"
+         transform="scale(1.0466179,-0.95545854)"><tspan
+           sodipodi:role="line"
+           id="tspan103537"
+           style="font-size:38.177px;fill:#04a49c;fill-opacity:1;stroke:none;stroke-width:1.30149"
+           x="-2.8303795"
+           y="25.111084">Engenharia</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:38.177px;line-height:1.25;font-family:'Coco Gothic';-inkscape-font-specification:'Coco Gothic';fill:#04a49c;fill-opacity:1;stroke:none;stroke-width:1.30149;stroke-opacity:1"
+         x="93.252792"
+         y="63.719158"
+         id="text103539-9-4"
+         transform="scale(1.0466179,-0.95545853)"><tspan
+           sodipodi:role="line"
+           id="tspan103537-1-1"
+           style="font-size:38.177px;fill:#04a49c;fill-opacity:1;stroke:none;stroke-width:1.30149"
+           x="93.252792"
+           y="63.719158">de Concursos</tspan></text>
+    </g>
+  </g>
+</svg>

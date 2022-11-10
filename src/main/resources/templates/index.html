@@ -19,7 +19,7 @@
 
   <div class="jumbotron p-4 p-md-5 text-white rounded bg-green-light">
     <div class="col-md-6 px-0">
-      <h1 class="display-4 font-italic" th:text="#{home.title}">Page Title</h1>
+      <h1 class="font-italic" th:text="#{home.title}">Page Title</h1>
       <p class="lead my-3" th:text="#{home.subtitle}">question Sub Title.</p>
     </div>
   </div>
@@ -38,30 +38,28 @@
   <div class="row">
     <div class="col-md-8 question-main">
       <div class="question-post">
-        <h1 class="question-post-title" th:text="#{home.area}">Question Area</h1>
-        <p class="question-post-meta">January 1, 2014 by <a href="#">Mark</a></p>
+        <h1 class="question-post-title" th:text="#{home.subtitle}">Question Area</h1>
+        <p class="question-post-meta"> <span th:text="#{home.date}">January 1, 2014 by</span> <a href="#">Renan Torres</a></p>
 
-        <p>This question post shows a few different types of content that’s supported and styled with Bootstrap. Basic
+        <p th:text="#{home.introduction}">This question post shows a few different types of content that’s supported and styled with Bootstrap. Basic
           typography, images, and code are all supported.</p>
         <hr>
-        <p>Cum sociis natoque penatibus et magnis <a href="#">dis parturient montes</a>, nascetur ridiculus mus. Aenean
+        <p th:text="#{home.introduction2}">Cum sociis natoque penatibus et magnis <a href="#">dis parturient montes</a>, nascetur ridiculus mus. Aenean
           eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Sed posuere consectetur est at
           lobortis. Cras mattis consectetur purus sit amet fermentum.</p>
         <blockquote>
-          <p>Curabitur blandit tempus porttitor. <strong>Nullam quis risus eget urna mollis</strong> ornare vel eu leo.
+          <p th:text="#{home.introduction3}">Curabitur blandit tempus porttitor. <strong>Nullam quis risus eget urna mollis</strong> ornare vel eu leo.
             Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-        </blockquote>
-        <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum.
-          Aenean lacinia bibendum nulla sed consectetur.</p></div><!-- /.question-post -->
+        </blockquote></div><!-- /.question-post -->
 
 
     </div><!-- /.question-main -->
 
     <aside class="col-md-4 question-sidebar">
       <div class="p-4 mb-3 bg-light rounded">
-        <h4 class="font-italic" th:text="#{home.author}">About Author</h4>
-        <p class="mb-0">Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet
-          fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
+        <h4 class="font-italic" th:text="#{home.about}">About Author</h4>
+        <p class="mb-0"><em th:text="#{home.aboutdescription}">sem malesuada magna</em></p>
+        <p class="mb-0"><em th:text="#{home.aboutdescription2}">sem malesuada magna</em></p>
         <hr/>
         <h4 class="font-italic" th:text="#{home.socialMidia}">Social Network</h4>
         <ol class="list-unstyled">

@@ -28,20 +28,10 @@ async function onLoad() {
     }
 }
 
-axios
-    .get('http://localhost:8080/api/questions/all')
-    .then(response => {
-
-    questionAPI = response.data;
-    console.log(questionAPI);
-    })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
-    })
-    .finally(function () {
-      // always executed
-    });
+let result = {
+    questionId: 0,
+    answerResult: ""
+}
 
 
 let questions = [
@@ -89,11 +79,17 @@ choices.forEach(choice => {
     choice.addEventListener('click', e => {
         if(!acceptingAnswers) return;
 
+
         acceptingAnswers = false;
         const selectedChoice = e.target;
         const selectedAnswer = selectedChoice.dataset['number'];
-        let classToApply = Number(selectedAnswer)+96 == currentQuestion.resposta.charCodeAt(0) ? 'correct' : 'incorrect';
-        console.log( Number(selectedAnswer)+96 + "" + currentQuestion.resposta.charCodeAt(0));
+        let classToApply = Number(selectedAnswer)+64 == currentQuestion.resposta.charCodeAt(0) ? 'correct' : 'incorrect';
+        console.log( Number(selectedAnswer)+64 + "" + currentQuestion.resposta.charCodeAt(0));
+        result = {
+                questionId: currentQuestion.id,
+                answerResult: String.fromCharCode(Number(selectedAnswer)+64)
+        }
+        console.log( result );
 
         if(classToApply === 'correct') {
             incrementScore(SCORE_POINTS);

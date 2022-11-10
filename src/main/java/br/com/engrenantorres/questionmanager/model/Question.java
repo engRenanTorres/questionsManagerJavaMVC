@@ -1,15 +1,13 @@
 package br.com.engrenantorres.questionmanager.model;
 
+import br.com.engrenantorres.questionmanager.model.enums.Alternatives;
 import br.com.engrenantorres.questionmanager.repository.QuestionRepository;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.Fetch;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Entity
 public class Question {
@@ -37,13 +35,26 @@ public class Question {
   private String concurso = "";
   private String assunto = "";
   @Enumerated(EnumType.STRING)
-  private Answers resposta = Answers.a;
+  private Alternatives resposta = Alternatives.A;
   private String observacao = "";
   private LocalDateTime date = LocalDateTime.now();
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JsonIgnore
   private User author;
+
+  public List<Result> getResults() {
+    return results;
+  }
+
+  public void setResults(List<Result> results) {
+    this.results = results;
+  }
+
+  @OneToMany(cascade = CascadeType.ALL,
+    mappedBy = "questionDone",fetch = FetchType.LAZY
+  )
+  private List<Result> results;
 
   public Question(User author) {
     this.author = author;
@@ -155,11 +166,11 @@ public class Question {
     this.assunto = assunto;
   }
 
-  public Answers getResposta() {
+  public Alternatives getResposta() {
     return resposta;
   }
 
-  public void setResposta(Answers resposta) {
+  public void setResposta(Alternatives resposta) {
     this.resposta = resposta;
   }
 

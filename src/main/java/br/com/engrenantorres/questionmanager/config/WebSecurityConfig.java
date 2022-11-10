@@ -29,17 +29,17 @@ public class WebSecurityConfig {
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http
       .authorizeHttpRequests((requests) -> requests
-        .antMatchers("/", "/home","/js/**","/static/**", "/css/**", "/images/**","/vendor/**","/fonts/**").permitAll()
+        .antMatchers("/","/error.html", "/home","/js/**","/static/**", "/css/**", "/images/**","/vendor/**","/fonts/**").permitAll()
         .anyRequest().authenticated()
       )
       .formLogin(form -> form
         .loginPage("/login")
-        .defaultSuccessUrl("/questions-list",true)
+        .defaultSuccessUrl("/",true)
         .permitAll()
       )
       .logout(logout ->
         logout.logoutUrl("/logout")
-          .logoutSuccessUrl("/login")
+          .logoutSuccessUrl("/")
       );
 
     return http.build();

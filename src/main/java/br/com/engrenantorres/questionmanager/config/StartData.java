@@ -1,6 +1,7 @@
 package br.com.engrenantorres.questionmanager.config;
 
 import br.com.engrenantorres.questionmanager.model.*;
+import br.com.engrenantorres.questionmanager.model.enums.Alternatives;
 import br.com.engrenantorres.questionmanager.repository.BancaRepository;
 import br.com.engrenantorres.questionmanager.repository.QuestionRepository;
 import br.com.engrenantorres.questionmanager.repository.SubjectAreaRepository;
@@ -11,7 +12,6 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 @Configuration
 public class StartData implements CommandLineRunner {
@@ -75,7 +75,7 @@ public class StartData implements CommandLineRunner {
       question.setAlternativa3("c) Ele");
       question.setAlternativa4("d) Nós");
       question.setAlternativa5("e) Vós");
-      question.setResposta(Answers.a);
+      question.setResposta(Alternatives.A);
       Banca banca = bancas.get(0);
       question.setBanca(banca);
       SubjectArea area = areas.get(0);
@@ -92,7 +92,7 @@ public class StartData implements CommandLineRunner {
       question1.setAlternativa3("c) Ele");
       question1.setAlternativa4("d) Nós");
       question1.setAlternativa5("e) Vós");
-      question.setResposta(Answers.b);
+      question.setResposta(Alternatives.B);
 
 
       List<Question> questions = Arrays.asList(question, question1);

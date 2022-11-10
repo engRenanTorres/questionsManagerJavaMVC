@@ -17,7 +17,7 @@
 
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="../static/images/favicon.png" th:href="@{/images/favicon.png}"/>
+  <link rel="icon" sizes="any" type="image/svg+xml" href="../static/images/favicon.svg" th:href="@{/images/favicon.svg}"/>
 
   <meta name="theme-color" content="#563d7c">
 
@@ -46,8 +46,8 @@
       </div>
       <div class="col-md-4 col-sm-12 text-center">
         <!-- <a class="question-header-logo text-dark" href="#">Large</a> -->
-        <img src="../static/images/page-logo.png" alt="Logo" height="100px"
-             th:src="@{/images/page-logo.png}"/>
+        <img src="../static/images/page-logo2.png" alt="Logo" height="150rem"
+             th:src="@{/images/page-logo2.png}"/>
       </div>
       <div class="col-md-4 col-sm-12  d-flex justify-content-end align-items-center">
 
@@ -106,30 +106,6 @@
       <div class="col-md-8 col-sm-12 question-main">
 
         <div  class="card question-post" >
-          <!--          <h2 class="question-post-title card-header" th:text="${question.cargo.name}">
-                      Question Area
-                    </h2>
-
-                    <div class="card-body">
-                      <p th:text="${question.enunciado}">This question post shows a few different types of content that’s
-                        supported and styled with Bootstrap. Basic
-                        typography, images, and code are all supported.</p>
-                      <hr>
-                      <blockquote>
-                        <p th:text="${question.alternativa1}">a) alternative.</p>
-                      </blockquote>
-                      <blockquote>
-                        <p th:text="${question.alternativa2}">b) alternative.</p>
-                      </blockquote>
-                      <blockquote>
-                        <p th:text="${question.alternativa3}">c) alternative.</p>
-                      </blockquote>
-                      <blockquote>
-                        <p th:text="${question.alternativa4}">d) alternative.</p>
-                      </blockquote>
-                      <blockquote>
-                        <p th:text="${question.alternativa5}">e) alternative.</p>
-                      </blockquote>-->
 
             <div id="game" class="justify-center flex-column">
               <div id="hud" class="question-post-title card-header">
@@ -144,7 +120,7 @@
                 </div>
                 <div class="hud-item col-md-6 col-sm-12">
                   <p class="hud-prefix">Pontuação</p>
-                  <h1 class="hud-main-text" id="score">0</h1>
+                  <h2 class="hud-main-text" id="score">0</h2>
                 </div>
               </div>
 
@@ -193,7 +169,7 @@
 
       <aside class="col-md-4 col-sm-12 question-sidebar">
         <div class="p-4 mb-3 bg-light rounded">
-          <h4 class="font-italic" th:text="#{question.author}">About Author</h4>
+          <h4 class="font-italic" th:text="#{question.about}">About Author</h4>
           <p class="mb-0" th:text="${question.banca.name}">Etiam porta.</p>
           <hr/>
           <h4 class="font-italic" th:text="#{home.socialMidia}">Social Network</h4>

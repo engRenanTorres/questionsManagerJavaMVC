@@ -40,18 +40,20 @@
 
 .hud-prefix {
 	text-align: center;
-	font-size: 2rem;
+	font-size: 1rem;
+	margin-bottom: 0;
 }
 
 .hud-main-text {
 	text-align: center;
+
 }
 
 #progressBar {
 	width: 100%;
-	height: 3rem;
+	height: 2rem;
 	border: 0.2rem solid #04a49cff;
-	margin-top: 2rem;
+	margin-top: 1rem;
 	border-radius: 50px;
 	overflow: hidden;
 }

@@ -44,48 +44,9 @@
                 <div class="text-center">
                   <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                 </div>
-                <form class="user" th:action="@{/login}" method="post">
-                  <div class="form-group">
-                    <label for="inputEmail">Nome</label>
-                    <input type="text" class="form-control form-control-user"
-                           id="inputEmail" aria-describedby="emailHelp"
-                           required placeholder="Enter Email Address..."
-                           name="username">
-                  </div>
-                  <div class="form-group">
-                    <label for="inputPassword">Senha</label>
-                    <input type="password" class="form-control form-control-user"
-                           required id="inputPassword" placeholder="Password..."
-                           name="password">
-                  </div>
-                  <div class="form-group">
-                    <div class="custom-control custom-checkbox small">
-                      <input type="checkbox" class="custom-control-input" id="customCheck">
-                      <label class="custom-control-label" for="customCheck">Remember
-                        Me</label>
-                    </div>
-                  </div>
-                  <button class="btn btn-primary btn-user btn-block" type="submit">
-                    Login
-                  </button>
-
-                  <br>
-                  <div class="alert alert-danger alert-dismissible fade show" role="alert"
-                       th:if="${messageError != null}">
-                    <span th:text="${messageError}"></span>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-
-                  <hr>
-                  <a href="index.html" class="btn btn-google btn-user btn-block">
-                    <i class="fab fa-google fa-fw"></i> Login with Google
-                  </a>
-                  <a href="index.html" class="btn btn-facebook btn-user btn-block">
-                    <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
-                  </a>
-                </form>
+                  <h1>Something went wrong! </h1>
+                  <h2>Our Engineers are on it</h2>
+                  <a href="/" th:href="@{/}">Go Home</a>
                 <hr>
                 <div class="text-center">
                   <a class="small" href="forgot-password.html">Forgot Password?</a>

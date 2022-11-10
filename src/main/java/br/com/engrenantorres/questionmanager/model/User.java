@@ -10,8 +10,12 @@ public class User {
   private String username;
   private String password;
   private Boolean enabled;
-  @OneToMany(cascade = CascadeType.ALL,mappedBy = "author",fetch = FetchType.LAZY)
+  @OneToMany(cascade = CascadeType.ALL,
+    mappedBy = "author",fetch = FetchType.LAZY)
   private List<Question> questionsPublished;
+  @OneToMany(cascade = CascadeType.ALL,
+    mappedBy = "user",fetch = FetchType.LAZY)
+  private List<Result> results;
 
   public List<Question> getQuestionsPublished() {
     return questionsPublished;

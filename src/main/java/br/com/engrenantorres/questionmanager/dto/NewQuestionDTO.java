@@ -1,9 +1,9 @@
 package br.com.engrenantorres.questionmanager.dto;
 
 import br.com.engrenantorres.questionmanager.model.*;
+import br.com.engrenantorres.questionmanager.model.enums.Alternatives;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 public class NewQuestionDTO {
   private Long id = 0L;
@@ -21,7 +21,7 @@ public class NewQuestionDTO {
   private String alternativa4 = "";
   @NotBlank
   private String alternativa5 = "";
-  private Answers resposta = Answers.a;
+  private Alternatives resposta = Alternatives.A;
 
   public NewQuestionDTO() {
   }
@@ -111,11 +111,11 @@ public class NewQuestionDTO {
     this.alternativa5 = alternativa5;
   }
 
-  public Answers getResposta() {
+  public Alternatives getResposta() {
     return resposta;
   }
 
-  public void setResposta(Answers resposta) {
+  public void setResposta(Alternatives resposta) {
     this.resposta = resposta;
   }
 
