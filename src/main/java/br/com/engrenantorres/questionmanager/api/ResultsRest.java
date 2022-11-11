@@ -10,6 +10,7 @@ import br.com.engrenantorres.questionmanager.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,9 +27,9 @@ public class ResultsRest {
   private ResultRepository resultRepository;
 
   @PostMapping
-  public Result createResult(ResultDTO req ){
+  public Result createResult(@RequestBody ResultDTO request ){
 
-    Optional<Question> questionFetch = questionRepository.findById(req.getQuestionId());
+    Optional<Question> questionFetch = questionRepository.findById(request.getQuestionId());
     if(!questionFetch.isPresent()) {
       return null;
     }
@@ -38,7 +39,7 @@ public class ResultsRest {
     String username = SecurityContextHolder.getContext().getAuthentication().getName();
     User user = userRepository.findByUsername(username);
 
-    Result newResult = req.toResult(question,user);
+    Result newResult = request.toResult(question,user);
 
     resultRepository.save(newResult);
 

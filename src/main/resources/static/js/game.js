@@ -83,13 +83,19 @@ choices.forEach(choice => {
         acceptingAnswers = false;
         const selectedChoice = e.target;
         const selectedAnswer = selectedChoice.dataset['number'];
-        let classToApply = Number(selectedAnswer)+64 == currentQuestion.resposta.charCodeAt(0) ? 'correct' : 'incorrect';
-        console.log( Number(selectedAnswer)+64 + "" + currentQuestion.resposta.charCodeAt(0));
+        const answerResult = Number(selectedAnswer)+64 == currentQuestion.resposta.charCodeAt(0);
+        let classToApply = answerResult ? 'correct' : 'incorrect';
+        console.log( Number(selectedAnswer)+64 + "" + currentQuestion.resposta.charCodeAt(0) );
         result = {
                 questionId: currentQuestion.id,
-                answerResult: String.fromCharCode(Number(selectedAnswer)+64)
+                answerMarked: String.fromCharCode(Number(selectedAnswer)+64),
+                answerResult: answerResult
         }
+       axios
+          .post('http://localhost:8080/api/results',result)
+          .then(response => console.log(response));
         console.log( result );
+
 
         if(classToApply === 'correct') {
             incrementScore(SCORE_POINTS);
