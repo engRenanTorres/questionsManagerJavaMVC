@@ -37,9 +37,9 @@ public class ResultsRest {
     Question question = questionFetch.get();
 
     String username = SecurityContextHolder.getContext().getAuthentication().getName();
-    User user = userRepository.findByUsername(username);
+    Optional<User> user = userRepository.findByUsername(username);
 
-    Result newResult = request.toResult(question,user);
+    Result newResult = request.toResult(question,user.get());
 
     resultRepository.save(newResult);
 

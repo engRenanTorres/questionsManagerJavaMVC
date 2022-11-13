@@ -21,6 +21,9 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
   @Query("SELECT q FROM Question q JOIN q.author a WHERE a.username = :username")
   Page<Question> findAllByAuthor(@Param("username") String username, Pageable pageable);
 
+  @Query("SELECT q FROM Question q WHERE q.cargo.name = :cargoname")
+  Page<Question> findAllByCargo(@Param("cargoname") String cargoname, Pageable pageable);
+
 /*  --Para ter queries personalizadas-- Precisa criar uma Class
   @PersistenceContext
   private EntityManager entityManager;

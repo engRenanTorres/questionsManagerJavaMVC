@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 import javax.sql.DataSource;
 
@@ -28,8 +29,10 @@ public class WebSecurityConfig {
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http
+      .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+      .and()
       .authorizeHttpRequests((requests) -> requests
-        .antMatchers("/","/error.html", "/home","/js/**","/static/**", "/css/**", "/images/**","/vendor/**","/fonts/**").permitAll()
+        .antMatchers("/", "/home","signup","/js/**","/static/**", "/css/**", "/images/**","/vendor/**","/fonts/**").permitAll()
         .anyRequest().authenticated()
       )
       .formLogin(form -> form
@@ -40,7 +43,7 @@ public class WebSecurityConfig {
       .logout(logout ->
         logout.logoutUrl("/logout")
           .logoutSuccessUrl("/")
-      ).csrf().disable();
+      )/*.csrf().disable()*/;
 
     return http.build();
   }
@@ -50,18 +53,18 @@ public class WebSecurityConfig {
     return new BCryptPasswordEncoder();
   }
 
-  @Bean
+/*  @Bean
   public JdbcUserDetailsManager users(PasswordEncoder encoder){
-/*    UserDetails user =
+   UserDetails user =
       User.builder()
-        .username("admin")
+        .username("Renan")
         .password(encoder.encode("123456"))
         .roles("ADM")
-        .build();*/
+        .build();
     JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
-    /*jdbcUserDetailsManager.createUser(user);*/
+    jdbcUserDetailsManager.createUser(user);
     return jdbcUserDetailsManager;
-  }
+  }*/
 
 
 }
