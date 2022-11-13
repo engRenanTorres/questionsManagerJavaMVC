@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/question-form")
@@ -51,8 +52,8 @@ public class QuestionFormController {
     }
 
     String username = SecurityContextHolder.getContext().getAuthentication().getName();
-    User user = userRepository.findByUsername(username);
-    saveQuestionInDB(newQuestionDTO, user);
+    Optional<User> user = userRepository.findByUsername(username);
+    saveQuestionInDB(newQuestionDTO, user.get());
     return "redirect:/questions-list";
   }
 

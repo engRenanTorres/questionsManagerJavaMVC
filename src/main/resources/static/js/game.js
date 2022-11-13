@@ -85,7 +85,7 @@ choices.forEach(choice => {
         const selectedAnswer = selectedChoice.dataset['number'];
         const answerResult = Number(selectedAnswer)+64 == currentQuestion.resposta.charCodeAt(0);
         let classToApply = answerResult ? 'correct' : 'incorrect';
-        console.log( Number(selectedAnswer)+64 + "" + currentQuestion.resposta.charCodeAt(0) );
+        //console.log( Number(selectedAnswer)+64 + "" + currentQuestion.resposta.charCodeAt(0) );
         result = {
                 questionId: currentQuestion.id,
                 answerMarked: String.fromCharCode(Number(selectedAnswer)+64),
@@ -93,8 +93,11 @@ choices.forEach(choice => {
         }
        axios
           .post('http://localhost:8080/api/results',result)
-          .then(response => console.log(response));
-        console.log( result );
+          .then(response => console.log(response))
+          .catch(error => {
+            console.log(error.response.data);
+          });
+        //console.log( result );
 
 
         if(classToApply === 'correct') {
