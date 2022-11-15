@@ -6,6 +6,8 @@ import br.com.engrenantorres.questionmanager.model.SubjectArea;
 import br.com.engrenantorres.questionmanager.repository.BancaRepository;
 import br.com.engrenantorres.questionmanager.repository.QuestionRepository;
 import br.com.engrenantorres.questionmanager.repository.SubjectAreaRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,6 +24,8 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/simulator")
 public class SimulatorController {
+
+  private final Logger LOGGER = LoggerFactory.getLogger(SimulatorController.class);
   @Autowired
   private QuestionRepository questionRepository;
   @Autowired
@@ -37,6 +41,8 @@ public class SimulatorController {
     @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
     Principal principal
   ) {
+
+    LOGGER.info("getSimulator()...");
 
     model.addAttribute("userName", principal.getName());
 

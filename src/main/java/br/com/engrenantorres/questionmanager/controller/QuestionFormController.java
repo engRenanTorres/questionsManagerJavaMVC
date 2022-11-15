@@ -9,6 +9,8 @@ import br.com.engrenantorres.questionmanager.repository.BancaRepository;
 import br.com.engrenantorres.questionmanager.repository.QuestionRepository;
 import br.com.engrenantorres.questionmanager.repository.SubjectAreaRepository;
 import br.com.engrenantorres.questionmanager.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -26,6 +28,8 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/question-form")
 public class QuestionFormController {
+
+  private final Logger LOGGER = LoggerFactory.getLogger(QuestionFormController.class);
   @Autowired
   private QuestionRepository questionRepository;
   @Autowired
@@ -40,6 +44,7 @@ public class QuestionFormController {
                      NewQuestionDTO newQuestionDTO,
                      Principal principal
   ) {
+    LOGGER.info("form()...");
     model.addAttribute("userName", principal.getName());
     injectAttributesFromBD(model);
     return "question-form";
@@ -48,9 +53,10 @@ public class QuestionFormController {
   public String insert(@Valid NewQuestionDTO newQuestionDTO, BindingResult bindingResult, Model model){
     if(bindingResult.hasErrors()) {
       injectAttributesFromBD(model);
+      LOGGER.error("Validation error : " + bindingResult.getAllErrors());
       return "question-form";
     }
-
+    LOGGER.info("insert question enunciado : " + newQuestionDTO.getEnunciado());
     String username = SecurityContextHolder.getContext().getAuthentication().getName();
     Optional<User> user = userRepository.findByUsername(username);
     saveQuestionInDB(newQuestionDTO, user.get());
