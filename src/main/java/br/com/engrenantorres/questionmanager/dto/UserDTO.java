@@ -1,9 +1,9 @@
 package br.com.engrenantorres.questionmanager.dto;
 
 import br.com.engrenantorres.questionmanager.model.User;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class UserDTO {
+
   private String username;
   private String password;
 
@@ -23,10 +23,10 @@ public class UserDTO {
     this.password = password;
   }
 
-  public User toUser(PasswordEncoder encoder) {
+  public User toUser() {
     User user = new User();
     user.setUsername(this.username);
-    user.setPassword(encoder.encode(this.getPassword()));
+    user.setPassword(this.getPassword());
     user.setEnabled(false);
 
     return user;

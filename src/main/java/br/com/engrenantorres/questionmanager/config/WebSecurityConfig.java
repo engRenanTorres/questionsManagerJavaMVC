@@ -1,11 +1,14 @@
 package br.com.engrenantorres.questionmanager.config;
 
+import br.com.engrenantorres.questionmanager.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,6 +27,9 @@ import javax.sql.DataSource;
 public class WebSecurityConfig {
 
   @Autowired
+  private UserService userService;
+
+  @Autowired
   private DataSource dataSource;
 
   @Bean
@@ -32,7 +38,7 @@ public class WebSecurityConfig {
       .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
       .and()
       .authorizeHttpRequests((requests) -> requests
-        .antMatchers("/", "/home","signup","/js/**","/static/**", "/css/**", "/images/**","/vendor/**","/fonts/**").permitAll()
+        .antMatchers("/", "/home","/signup","/js/**","/static/**", "/css/**", "/images/**","/vendor/**","/fonts/**").permitAll()
         .anyRequest().authenticated()
       )
       .formLogin(form -> form
@@ -43,28 +49,33 @@ public class WebSecurityConfig {
       .logout(logout ->
         logout.logoutUrl("/logout")
           .logoutSuccessUrl("/")
-      )/*.csrf().disable()*/;
+      );
 
     return http.build();
   }
 
+  @Autowired
+  public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+    auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
+  }
+
   @Bean
-  public PasswordEncoder passwordEncoder(){
+  public static PasswordEncoder passwordEncoder(){
     return new BCryptPasswordEncoder();
   }
 
-/*  @Bean
+  @Bean
   public JdbcUserDetailsManager users(PasswordEncoder encoder){
    UserDetails user =
       User.builder()
-        .username("Renan")
+        .username("Janete")
         .password(encoder.encode("123456"))
         .roles("ADM")
         .build();
     JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
-    jdbcUserDetailsManager.createUser(user);
+    /*jdbcUserDetailsManager.createUser(user);*/
     return jdbcUserDetailsManager;
-  }*/
+  }
 
 
 }

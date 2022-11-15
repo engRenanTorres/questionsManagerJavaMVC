@@ -7,6 +7,8 @@ import br.com.engrenantorres.questionmanager.model.SubjectArea;
 import br.com.engrenantorres.questionmanager.repository.BancaRepository;
 import br.com.engrenantorres.questionmanager.repository.QuestionRepository;
 import br.com.engrenantorres.questionmanager.repository.SubjectAreaRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,6 +25,8 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/questions-list")
 public class QuestionsListController {
+
+  private final Logger LOGGER = LoggerFactory.getLogger(QuestionsListController.class);
   @Autowired
   private QuestionRepository questionRepository;
   @Autowired
@@ -40,6 +44,7 @@ public class QuestionsListController {
     @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
     Principal principal
     ) {
+    LOGGER.info("list()...");
 
     model.addAttribute("userName", principal.getName());
 
@@ -57,6 +62,8 @@ public class QuestionsListController {
     @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
     Principal principal
   ) {
+    LOGGER.info("listMyQuetions()...");
+
     Sort sort = Sort.by("cargo").ascending()
       .and(Sort.by("date").descending());
 
@@ -80,7 +87,11 @@ public class QuestionsListController {
     @PathVariable("questionId") Long questionId,
     Model model,
     @RequestParam(name = "page", required = false, defaultValue = "0") Integer page) {
+
+    LOGGER.info("edit( id = " + questionId + " )...");
+
     Optional<Question> question = questionRepository.findById(questionId);
+
     injectQuestionDataIntoEditForm(model, question);
 
     injectBancaAndAreaAttsFromBD(model);
@@ -94,6 +105,9 @@ public class QuestionsListController {
     @PathVariable("questionId") Long questionId,
     Model model,
     @RequestParam(name = "page", required = false, defaultValue = "0") Integer page) {
+
+    LOGGER.info("delete( id = " + questionId + " )...");
+
     questionRepository.deleteById(questionId);
     HandleAttributes(model, page, 0L);
     return "redirect:/questions-list";
@@ -104,6 +118,7 @@ public class QuestionsListController {
     return "redirect:/questions-list";
   }
   private void injectQuestionDataIntoEditForm(Model model, Optional<Question> question) {
+    LOGGER.error("Illegal Argument error...");
     question.ifPresent(question1 -> {
       NewQuestionDTO questionDTO = new NewQuestionDTO(question1);
       model.addAttribute("newQuestionDTO", questionDTO);
