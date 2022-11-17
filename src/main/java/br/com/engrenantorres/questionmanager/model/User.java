@@ -1,27 +1,36 @@
 package br.com.engrenantorres.questionmanager.model;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements UserDetails {
   @Id
   private String username;
 
-  private String firstName;
+  private String firstName = "";
 
-  private String lastName;
-
-  private String email;
-  private String password;
+  private String lastName = "";
+  private String email = "";
+  private String password = "";
   private Boolean enabled = true;
+  @ManyToMany(fetch = FetchType.EAGER)
+  private List<Role> roles = new ArrayList<Role>();
+
   @OneToMany(cascade = CascadeType.ALL,
     mappedBy = "author",fetch = FetchType.LAZY)
   private List<Question> questionsPublished;
   @OneToMany(cascade = CascadeType.ALL,
     mappedBy = "user",fetch = FetchType.LAZY)
   private List<Result> results;
+
+
 
   public List<Result> getResults() {
     return results;
@@ -64,15 +73,40 @@ public class User {
   }
 
   public String getUsername() {
-    return username;
+    return this.username;
+  }
+
+  @Override
+  public boolean isAccountNonExpired() {
+    return true;
+  }
+
+  @Override
+  public boolean isAccountNonLocked() {
+    return true;
+  }
+
+  @Override
+  public boolean isCredentialsNonExpired() {
+    return true;
+  }
+
+  @Override
+  public boolean isEnabled() {
+    return true;
   }
 
   public void setUsername(String username) {
     this.username = username;
   }
 
+  @Override
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+    return this.roles;
+  }
+
   public String getPassword() {
-    return password;
+    return this.password;
   }
 
   public void setPassword(String password) {
@@ -80,7 +114,7 @@ public class User {
   }
 
   public Boolean getEnabled() {
-    return enabled;
+    return this.enabled;
   }
 
   public void setEnabled(Boolean enabled) {

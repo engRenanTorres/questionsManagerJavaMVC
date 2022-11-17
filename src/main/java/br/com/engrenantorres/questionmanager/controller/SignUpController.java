@@ -37,29 +37,8 @@ public class SignUpController {
   public String saveUser(UserDTO userDTO,
                          String confirmPassword,
                          Model model) {
-    System.out.println("senha" + userDTO.getPassword());
-    System.out.println("confirma" + confirmPassword);
     LOGGER.info("saveUser()...");
-    if (!userDTO.getPassword().equals(confirmPassword)) {
-      var errorMessage = "Senhas não conferem...";
-      model.addAttribute("messageError",errorMessage);
-      LOGGER.error(errorMessage);
-      return "signup";
-    }
 
-    Optional<User> optionalUser = userRepository.findByUsername(userDTO.getUsername());
-    if (optionalUser.isPresent()) {
-      var errorMessage = "Usuário já existe";
-      model.addAttribute("messageError",errorMessage);
-      LOGGER.error(errorMessage);
-      return "signup";
-    }
-    System.out.println(optionalUser.isPresent());
-
-    User newUser = userDTO.toUser();
-
-    userService.registerUser(newUser);
-
-    return "redirect:/login";
+    return userService.registerUser(userDTO,confirmPassword,model);
   }
 }

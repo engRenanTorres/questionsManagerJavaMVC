@@ -46,6 +46,7 @@ public class QuestionFormController {
   ) {
     LOGGER.info("form()...");
     model.addAttribute("userName", principal.getName());
+
     injectAttributesFromBD(model);
     return "question-form";
   }

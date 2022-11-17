@@ -4,12 +4,15 @@ import br.com.engrenantorres.questionmanager.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.ldap.EmbeddedLdapServerContextSourceFactoryBean;
+import org.springframework.security.config.ldap.LdapBindAuthenticationManagerFactory;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,6 +22,7 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+//import org.springframework.ldap.core.support.BaseLdapPathContextSource;
 
 import javax.sql.DataSource;
 
@@ -32,13 +36,20 @@ public class WebSecurityConfig {
   @Autowired
   private DataSource dataSource;
 
+
+  //config dynamic requests
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http
       .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
       .and()
       .authorizeHttpRequests((requests) -> requests
-        .antMatchers("/", "/home","/signup","/js/**","/static/**", "/css/**", "/images/**","/vendor/**","/fonts/**").permitAll()
+        .antMatchers("/",
+            "/home","/signup","/js/**","/static/**",
+            "/css/**", "/images/**","/vendor/**",
+            "/fonts/**")
+          .permitAll()
+        .antMatchers("/question-form/**").hasRole("ADM")
         .anyRequest().authenticated()
       )
       .formLogin(form -> form
@@ -54,10 +65,35 @@ public class WebSecurityConfig {
     return http.build();
   }
 
+  //config the static requests like css, js and more.
+  @Bean
+  public WebSecurityCustomizer webSecurityCustomizer() {
+    return (web) -> web.ignoring().antMatchers("/ignore1", "/ignore2");
+  }
+
+
   @Autowired
   public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
     auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
   }
+
+/*  @Bean
+  public EmbeddedLdapServerContextSourceFactoryBean contextSourceFactoryBean() {
+    EmbeddedLdapServerContextSourceFactoryBean contextSourceFactoryBean =
+        EmbeddedLdapServerContextSourceFactoryBean.fromEmbeddedLdapServer();
+    contextSourceFactoryBean.setPort(0);
+    return contextSourceFactoryBean;
+  }
+  //auth config
+  @Bean
+  AuthenticationManager ldapAuthenticationManager(
+      BaseLdapPathContextSource contextSource) {
+    LdapBindAuthenticationManagerFactory factory =
+        new LdapBindAuthenticationManagerFactory(contextSource);
+    factory.setUserDnPatterns("uid={0},ou=people");
+    //factory.setUserDetailsContextMapper(new PersonContextMapper());
+    return factory.createAuthenticationManager();
+  }*/
 
   @Bean
   public static PasswordEncoder passwordEncoder(){
