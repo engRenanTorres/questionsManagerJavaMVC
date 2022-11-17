@@ -4,9 +4,11 @@ import br.com.engrenantorres.questionmanager.dto.NewQuestionDTO;
 import br.com.engrenantorres.questionmanager.model.Banca;
 import br.com.engrenantorres.questionmanager.model.Question;
 import br.com.engrenantorres.questionmanager.model.SubjectArea;
+import br.com.engrenantorres.questionmanager.model.User;
 import br.com.engrenantorres.questionmanager.repository.BancaRepository;
 import br.com.engrenantorres.questionmanager.repository.QuestionRepository;
 import br.com.engrenantorres.questionmanager.repository.SubjectAreaRepository;
+import br.com.engrenantorres.questionmanager.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +35,8 @@ public class QuestionsListController {
   private SubjectAreaRepository areaRepository;
   @Autowired
   BancaRepository bancaRepository;
+  @Autowired
+  UserRepository userRepository;
 
   private Integer paginationSize = 5;
 

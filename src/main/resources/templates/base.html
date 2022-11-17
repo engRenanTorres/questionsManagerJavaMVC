@@ -68,7 +68,9 @@
             <a class="dropdown-item" href="/questions-list" th:href="@{/questions-list}">
               List All Questions
             </a>
-            <a class="dropdown-item" href="/question-form" th:href="@{/question-form}">
+            <a class="dropdown-item" href="/question-form"
+               sec:authorize="hasAnyRole('ADM')"
+               th:href="@{/question-form}">
               Insert Question
             </a>
             <a class="dropdown-item" href="#">Histórico</a>
