@@ -77,41 +77,23 @@ public class WebSecurityConfig {
     auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
   }
 
-/*  @Bean
-  public EmbeddedLdapServerContextSourceFactoryBean contextSourceFactoryBean() {
-    EmbeddedLdapServerContextSourceFactoryBean contextSourceFactoryBean =
-        EmbeddedLdapServerContextSourceFactoryBean.fromEmbeddedLdapServer();
-    contextSourceFactoryBean.setPort(0);
-    return contextSourceFactoryBean;
-  }
-  //auth config
-  @Bean
-  AuthenticationManager ldapAuthenticationManager(
-      BaseLdapPathContextSource contextSource) {
-    LdapBindAuthenticationManagerFactory factory =
-        new LdapBindAuthenticationManagerFactory(contextSource);
-    factory.setUserDnPatterns("uid={0},ou=people");
-    //factory.setUserDetailsContextMapper(new PersonContextMapper());
-    return factory.createAuthenticationManager();
-  }*/
-
   @Bean
   public static PasswordEncoder passwordEncoder(){
     return new BCryptPasswordEncoder();
   }
 
-  @Bean
+/*  @Bean
   public JdbcUserDetailsManager users(PasswordEncoder encoder){
    UserDetails user =
       User.builder()
-        .username("Janete")
+        .username("admin")
         .password(encoder.encode("123456"))
         .roles("ADM")
         .build();
     JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
-    /*jdbcUserDetailsManager.createUser(user);*/
+    //jdbcUserDetailsManager.createUser(user);
     return jdbcUserDetailsManager;
-  }
+  }*/
 
 
 }

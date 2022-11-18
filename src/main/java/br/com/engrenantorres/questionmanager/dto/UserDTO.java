@@ -1,6 +1,11 @@
 package br.com.engrenantorres.questionmanager.dto;
 
+import br.com.engrenantorres.questionmanager.model.Role;
 import br.com.engrenantorres.questionmanager.model.User;
+import br.com.engrenantorres.questionmanager.repository.RoleRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Optional;
 
 public class UserDTO {
 
@@ -10,6 +15,7 @@ public class UserDTO {
   private String lastName;
   private String email;
   private String password;
+
 
   public String getFirstName() {
     return firstName;
@@ -52,6 +58,7 @@ public class UserDTO {
   }
 
   public User toUser() {
+
     User user = new User();
     user.setUsername(this.username);
     user.setPassword(this.getPassword());
