@@ -2,10 +2,8 @@ package br.com.engrenantorres.questionmanager.config;
 
 import br.com.engrenantorres.questionmanager.model.*;
 import br.com.engrenantorres.questionmanager.model.enums.Alternatives;
-import br.com.engrenantorres.questionmanager.repository.BancaRepository;
-import br.com.engrenantorres.questionmanager.repository.QuestionRepository;
-import br.com.engrenantorres.questionmanager.repository.SubjectAreaRepository;
-import br.com.engrenantorres.questionmanager.repository.UserRepository;
+import br.com.engrenantorres.questionmanager.repository.*;
+import br.com.engrenantorres.questionmanager.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -23,19 +21,45 @@ public class StartData implements CommandLineRunner {
   private QuestionRepository questionRepository;
   @Autowired
   private UserRepository userRepository;
+  
+  @Autowired
+  private RoleRepository roleRepository;
+
+  @Autowired
+  private UserService userService;
 
   @Override
   public void run(String... args) throws Exception {
+    addInitialRolesData();
+
+    Role role = roleRepository.findAll().get(0);
+    User user = new User();
+    user.setUsername("admin");
+    user.setPassword("123456");
+    user.setEmail("admin@admin.com");
+    user.addRole(role);
+    userService.registerUser(user);
+
     addInitialBancaData();
     addInitialAreasData();
     addInitialQuestionData();
 
   }
 
+  private void addInitialRolesData() {
+    if(roleRepository.count() == 0){
+      var user = new Role("USER");
+      var prof = new Role("PROF");
+      var adm = new Role("ADM");
+      roleRepository.saveAll(List.of(adm,prof,user));
+    }
+
+  }
+
 
   private void addInitialAreasData() {
     if(areaRepository.count() == 0) {
-      SubjectArea area = new SubjectArea();
+      var area = new SubjectArea();
       area.setName("Segurança do Trabalho");
       area.setAbout("Atua na prevensão de acidentes laborais");
 
@@ -50,11 +74,11 @@ public class StartData implements CommandLineRunner {
 
   private void addInitialBancaData() {
     if(bancaRepository.count() == 0) {
-      Banca banca = new Banca();
+      var banca = new Banca();
       banca.setName("F.G.V");
       banca.setAbout("Banca com questões multiplas escolha de 5 alternativas");
 
-      Banca banca2 = new Banca();
+      var banca2 = new Banca();
       banca2.setName("CESPE");
       banca2.setAbout("Banca com questões de verdadeiro, ou falso.");
 

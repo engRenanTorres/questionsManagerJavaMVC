@@ -3,7 +3,9 @@ package br.com.engrenantorres.questionmanager.service;
 
 import br.com.engrenantorres.questionmanager.controller.SignUpController;
 import br.com.engrenantorres.questionmanager.dto.UserDTO;
+import br.com.engrenantorres.questionmanager.model.Role;
 import br.com.engrenantorres.questionmanager.model.User;
+import br.com.engrenantorres.questionmanager.repository.RoleRepository;
 import br.com.engrenantorres.questionmanager.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,12 +28,15 @@ public class UserService implements UserDetailsService {
 
   private UserRepository userRepository;
   private PasswordEncoder passwordEncoder;
+  private RoleRepository roleRepository;
 
   @Autowired
   public UserService(UserRepository userRepository,
+                     RoleRepository roleRepository,
                      @Lazy PasswordEncoder passwordEncoder) {
     this.userRepository = userRepository;
     this.passwordEncoder = passwordEncoder;
+    this.roleRepository = roleRepository;
   }
   public String registerUser(UserDTO userDTO, String confirmPassword, Model model){
 
@@ -48,12 +53,27 @@ public class UserService implements UserDetailsService {
       LOGGER.error(errorMessage);
       return "signup";
     }
+    Optional<Role> roleOptional = roleRepository.findByName("ROLE_USER");
     User newUser = userDTO.toUser();
-    newUser.setUsername(newUser.getUsername());
+    roleOptional.ifPresent(role -> newUser.addRole(role));
     newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
     userRepository.save(newUser);
     LOGGER.info("Saved new user successfully. Username = " + newUser.getUsername());
     return "redirect:/login";
+  }
+
+  public Void registerUser(User newUser){
+    Optional<User> optionalUser = userRepository.findByUsername(newUser.getUsername());
+    if (optionalUser.isPresent()) {
+      var errorMessage = "Usuário já existe";
+      LOGGER.error(errorMessage);
+    }
+    Optional<Role> roleOptional = roleRepository.findByName("ROLE_USER");
+    roleOptional.ifPresent(role -> newUser.addRole(role));
+    newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
+    userRepository.save(newUser);
+    LOGGER.info("Saved new user successfully. Username = " + newUser.getUsername());
+    return null;
   }
 
   @Override
