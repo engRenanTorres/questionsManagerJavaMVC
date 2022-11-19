@@ -7,6 +7,8 @@ import br.com.engrenantorres.questionmanager.model.Role;
 import br.com.engrenantorres.questionmanager.model.User;
 import br.com.engrenantorres.questionmanager.repository.RoleRepository;
 import br.com.engrenantorres.questionmanager.repository.UserRepository;
+import br.com.engrenantorres.questionmanager.util.CheckStrings;
+import jdk.jshell.spi.ExecutionControl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,36 +40,32 @@ public class UserService implements UserDetailsService {
     this.passwordEncoder = passwordEncoder;
     this.roleRepository = roleRepository;
   }
-  public String registerUser(UserDTO userDTO, String confirmPassword, Model model){
+  public User registerUser(UserDTO userDTO, String confirmPassword) throws Exception {
 
-    if (!userDTO.getPassword().equals(confirmPassword)) {
-      var errorMessage = "Senhas não conferem...";
-      model.addAttribute("messageError",errorMessage);
-      LOGGER.error(errorMessage);
-      return "signup";
-    }
-    Optional<User> optionalUser = userRepository.findByUsername(userDTO.getUsername());
-    if (optionalUser.isPresent()) {
-      var errorMessage = "Usuário já existe";
-      model.addAttribute("messageError",errorMessage);
-      LOGGER.error(errorMessage);
-      return "signup";
-    }
+    userValidations(userDTO, confirmPassword);
+
     Optional<Role> roleOptional = roleRepository.findByName("ROLE_USER");
     User newUser = userDTO.toUser();
     roleOptional.ifPresent(role -> newUser.addRole(role));
     newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
-    userRepository.save(newUser);
+    User user = userRepository.save(newUser);
     LOGGER.info("Saved new user successfully. Username = " + newUser.getUsername());
-    return "redirect:/login";
+    return user;
   }
 
-  public Void registerUser(User newUser){
-    Optional<User> optionalUser = userRepository.findByUsername(newUser.getUsername());
-    if (optionalUser.isPresent()) {
-      var errorMessage = "Usuário já existe";
+  private void userValidations(UserDTO userDTO, String confirmPassword) throws Exception {
+    if (!userDTO.getPassword().equals(confirmPassword)) {
+      var errorMessage = "Senhas não conferem...";
       LOGGER.error(errorMessage);
+      throw new Exception(errorMessage);
     }
+    checkIfUserExistsByUserNameAndEmail(userDTO.toUser());
+  }
+
+  public Void registerUser(User newUser) throws Exception {
+
+    checkIfUserExistsByUserNameAndEmail(newUser);
+
     Optional<Role> roleOptional = roleRepository.findByName("ROLE_USER");
     roleOptional.ifPresent(role -> newUser.addRole(role));
     newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
@@ -76,20 +74,43 @@ public class UserService implements UserDetailsService {
     return null;
   }
 
+  private void checkIfUserExistsByUserNameAndEmail(User newUser) throws Exception {
+    Optional<User> optionalUser = userRepository.findByUsername(newUser.getUsername());
+    if (optionalUser.isPresent()) {
+      var errorMessage = "Login já existe";
+      LOGGER.error(errorMessage);
+      throw new Exception(errorMessage);
+    }
+    optionalUser = userRepository.findByEmail(newUser.getEmail());
+    if (optionalUser.isPresent()) {
+      var errorMessage = "E-mail já cadastrado";
+      LOGGER.error(errorMessage);
+      throw new Exception(errorMessage);
+    }
+  }
+
+  //function used to login
   @Override
-  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    Optional<User> user = userRepository.findByUsername(username);
+  public UserDetails loadUserByUsername(String usernameOrEmail) throws UsernameNotFoundException {
+    Optional<User> user = getUserFromUsernameOrEmail(usernameOrEmail);
 
     if(user.isEmpty()) throw new UsernameNotFoundException("Usuário não cadastrado");
 
-    LOGGER.info("Logged as "+ username);
+    LOGGER.info("Logged as "+ user.get().getUsername());
 
     /*return new org.springframework.security.core.userdetails.User(user.get().getUsername(),
         user.get().getPassword(), Collections.emptyList());*/
     return user.get();
   }
-  public static void main(String[] args) {
 
-    System.out.println();
+  private Optional<User> getUserFromUsernameOrEmail(String usernameOrEmail) {
+    Optional<User> user;
+    if(CheckStrings.isEmail(usernameOrEmail)){
+      user = userRepository.findByEmail(usernameOrEmail);
+    } else {
+      user = userRepository.findByUsername(usernameOrEmail);
+    }
+    return user;
   }
+
 }
