@@ -31,7 +31,14 @@ public class StartData implements CommandLineRunner {
   @Override
   public void run(String... args) throws Exception {
     addInitialRolesData();
+    addInitialUser();
+    addInitialBancaData();
+    addInitialAreasData();
+    addInitialQuestionData();
 
+  }
+
+  private void addInitialUser() {
     Role role = roleRepository.findAll().get(0);
     User user = new User();
     user.setUsername("admin");
@@ -39,11 +46,6 @@ public class StartData implements CommandLineRunner {
     user.setEmail("admin@admin.com");
     user.addRole(role);
     userService.registerUser(user);
-
-    addInitialBancaData();
-    addInitialAreasData();
-    addInitialQuestionData();
-
   }
 
   private void addInitialRolesData() {
@@ -55,7 +57,6 @@ public class StartData implements CommandLineRunner {
     }
 
   }
-
 
   private void addInitialAreasData() {
     if(areaRepository.count() == 0) {

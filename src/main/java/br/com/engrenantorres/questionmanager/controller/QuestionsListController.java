@@ -74,7 +74,6 @@ public class QuestionsListController {
     String username = principal.getName();
     model.addAttribute("userName", username);
 
-
     injectBancaAndAreaAttsFromBD(model);
 
     Page<Question> questions;
@@ -88,11 +87,15 @@ public class QuestionsListController {
 
   @GetMapping("/edit/{questionId}")
   public String edit(
-    @PathVariable("questionId") Long questionId,
     Model model,
+    Principal principal,
+    @PathVariable("questionId") Long questionId,
     @RequestParam(name = "page", required = false, defaultValue = "0") Integer page) {
 
     LOGGER.info("edit( id = " + questionId + " )...");
+
+    String username = principal.getName();
+    model.addAttribute("userName", username);
 
     Optional<Question> question = questionRepository.findById(questionId);
 
