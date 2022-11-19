@@ -50,7 +50,8 @@ spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 
 9 - Bootstrap
 
-![image](https://user-images.githubusercontent.com/85042807/199363469-9c23b828-364e-4f53-b58b-924fcf0550cf.png)
+![image](https://user-images.githubusercontent.com/85042807/202832041-17e97952-753d-404f-9f81-140087dcdf1e.png)
+
 
 ## Diagrama de entidade-relacionamento
 
