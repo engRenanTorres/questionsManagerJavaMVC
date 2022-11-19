@@ -15,6 +15,7 @@ public class User implements UserDetails {
   private String firstName = "";
 
   private String lastName = "";
+  @Column(nullable = false, unique = true, length = 45)
   private String email = "";
   private String password = "";
   private Boolean enabled = true;
@@ -128,4 +129,9 @@ public class User implements UserDetails {
   public void setEnabled(Boolean enabled) {
     this.enabled = enabled;
   }
+
+  public Set<Role> getRoles() {
+    return roles;
+  }
+
 }

@@ -1,9 +1,13 @@
 package br.com.engrenantorres.questionmanager.config;
 
+import br.com.engrenantorres.questionmanager.controller.SignUpController;
 import br.com.engrenantorres.questionmanager.model.*;
 import br.com.engrenantorres.questionmanager.model.enums.Alternatives;
 import br.com.engrenantorres.questionmanager.repository.*;
 import br.com.engrenantorres.questionmanager.service.UserService;
+import jdk.jshell.spi.ExecutionControl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -28,6 +32,8 @@ public class StartData implements CommandLineRunner {
   @Autowired
   private UserService userService;
 
+  private final Logger LOGGER = LoggerFactory.getLogger(StartData.class);
+
   @Override
   public void run(String... args) throws Exception {
     addInitialRolesData();
@@ -38,14 +44,20 @@ public class StartData implements CommandLineRunner {
 
   }
 
-  private void addInitialUser() {
-    Role role = roleRepository.findAll().get(0);
-    User user = new User();
-    user.setUsername("admin");
-    user.setPassword("123456");
-    user.setEmail("admin@admin.com");
-    user.addRole(role);
-    userService.registerUser(user);
+  private void addInitialUser() throws Exception {
+    if (userRepository.count() == 0) {
+      Role role = roleRepository.findAll().get(0);
+      User user = new User();
+      user.setUsername("admin");
+      user.setPassword("123456");
+      user.setEmail("admin@admin.com");
+      user.addRole(role);
+      try {
+        userService.registerUser(user);
+      } catch (Exception e) {
+        LOGGER.error(e.getMessage());
+      }
+    }
   }
 
   private void addInitialRolesData() {

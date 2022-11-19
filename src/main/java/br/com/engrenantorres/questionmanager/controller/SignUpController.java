@@ -1,6 +1,7 @@
 package br.com.engrenantorres.questionmanager.controller;
 
 import br.com.engrenantorres.questionmanager.dto.UserDTO;
+import br.com.engrenantorres.questionmanager.model.User;
 import br.com.engrenantorres.questionmanager.repository.UserRepository;
 import br.com.engrenantorres.questionmanager.service.UserService;
 import org.slf4j.Logger;
@@ -23,17 +24,27 @@ public class SignUpController {
   private UserRepository userRepository;
 
   @GetMapping
-  public String form(Model model){
+  public String form(Model model) {
     LOGGER.info("form()...");
-    model.addAttribute("userDTO",new UserDTO());
+    model.addAttribute("userDTO", new UserDTO());
     return "signup";
   }
+
   @PostMapping
   public String saveUser(UserDTO userDTO,
                          String confirmPassword,
                          Model model) {
     LOGGER.info("saveUser()...");
 
-    return userService.registerUser(userDTO,confirmPassword,model);
+    try {
+      User user = userService.registerUser(userDTO, confirmPassword);
+      LOGGER.info("User " + user.getUsername() + " saved successfully");
+    } catch (Exception exception) {
+      var errorMessage = exception.getMessage();
+      LOGGER.info(errorMessage);
+      model.addAttribute("messageError", errorMessage);
+      return "signup";
+    }
+    return "redirect:/login";
   }
 }
