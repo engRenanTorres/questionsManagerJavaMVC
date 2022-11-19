@@ -84,9 +84,9 @@ h1, h2, h3, h4, h5, h6 {
 .question-post {
   margin-bottom: 4rem;
 }
-.question-post-title {
+.question-post__title {
   margin-bottom: .25rem;
-  font-size: 2.5rem;
+  font-size: 1.5rem;
 }
 .question-post-meta {
   margin-bottom: 1.25rem;
@@ -161,6 +161,17 @@ a{text-decoration: none}
 .header_img img{width: 40px}
 .l-navbar{position: fixed;top: 0;left: -30%;width: var(--nav-width);height: 100vh;background-color: var(--first-color);padding: .5rem 1rem 0 0;transition: .5s;z-index: var(--z-fixed)}
 .nav{height: 100%;display: flex;flex-direction: column;justify-content: space-between;overflow: hidden}
+.header_toggle{
+   padding: 0.5rem 0 0.5rem 1.5rem;
+}
+.header_toggle--open {
+   display: flex;
+   justify-content: end;
+}
+.header_toggle--close {
+   display: flex;
+   justify-content: end;
+}
 .nav_logo, .nav_link{display: grid;grid-template-columns: max-content max-content;align-items: center;column-gap: 1rem;padding: .5rem 0 .5rem 1.5rem}
 .nav_logo{margin-bottom: 2rem}
 .nav_logo-icon{font-size: 1.25rem;color: var(--white-color)}
@@ -175,4 +186,5 @@ a{text-decoration: none}
 .header{height: calc(var(--header-height) + 1rem);padding: 0 2rem 0 calc(var(--nav-width) + 2rem)}
 .header_img{width: 40px;height: 40px}.header_img img{width: 45px}
 .l-navbar{left: 0;padding: 1rem 1rem 0 0}
+.show{width: calc(var(--nav-width) + 156px)}.body-pd{padding-left: calc(var(--nav-width) + 188px)}}
 /* end from import from sidebar */

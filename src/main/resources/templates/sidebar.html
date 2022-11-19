@@ -1,0 +1,48 @@
+<!-- begin of sidebar -->
+<div class="l-navbar show" id="nav-bar" th:fragment="sidebar">
+  <nav class="nav">
+    <div>
+      <div class="header_toggle header_toggle--open nav_logo-icon"
+           id="div-toggle">
+        <i class='bx bx-menu bx-x' id="header-toggle"></i>
+      </div>
+      <a href="#" class="nav_logo">
+        <i class='bx bx-cog nav_logo-icon'></i> <span class="nav_logo-name">Eng. de Concursos</span>
+      </a>
+
+      <div class="nav_list">
+        <a href="index.html" class="nav_link" th:href="@{/}"
+           th:classappend="${#httpServletRequest.getRequestURI() == '/' ? 'active':''}">
+          <i class='bx bx-grid-alt nav_icon'></i>
+          <span class="nav_name">Home</span>
+        </a>
+        <!--          <a href="#" class="nav_link">-->
+        <!--            <i class='bx bx-user nav_icon'></i>-->
+        <!--            <span class="nav_name">Users</span>-->
+        <!--          </a>-->
+        <a class="nav_link" href="simulator/simulator.html" th:href="@{/simulator/init}"
+           th:classappend="${#httpServletRequest.getRequestURI() == '/simulator/init' ? 'active':''}">
+          <i class='bx bx-message-square-detail nav_icon'></i>
+          <span class="nav_name">Simulator</span>
+        </a>
+        <a href="question-list.html" class="nav_link" th:href="@{/questions-list}"
+           th:classappend="${#httpServletRequest.getRequestURI() == '/questions-list' ? 'active':''}">
+          <i class='bx bx-bookmark nav_icon'></i>
+          <span class="nav_name">Questions List</span>
+        </a>
+        <!--          <a href="#" class="nav_link">-->
+        <!--            <i class='bx bx-bookmark nav_icon'></i>-->
+        <!--            <span class="nav_name">Test Simulator</span>-->
+        <!--          </a>-->
+        <!--          <a href="#" class="nav_link"> <i class='bx bx-folder nav_icon'></i> <span class="nav_name">Files</span> </a>-->
+        <!--          <a href="#" class="nav_link"> <i class='bx bx-bar-chart-alt-2 nav_icon'></i> <span-->
+        <!--              class="nav_name">Stats</span> </a>-->
+      </div>
+    </div>
+    <a class="nav_link" th:if="${session.currentUser != null}"
+       href="index.html" th:href="@{/login/logout}">
+      <i class='bx bx-log-out nav_icon'></i> <span class="nav_name">Log out</span>
+    </a>
+  </nav>
+</div>
+<!-- end of sidebar -->
