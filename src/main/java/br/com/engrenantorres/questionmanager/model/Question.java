@@ -19,6 +19,8 @@ public class Question {
   private Banca banca = new Banca();
   @ManyToOne
   private SubjectArea cargo = new SubjectArea();
+  @ManyToOne
+  private Assunto assunto;
   private String enunciado = "";
 
   private String alternativa1 = "";
@@ -33,7 +35,6 @@ public class Question {
 
   private Integer ano = 2022;
   private String concurso = "";
-  private String assunto = "";
   @Enumerated(EnumType.STRING)
   private Alternatives resposta = Alternatives.A;
   private String observacao = "";
@@ -158,11 +159,11 @@ public class Question {
     this.concurso = concurso;
   }
 
-  public String getAssunto() {
-    return assunto;
+  public Assunto getAssunto() {
+    return this.assunto;
   }
 
-  public void setAssunto(String assunto) {
+  public void setAssunto(Assunto assunto) {
     this.assunto = assunto;
   }
 

@@ -25,12 +25,12 @@ public class StartData implements CommandLineRunner {
   private QuestionRepository questionRepository;
   @Autowired
   private UserRepository userRepository;
-  
   @Autowired
   private RoleRepository roleRepository;
-
   @Autowired
   private UserService userService;
+  @Autowired
+  private AssuntoRepository assuntoRepository;
 
   private final Logger LOGGER = LoggerFactory.getLogger(StartData.class);
 
@@ -40,9 +40,11 @@ public class StartData implements CommandLineRunner {
     addInitialUser();
     addInitialBancaData();
     addInitialAreasData();
+    addInitialAssuntosData();
     addInitialQuestionData();
 
   }
+
 
   private void addInitialUser() throws Exception {
     if (userRepository.count() == 0) {
@@ -57,6 +59,14 @@ public class StartData implements CommandLineRunner {
       } catch (Exception e) {
         LOGGER.error(e.getMessage());
       }
+    }
+  }
+  private void addInitialAssuntosData() {
+    if(assuntoRepository.count() == 0) {
+      SubjectArea area = areaRepository.findAll().get(0);
+      Assunto nr10 = new Assunto("NR10", area, "Norma regulamentodora de Trabalho com instalações energizadas");
+      assuntoRepository.save(nr10);
+      LOGGER.info("New inital assunto added" + area.getName());
     }
   }
 
@@ -104,6 +114,7 @@ public class StartData implements CommandLineRunner {
       List<SubjectArea> areas = areaRepository.findAll();
       List<Banca> bancas = bancaRepository.findAll();
       List<User> users = userRepository.findAll();
+      Assunto assunto = assuntoRepository.findAll().get(0);
 
       Question question = new Question(users.get(0));
       question.setEnunciado("Quem sou eu?");
@@ -116,11 +127,13 @@ public class StartData implements CommandLineRunner {
       Banca banca = bancas.get(0);
       question.setBanca(banca);
       SubjectArea area = areas.get(0);
+      question.setAssunto(assunto);
       question.setCargo(area);
 
       Question question1 = new Question(users.get(0));
       Banca banca2 = bancas.get(1);
       question1.setBanca(banca2);
+      question1.setAssunto(assunto);
       SubjectArea area2 = areas.get(1);
       question1.setCargo(area2);
       question1.setEnunciado("Quem és tu?");
