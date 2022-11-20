@@ -1,6 +1,8 @@
 package br.com.engrenantorres.questionmanager.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class SubjectArea {
@@ -9,6 +11,17 @@ public class SubjectArea {
   private Long id;
   private String name = "";
   private String about = "";
+
+  @OneToMany
+  private Set<Assunto> assuntos = new HashSet<>();
+
+  public void addAssunto(Assunto assunto) {
+    this.assuntos.add(assunto);
+  }
+
+  public Set<Assunto> getAssunto() {
+    return assuntos;
+  }
 
   public String getName() {
     return name;

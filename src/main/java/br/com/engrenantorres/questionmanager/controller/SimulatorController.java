@@ -36,15 +36,15 @@ public class SimulatorController {
 
   @GetMapping("init")
   public String getSimulator(
-    @RequestParam(name="areaId",required = false,defaultValue = "0") Long areaId,
+    @RequestParam(name="areaId",required = true,defaultValue = "0") Long areaId,
     Model model,
     @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
     Principal principal
   ) {
-
     LOGGER.info("getSimulator()...");
 
     model.addAttribute("userName", principal.getName());
+
 
     injectBancaAndAreaAttsFromBD(model);
 
