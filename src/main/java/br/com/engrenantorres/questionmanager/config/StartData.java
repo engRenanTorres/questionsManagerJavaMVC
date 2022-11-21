@@ -64,8 +64,10 @@ public class StartData implements CommandLineRunner {
   private void addInitialAssuntosData() {
     if(assuntoRepository.count() == 0) {
       SubjectArea area = areaRepository.findAll().get(0);
+      SubjectArea area2 = areaRepository.findAll().get(1);
       Assunto nr10 = new Assunto("NR10", area, "Norma regulamentodora de Trabalho com instalações energizadas");
-      assuntoRepository.save(nr10);
+      Assunto construcao = new Assunto("Construção", area2, "Construção civil");
+      assuntoRepository.saveAll (Arrays.asList(nr10,construcao));
       LOGGER.info("New inital assunto added" + area.getName());
     }
   }
@@ -114,7 +116,7 @@ public class StartData implements CommandLineRunner {
       List<SubjectArea> areas = areaRepository.findAll();
       List<Banca> bancas = bancaRepository.findAll();
       List<User> users = userRepository.findAll();
-      Assunto assunto = assuntoRepository.findAll().get(0);
+      List<Assunto> assuntos = assuntoRepository.findAll();
 
       Question question = new Question(users.get(0));
       question.setEnunciado("Quem sou eu?");
@@ -127,13 +129,13 @@ public class StartData implements CommandLineRunner {
       Banca banca = bancas.get(0);
       question.setBanca(banca);
       SubjectArea area = areas.get(0);
-      question.setAssunto(assunto);
+      question.setAssunto(assuntos.get(0));
       question.setCargo(area);
 
       Question question1 = new Question(users.get(0));
       Banca banca2 = bancas.get(1);
       question1.setBanca(banca2);
-      question1.setAssunto(assunto);
+      question1.setAssunto(assuntos.get(1));
       SubjectArea area2 = areas.get(1);
       question1.setCargo(area2);
       question1.setEnunciado("Quem és tu?");

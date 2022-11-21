@@ -86,18 +86,18 @@
         </div>
       </div>
     </div>
-
-    <div>
-      <div class="nav-scroller py-1 mb-2">
-        <nav class="nav d-flex flex-row justify-content-around">
-          <a class="p2 text-muted" th:each="area: ${areas}" th:href="@{/questions-list/?areaId={id}(id=${area.id})}">
-            <span th:text="${area.name}">Areas</span>
-          </a>
-        </nav>
-      </div>
-
-    </div>
   </header>
+
+  <div th:fragment="areafilter">
+    <div class="nav-scroller py-1 mb-2">
+      <nav class="nav d-flex flex-row justify-content-around">
+        <a class="p2 text-muted" th:each="area: ${areas}" th:href="@{/questions-list/?areaId={id}(id=${area.id})}">
+          <span th:text="${area.name}">Areas</span>
+        </a>
+      </nav>
+    </div>
+
+  </div>
 
 
 </body>

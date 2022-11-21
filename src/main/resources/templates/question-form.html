@@ -22,7 +22,7 @@
   <div class="row">
     <div class="col-md-8 question-main">
       <div class="question-post">
-        <h2 class="question-post-title" th:text="#{home.area}" >Edit question</h2>
+        <h2 class="question-post-title" th:text="#{edit.area}" >Edit question</h2>
 
         <form th:object="${newQuestionDTO}" th:action="@{/question-form}" method="post">
 
@@ -34,19 +34,52 @@
 
             <div class="form-group col-5 d-flex flex-column">
               <label>Cargo</label>
-              <select class="custom-select" aria-label="Select engineer area" name="cargo" th:field="*{cargo}" >
+              <select class="custom-select" aria-label="Select engineer area"
+                      name="cargo" th:field="*{cargo}" id="areasOptions"
+                      onChange="top.location.href='http://localhost:8080/question-form/?areaId=' + this.options[this.selectedIndex].value;">
                 <option value="1" th:each="sarea: ${areas}"
-                        th:value="${sarea.id}" th:text="${sarea.name}">One</option>
+                        th:selected="${sarea.id} == ${areaId}"
+                        th:value="${sarea.id}" th:text="${sarea.name}"
+                >One</option>
               </select>
             </div>
 
+            <!--th:onchange="@{/questions-form/?areaId={id}(id=${cargo.id})}"-->
+
             <div class="form-group col-5 d-flex flex-column">
               <label>Banca</label>
-              <select class="custom-select" aria-label="Select banca" name="banca" th:field="*{banca}">
+              <select class="custom-select" aria-label="Select banca" name="banca"
+                      th:field="*{banca}">
                 <option value="1" th:each="sbanca: ${bancas}"
                         th:value="${sbanca.id}" th:text="${sbanca.name}">One</option>
               </select>
             </div>
+          </div>
+
+          <div class="row my-1">
+            <div class="form-group col-5 d-flex flex-column">
+              <label>Assunto</label>
+              <select class="custom-select" aria-label="Select assunto" name="assunto" th:field="*{assunto}">
+                <option value="1" th:each="sAssunto: *{cargo.assuntos}"
+                        th:value="${sAssunto.id}" th:text="${sAssunto.name}">One</option>
+              </select>
+            </div>
+
+            <div class="form-group col-5 d-flex flex-column">
+              <label for="resposta" >Resposta</label>
+              <select class="custom-select" aria-label="Select banca" th:field="*{resposta}" id="resposta">
+                <option value="A"  >a)</option>
+                <option value="B"  >b)</option>
+                <option value="C"  >c)</option>
+                <option value="D"  >d)</option>
+                <option value="E"  >e)</option>
+                <option value="CERTO"  >Certa</option>
+                <option value="ERRADO"  >Errada</option>
+
+              </select>
+              <small>Informe a resposta da pergunta</small>
+            </div>
+
           </div>
 
 
@@ -98,17 +131,7 @@
                       rows="3" class="form-control" required>
             </textarea>
           </div>
-          <div class="form-group col-5 d-flex flex-column">
-            <label for="resposta" >Resposta</label>
-            <select class="custom-select" aria-label="Select banca" th:field="*{resposta}" id="resposta">
-              <option value="a"  >a)</option>
-              <option value="b"  >b)</option>
-              <option value="c"  >c)</option>
-              <option value="d"  >d)</option>
-              <option value="e"  >e)</option>
-            </select>
-            <small>Informe a resposta da pergunta</small>
-          </div>
+
           <button class="btn btn-primary" type="submit">
             Salvar
           </button>
@@ -131,7 +154,7 @@
       </div>
     </aside> --> <!-- /.question-sidebar -->
 
-    <nav class="question-pagination">
+  <!--  <nav class="question-pagination">
       <a class="btn btn-outline-primary"
          href="#">
         <i class="bx bx-skip-previous nav_icon" style="font-size: 1.5rem;"></i>
@@ -142,7 +165,7 @@
         <i class="bx bx-skip-next nav_icon" style="font-size: 1.5rem;"></i>
         <span th:text="#{question.next}">Newer</span>
       </a>
-    </nav>
+    </nav>-->
 
   </div><!-- /.row -->
 
@@ -154,6 +177,17 @@
   </p>
 </footer>
 
+<script>
+
+  const areaId = getParams("areaId") - 1;
+  const areasOptions = document.getElementById('areasOptions');
+  areasOptions.options[areaId].selected = true;
+
+  function getParams(name){
+   if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(location.search))
+      return decodeURIComponent(name[1]);
+  }
+</script>
 <div th:replace="~{base :: scripts}">
 
 </div>

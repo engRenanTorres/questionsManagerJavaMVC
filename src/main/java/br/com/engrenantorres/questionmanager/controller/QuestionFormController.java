@@ -1,14 +1,8 @@
 package br.com.engrenantorres.questionmanager.controller;
 
 import br.com.engrenantorres.questionmanager.dto.NewQuestionDTO;
-import br.com.engrenantorres.questionmanager.model.Banca;
-import br.com.engrenantorres.questionmanager.model.Question;
-import br.com.engrenantorres.questionmanager.model.SubjectArea;
-import br.com.engrenantorres.questionmanager.model.User;
-import br.com.engrenantorres.questionmanager.repository.BancaRepository;
-import br.com.engrenantorres.questionmanager.repository.QuestionRepository;
-import br.com.engrenantorres.questionmanager.repository.SubjectAreaRepository;
-import br.com.engrenantorres.questionmanager.repository.UserRepository;
+import br.com.engrenantorres.questionmanager.model.*;
+import br.com.engrenantorres.questionmanager.repository.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -38,22 +30,30 @@ public class QuestionFormController {
   private SubjectAreaRepository areaRepository;
   @Autowired
   private UserRepository userRepository;
+  @Autowired
+  private AssuntoRepository assuntoRepository;
 
   @GetMapping
   public String form(Model model,
                      NewQuestionDTO newQuestionDTO,
-                     Principal principal
+                     Principal principal,
+                     @RequestParam(name = "areaId",required = true,defaultValue = "1")
+                     Long areaId
   ) {
     LOGGER.info("form()...");
     model.addAttribute("userName", principal.getName());
+    model.addAttribute("areaId", areaId);
 
-    injectAttributesFromBD(model);
+    injectAttributesFromBD(model,areaId);
     return "question-form";
   }
   @PostMapping
-  public String insert(@Valid NewQuestionDTO newQuestionDTO, BindingResult bindingResult, Model model){
+  public String insert(@Valid NewQuestionDTO newQuestionDTO,
+                       BindingResult bindingResult,
+                       Long areaId,
+                       Model model){
     if(bindingResult.hasErrors()) {
-      injectAttributesFromBD(model);
+      injectAttributesFromBD(model,areaId);
       LOGGER.error("Validation error : " + bindingResult.getAllErrors());
       return "question-form";
     }
@@ -69,10 +69,13 @@ public class QuestionFormController {
     questionRepository.save(question);
   }
 
-  private void injectAttributesFromBD(Model model) {
+  private void injectAttributesFromBD(Model model,Long areaId) {
     List<SubjectArea> areas = areaRepository.findAll();
     List<Banca> bancas = bancaRepository.findAll();
+    List<Assunto> assuntos = assuntoRepository.findAllByCargoId(areaId);
+
     model.addAttribute("areas",areas);
     model.addAttribute("bancas",bancas);
+    model.addAttribute("assuntos",assuntos);
   }
 }
