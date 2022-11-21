@@ -1,14 +1,8 @@
 package br.com.engrenantorres.questionmanager.controller;
 
 import br.com.engrenantorres.questionmanager.dto.NewQuestionDTO;
-import br.com.engrenantorres.questionmanager.model.Banca;
-import br.com.engrenantorres.questionmanager.model.Question;
-import br.com.engrenantorres.questionmanager.model.SubjectArea;
-import br.com.engrenantorres.questionmanager.model.User;
-import br.com.engrenantorres.questionmanager.repository.BancaRepository;
-import br.com.engrenantorres.questionmanager.repository.QuestionRepository;
-import br.com.engrenantorres.questionmanager.repository.SubjectAreaRepository;
-import br.com.engrenantorres.questionmanager.repository.UserRepository;
+import br.com.engrenantorres.questionmanager.model.*;
+import br.com.engrenantorres.questionmanager.repository.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +31,8 @@ public class QuestionsListController {
   BancaRepository bancaRepository;
   @Autowired
   UserRepository userRepository;
+  @Autowired
+  AssuntoRepository assuntoRepository;
 
   private Integer paginationSize = 5;
 
@@ -101,6 +97,7 @@ public class QuestionsListController {
 
     injectQuestionDataIntoEditForm(model, question);
 
+
     injectBancaAndAreaAttsFromBD(model);
 
     return "question-form";
@@ -128,7 +125,10 @@ public class QuestionsListController {
     LOGGER.error("Illegal Argument error...");
     question.ifPresent(question1 -> {
       NewQuestionDTO questionDTO = new NewQuestionDTO(question1);
+      List<Assunto> assuntos = assuntoRepository.findAllByCargoId(questionDTO.getCargo().getId());
+
       model.addAttribute("newQuestionDTO", questionDTO);
+      model.addAttribute("assuntos", assuntos);
     });
   }
 
