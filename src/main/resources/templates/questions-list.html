@@ -9,6 +9,9 @@
   <div th:replace="~{base :: header}">
 
   </div>
+  <div th:replace="~{base :: areafilter}">
+
+  </div>
 
 </div>
 
@@ -52,6 +55,9 @@
             </div>
             <div class="badge badge-secondary">
               Enviada por: <span th:text="${question.author.username}"></span>
+            </div>
+            <div class="badge badge-secondary">
+              Assunto: <span th:text="${question.assunto.name}"></span>
             </div>
             <div class="badge badge-secondary">
               <span>updated at</span>

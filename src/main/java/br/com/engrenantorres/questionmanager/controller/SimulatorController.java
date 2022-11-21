@@ -60,7 +60,8 @@ public class SimulatorController {
     injectQuestionsAttributes(model, page, questions);
   }
 
-  private void injectQuestionsAttributes(Model model, Integer page, Page<Question> questions) {
+  private void injectQuestionsAttributes(Model model, Integer page,
+                                         Page<Question> questions) {
     Integer nextPage = (page >= (questions.getTotalElements() - 1) / 1) ? page : page + 1;
     Integer previousPage = (page <= 0) ? 0 : page - 1;
     model.addAttribute("questions", questions);
@@ -70,7 +71,8 @@ public class SimulatorController {
     model.addAttribute("isLast", questions.isLast());
   }
 
-  private Page<Question> getQuestionsApplyingFilterIfExist(Model model, Integer page, Long areaId) {
+  private Page<Question> getQuestionsApplyingFilterIfExist(Model model,
+                                                           Integer page, Long areaId) {
     Page<Question> questions;
     if (areaId == 0) {
       model.addAttribute("areaId", "nulo");

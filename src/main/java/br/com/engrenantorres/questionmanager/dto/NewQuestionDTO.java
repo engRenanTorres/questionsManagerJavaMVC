@@ -9,6 +9,8 @@ public class NewQuestionDTO {
   private Long id = 0L;
   private SubjectArea cargo = new SubjectArea();
   private Banca banca = new Banca();
+
+  private Assunto assunto = new Assunto();
   @NotBlank
   private String enunciado = "";
   @NotBlank
@@ -30,6 +32,7 @@ public class NewQuestionDTO {
     this.id = question.getId();
     this.cargo = question.getCargo();
     this.banca = question.getBanca();
+    this.assunto = question.getAssunto();
     this.enunciado = question.getEnunciado();
     this.alternativa1 = question.getAlternativa1();
     this.alternativa2 = question.getAlternativa2();
@@ -53,6 +56,14 @@ public class NewQuestionDTO {
 
   public void setCargo(SubjectArea cargo) {
     this.cargo = cargo;
+  }
+
+  public Assunto getAssunto() {
+    return assunto;
+  }
+
+  public void setAssunto(Assunto assunto) {
+    this.assunto = assunto;
   }
 
   public Banca getBanca() {
@@ -126,6 +137,7 @@ public class NewQuestionDTO {
     question.setId(id);
     question.setCargo(cargo);
     question.setBanca(banca);
+    question.setAssunto(assunto);
     question.setEnunciado(enunciado);
     question.setAlternativa1(alternativa1);
     question.setAlternativa2(alternativa2);
