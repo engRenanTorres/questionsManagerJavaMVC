@@ -36,24 +36,20 @@ public class QuestionFormController {
   @GetMapping
   public String form(Model model,
                      NewQuestionDTO newQuestionDTO,
-                     Principal principal,
-                     @RequestParam(name = "areaId",required = true,defaultValue = "1")
-                     Long areaId
+                     Principal principal
   ) {
     LOGGER.info("form()...");
     model.addAttribute("userName", principal.getName());
-    model.addAttribute("areaId", areaId);
 
-    injectAttributesFromBD(model,areaId);
+    injectAttributesFromBD(model);
     return "question-form";
   }
   @PostMapping
   public String insert(@Valid NewQuestionDTO newQuestionDTO,
                        BindingResult bindingResult,
-                       Long areaId,
                        Model model){
     if(bindingResult.hasErrors()) {
-      injectAttributesFromBD(model,areaId);
+      injectAttributesFromBD(model);
       LOGGER.error("Validation error : " + bindingResult.getAllErrors());
       return "question-form";
     }
@@ -69,10 +65,10 @@ public class QuestionFormController {
     questionRepository.save(question);
   }
 
-  private void injectAttributesFromBD(Model model,Long areaId) {
+  private void injectAttributesFromBD(Model model) {
     List<SubjectArea> areas = areaRepository.findAll();
     List<Banca> bancas = bancaRepository.findAll();
-    List<Assunto> assuntos = assuntoRepository.findAllByCargoId(areaId);
+    List<Assunto> assuntos = assuntoRepository.findAllByCargoId(1L);
 
     model.addAttribute("areas",areas);
     model.addAttribute("bancas",bancas);

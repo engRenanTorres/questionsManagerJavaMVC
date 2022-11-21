@@ -34,9 +34,8 @@
 
             <div class="form-group col-5 d-flex flex-column">
               <label>Cargo</label>
-              <select class="custom-select" aria-label="Select engineer area"
-                      name="cargo" th:field="*{cargo}" id="areasOptions"
-                      onChange="top.location.href='http://localhost:8080/question-form/?areaId=' + this.options[this.selectedIndex].value;">
+              <select class="custom-select" aria-label="Select engineer area" onChange="onLoad(this.value)"
+                      name="cargo" th:field="*{cargo}" id="areasOptions">
                 <option value="1" th:each="sarea: ${areas}"
                         th:selected="${sarea.id} == ${areaId}"
                         th:value="${sarea.id}" th:text="${sarea.name}"
@@ -44,7 +43,8 @@
               </select>
             </div>
 
-            <!--th:onchange="@{/questions-form/?areaId={id}(id=${cargo.id})}"-->
+            <!--th:onchange="@{/questions-form/?areaId={id}(id=${cargo.id})}"
+            onChange="top.location.href='http://localhost:8080/question-form/?areaId=' + this.options[this.selectedIndex].value;"-->
 
             <div class="form-group col-5 d-flex flex-column">
               <label>Banca</label>
@@ -59,8 +59,9 @@
           <div class="row my-1">
             <div class="form-group col-5 d-flex flex-column">
               <label>Assunto</label>
-              <select class="custom-select" aria-label="Select assunto" name="assunto" th:field="*{assunto}">
-                <option value="1" th:each="sAssunto: *{cargo.assuntos}"
+              <select class="custom-select" aria-label="Select assunto" name="assunto"
+                      th:field="*{assunto}"   id="assuntos">
+                <option value="1" th:each="sAssunto: ${assuntos}"
                         th:value="${sAssunto.id}" th:text="${sAssunto.name}">One</option>
               </select>
             </div>
@@ -140,33 +141,6 @@
 
     </div><!-- /.question-main -->
 
-<!--    <aside class="col-md-4 question-sidebar">
-      <div class="p-4 mb-3 bg-light rounded">
-        <h4 class="font-italic" th:text="#{question.about}" >About Author</h4>
-        <p class="mb-0">Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
-        <hr/>
-        <h4 class="font-italic" th:text="#{home.socialMidia}" >Social Network</h4>
-        <ol class="list-unstyled">
-          <li><a href="#">Facebook</a></li>
-          <li><a href="#">Twitter</a></li>
-          <li><a href="#">LinkedIn</a></li>
-        </ol>
-      </div>
-    </aside> --> <!-- /.question-sidebar -->
-
-  <!--  <nav class="question-pagination">
-      <a class="btn btn-outline-primary"
-         href="#">
-        <i class="bx bx-skip-previous nav_icon" style="font-size: 1.5rem;"></i>
-        <span th:text="#{question.before}">Older</span>
-      </a>
-      <a class="btn btn-outline-primary"
-         href="#">
-        <i class="bx bx-skip-next nav_icon" style="font-size: 1.5rem;"></i>
-        <span th:text="#{question.next}">Newer</span>
-      </a>
-    </nav>-->
-
   </div><!-- /.row -->
 
 </main><!-- /.container -->
@@ -176,16 +150,41 @@
     <a href="#" th:text="#{home.backToTop}">Back to top</a>
   </p>
 </footer>
+<script src="https://unpkg.com/axios/dist/axios.min.js" ></script>
 
 <script>
 
-  const areaId = getParams("areaId") - 1;
+/*  const areaId = getParams("areaId") - 1;
   const areasOptions = document.getElementById('areasOptions');
-  areasOptions.options[areaId].selected = true;
+  areasOptions.options[areaId].selected = true;*/
+
+  async function onLoad(id) {
+    try {
+        const response = await axios.get('http://localhost:8080/api/assuntos/'+ id);
+        assuntos = response.data;
+        console.log(response.data);
+        clearOptionsFast('assuntos')
+        assuntosSelect = document.getElementById('assuntos');
+        assuntos.forEach( assunto => {
+          assuntosSelect.options[assuntosSelect.options.length] = new Option(assunto.name, assunto.id);
+        });
+    } catch (error) {
+        console.error(error);
+    }
+  }
+
 
   function getParams(name){
    if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(location.search))
       return decodeURIComponent(name[1]);
+  }
+  function clearOptionsFast(id)
+  {
+    const selectObj = document.getElementById(id);
+    const selectParentNode = selectObj.parentNode;
+    const newSelectObj = selectObj.cloneNode(false); // Make a shallow copy
+    selectParentNode.replaceChild(newSelectObj, selectObj);
+    return newSelectObj;
   }
 </script>
 <div th:replace="~{base :: scripts}">
