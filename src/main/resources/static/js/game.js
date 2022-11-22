@@ -18,7 +18,7 @@ let MAX_QUESTIONS = 1;
 
 async function onLoad() {
     try {
-        const response = await axios.get('http://localhost:8080/api/questions/all');
+        const response = await axios.get('http://localhost:8080/api/questions/all/1/?limit=2');
         questions = response.data;
         MAX_QUESTIONS = questions.length;
         console.log(response);
