@@ -9,6 +9,7 @@ public class NewQuestionDTO {
   private Long id = 0L;
   private SubjectArea cargo = new SubjectArea();
   private Banca banca = new Banca();
+  private String concurso = "";
 
   private Assunto assunto = new Assunto();
   @NotBlank
@@ -17,13 +18,16 @@ public class NewQuestionDTO {
   private String alternativa1 = "";
   @NotBlank
   private String alternativa2 = "";
-  @NotBlank
+
   private String alternativa3 = "";
-  @NotBlank
+
   private String alternativa4 = "";
-  @NotBlank
   private String alternativa5 = "";
   private Alternatives resposta = Alternatives.A;
+
+  private String observacao = "";
+
+
 
   public NewQuestionDTO() {
   }
@@ -34,12 +38,14 @@ public class NewQuestionDTO {
     this.banca = question.getBanca();
     this.assunto = question.getAssunto();
     this.enunciado = question.getEnunciado();
+    this.concurso = question.getConcurso();
     this.alternativa1 = question.getAlternativa1();
     this.alternativa2 = question.getAlternativa2();
     this.alternativa3 = question.getAlternativa3();
     this.alternativa4 = question.getAlternativa4();
     this.alternativa5 = question.getAlternativa5();
     this.resposta = question.getResposta();
+    this.observacao = question.getObservacao();
   }
 
   public Long getId() {
@@ -48,6 +54,22 @@ public class NewQuestionDTO {
 
   public void setId(Long id) {
     this.id = id;
+  }
+
+  public String getConcurso() {
+    return concurso;
+  }
+
+  public void setConcurso(String concurso) {
+    this.concurso = concurso;
+  }
+
+  public String getObservacao() {
+    return observacao;
+  }
+
+  public void setObservacao(String observacao) {
+    this.observacao = observacao;
   }
 
   public SubjectArea getCargo() {
@@ -138,6 +160,7 @@ public class NewQuestionDTO {
     question.setCargo(cargo);
     question.setBanca(banca);
     question.setAssunto(assunto);
+    question.setConcurso(concurso);
     question.setEnunciado(enunciado);
     question.setAlternativa1(alternativa1);
     question.setAlternativa2(alternativa2);
@@ -145,6 +168,7 @@ public class NewQuestionDTO {
     question.setAlternativa4(alternativa4);
     question.setAlternativa5(alternativa5);
     question.setResposta(resposta);
+    question.setObservacao(observacao);
     return question;
   }
 }

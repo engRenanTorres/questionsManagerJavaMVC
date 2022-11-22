@@ -126,6 +126,8 @@ public class StartData implements CommandLineRunner {
       question.setAlternativa4("d) Nós");
       question.setAlternativa5("e) Vós");
       question.setResposta(Alternatives.A);
+      question.setConcurso("Petrobras");
+      question.setObservacao("Questão teste");
       Banca banca = bancas.get(0);
       question.setBanca(banca);
       SubjectArea area = areas.get(0);
@@ -137,6 +139,8 @@ public class StartData implements CommandLineRunner {
       question1.setBanca(banca2);
       question1.setAssunto(assuntos.get(1));
       SubjectArea area2 = areas.get(1);
+      question1.setConcurso("Fundação Saúde RJ");
+      question1.setObservacao("Questão teste2");
       question1.setCargo(area2);
       question1.setEnunciado("Quem és tu?");
       question1.setAlternativa1("a) Eu");

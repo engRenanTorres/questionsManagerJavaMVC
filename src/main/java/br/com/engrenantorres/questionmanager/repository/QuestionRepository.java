@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public interface QuestionRepository extends JpaRepository<Question, Long> {
@@ -25,6 +26,9 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
 
   @Query("SELECT q FROM Question q WHERE q.cargo.name = :cargoname")
   Page<Question> findAllByCargo(@Param("cargoname") String cargoname, Pageable pageable);
+  @Query("SELECT q FROM Question q WHERE q.cargo.id = :areaId")
+  Set<Question> findAllByCargoId(@Param("areaId") Long areaId);
+
 
   /*@Query("select a from Question a where a.id in ?1")
   List<Qustion> findAllByCargoId(Collection<Long> ids);*/

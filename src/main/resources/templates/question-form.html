@@ -32,7 +32,7 @@
               <input type="text" th:field="*{id}" class="form-control" readonly>
             </div>
 
-            <div class="form-group col-5 d-flex flex-column">
+            <div class="form-group col-6 d-flex flex-column">
               <label>Cargo</label>
               <select class="custom-select" aria-label="Select engineer area" onChange="onLoad(this.value)"
                       name="cargo" th:field="*{cargo}" id="areasOptions">
@@ -46,6 +46,17 @@
             <!--th:onchange="@{/questions-form/?areaId={id}(id=${cargo.id})}"
             onChange="top.location.href='http://localhost:8080/question-form/?areaId=' + this.options[this.selectedIndex].value;"-->
 
+            <div class="form-group col-6 d-flex flex-column">
+              <label>Assunto</label>
+              <select class="custom-select" aria-label="Select assunto" name="assunto"
+                      th:field="*{assunto}"   id="assuntos">
+                <option value="1" th:each="sAssunto: ${assuntos}"
+                        th:value="${sAssunto.id}" th:text="${sAssunto.name}">One</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row my-1">
             <div class="form-group col-5 d-flex flex-column">
               <label>Banca</label>
               <select class="custom-select" aria-label="Select banca" name="banca"
@@ -54,21 +65,20 @@
                         th:value="${sbanca.id}" th:text="${sbanca.name}">One</option>
               </select>
             </div>
-          </div>
-
-          <div class="row my-1">
             <div class="form-group col-5 d-flex flex-column">
-              <label>Assunto</label>
-              <select class="custom-select" aria-label="Select assunto" name="assunto"
-                      th:field="*{assunto}"   id="assuntos">
-                <option value="1" th:each="sAssunto: ${assuntos}"
-                        th:value="${sAssunto.id}" th:text="${sAssunto.name}">One</option>
-              </select>
+              <label for="enunciado" >Enunciado</label>
+              <input th:field="*{concurso}" id="concurso"
+                        rows="10" th:errorclass="is-invalid"
+                        class="form-control"></input>
+              <small class="invalid-feedback" th:errors="*{concurso}">
+                Mensagem de possíveis erros no enunciado
+              </small>
             </div>
 
-            <div class="form-group col-5 d-flex flex-column">
+            <div class="form-group col-2 d-flex flex-column">
               <label for="resposta" >Resposta</label>
-              <select class="custom-select" aria-label="Select banca" th:field="*{resposta}" id="resposta">
+              <select class="custom-select" aria-label="Select banca" th:field="*{resposta}"
+                      id="resposta"   th:errorclass="is-invalid">
                 <option value="A"  >a)</option>
                 <option value="B"  >b)</option>
                 <option value="C"  >c)</option>
@@ -78,7 +88,9 @@
                 <option value="ERRADO"  >Errada</option>
 
               </select>
-              <small>Informe a resposta da pergunta</small>
+              <small class="invalid-feedback" th:errors="*{resposta}">
+                Informe a resposta da pergunta
+              </small>
             </div>
 
           </div>
@@ -117,20 +129,27 @@
           <div class="form-group">
             <label for="alternativa3" >Alternativa (c)</label>
             <textarea th:field="*{alternativa3}" id="alternativa3"
-                      rows="3" class="form-control" required>
+                      rows="3" class="form-control">
             </textarea>
           </div>
           <div class="form-group">
             <label for="alternativa4" >Alternativa (d)</label>
             <textarea id="alternativa4" th:field="*{alternativa4}"
-                      rows="3" class="form-control" required>
+                      rows="3" class="form-control">
             </textarea>
           </div>
           <div class="form-group">
             <label for="alternativa5" >Alternativa (e)</label>
             <textarea id="alternativa5" th:field="*{alternativa5}"
-                      rows="3" class="form-control" required>
+                      rows="3" class="form-control">
             </textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="enunciado" >Enunciado</label>
+            <textarea th:field="*{observacao}" id="observacao"
+                      rows="10"
+                      class="form-control"></textarea>
           </div>
 
           <button class="btn btn-primary" type="submit">

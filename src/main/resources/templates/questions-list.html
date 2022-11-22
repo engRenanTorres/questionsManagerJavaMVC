@@ -25,6 +25,7 @@
       <div class="card question-post">
         <h4 class="question-post__title card-header" >
           <span th:text="${question.concurso}"></span>
+          <span th:text="${question.banca}"></span>
           <span th:text="${question.ano}"></span>
         </h4>
 
@@ -49,6 +50,10 @@
             <p th:text="${question.alternativa5}">e) alternative.</p>
           </blockquote>
 
+          <blockquote>
+            Gabarito: <strong th:text="${question.resposta}">e) alternative.</strong>
+          </blockquote>
+
           <div class="card-footer text-muted">
             <div class="badge badge-secondary">
               Questão id: <span th:text="${question.id}"></span>
@@ -64,6 +69,11 @@
               <span th:text="${#temporals.format(question.date,'dd/MM/yyyy')}">2014</span>
             </div>
           </div>
+
+          <hr>
+          <blockquote>
+            Observação: <small th:text="${question.observacao}">e) alternative.</small>
+          </blockquote>
 
         </div>
 
