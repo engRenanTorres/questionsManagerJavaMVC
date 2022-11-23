@@ -34,13 +34,24 @@
 
             <div class="form-group col-6 d-flex flex-column">
               <label>Cargo</label>
-              <select class="custom-select" aria-label="Select engineer area" onChange="onLoad(this.value)"
-                      name="cargo" th:field="*{cargo}" id="areasOptions">
-                <option value="1" th:each="sarea: ${areas}"
-                        th:selected="${sarea.id} == ${areaId}"
-                        th:value="${sarea.id}" th:text="${sarea.name}"
+              <select class="custom-select" aria-label="Select cargo"
+                      name="cargo" th:field="*{cargo}" id="cargosOptions">
+                <option value="1" th:each="scargo : ${cargos}"
+                        th:value="${scargo}" th:text="${scargo}"
                 >One</option>
               </select>
+            </div>
+
+            <div class="row my-1">
+              <div class="form-group col-12 d-flex flex-column">
+                <label>Area</label>
+                <select class="custom-select" aria-label="Select engineer area" onChange="onLoad(this.value)"
+                        name="area" th:field="*{subjectArea}" id="areasOptions">
+                  <option value="1" th:each="sarea: ${areas}"
+                          th:value="${sarea.id}" th:text="${sarea.name}"
+                  >One</option>
+                </select>
+              </div>
             </div>
 
             <!--th:onchange="@{/questions-form/?areaId={id}(id=${cargo.id})}"
@@ -66,7 +77,7 @@
               </select>
             </div>
             <div class="form-group col-5 d-flex flex-column">
-              <label for="enunciado" >Enunciado</label>
+              <label for="concurso" >Concurso</label>
               <input th:field="*{concurso}" id="concurso"
                         rows="10" th:errorclass="is-invalid"
                         class="form-control"></input>
@@ -174,8 +185,8 @@
 <script>
 
 /*  const areaId = getParams("areaId") - 1;
-  const areasOptions = document.getElementById('areasOptions');
-  areasOptions.options[areaId].selected = true;*/
+  const cargosOptions = document.getElementById('cargosOptions');
+  cargosOptions.options[areaId].selected = true;*/
 
   async function onLoad(id) {
     try {

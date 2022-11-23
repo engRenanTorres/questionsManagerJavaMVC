@@ -80,7 +80,7 @@ public class SimulatorController {
     } else {
       model.addAttribute("areaId", areaId);
       Optional<SubjectArea> area = areaRepository.findById(areaId);
-      questions = questionRepository.findByCargoOrderByDateAsc(area.get(), PageRequest.of(page, 1));
+      questions = questionRepository.findBySubjectAreaOrderByDateAsc(area.get(), PageRequest.of(page, 1));
     }
     return questions;
   }

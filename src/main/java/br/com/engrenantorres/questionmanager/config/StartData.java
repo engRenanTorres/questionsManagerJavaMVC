@@ -3,6 +3,7 @@ package br.com.engrenantorres.questionmanager.config;
 import br.com.engrenantorres.questionmanager.controller.SignUpController;
 import br.com.engrenantorres.questionmanager.model.*;
 import br.com.engrenantorres.questionmanager.model.enums.Alternatives;
+import br.com.engrenantorres.questionmanager.model.enums.Cargo;
 import br.com.engrenantorres.questionmanager.repository.*;
 import br.com.engrenantorres.questionmanager.service.UserService;
 import jdk.jshell.spi.ExecutionControl;
@@ -126,13 +127,14 @@ public class StartData implements CommandLineRunner {
       question.setAlternativa4("d) Nós");
       question.setAlternativa5("e) Vós");
       question.setResposta(Alternatives.A);
+      question.setCargo(Cargo.Técnico);
       question.setConcurso("Petrobras");
       question.setObservacao("Questão teste");
       Banca banca = bancas.get(0);
       question.setBanca(banca);
       SubjectArea area = areas.get(0);
       question.setAssunto(assuntos.get(0));
-      question.setCargo(area);
+      question.setSubjectArea(area);
 
       Question question1 = new Question(users.get(0));
       Banca banca2 = bancas.get(1);
@@ -141,7 +143,8 @@ public class StartData implements CommandLineRunner {
       SubjectArea area2 = areas.get(1);
       question1.setConcurso("Fundação Saúde RJ");
       question1.setObservacao("Questão teste2");
-      question1.setCargo(area2);
+      question1.setCargo(Cargo.Engenharia);
+      question1.setSubjectArea(area2);
       question1.setEnunciado("Quem és tu?");
       question1.setAlternativa1("a) Eu");
       question1.setAlternativa2("b) Tu");

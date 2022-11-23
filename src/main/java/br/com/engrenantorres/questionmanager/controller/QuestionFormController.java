@@ -2,6 +2,7 @@ package br.com.engrenantorres.questionmanager.controller;
 
 import br.com.engrenantorres.questionmanager.dto.NewQuestionDTO;
 import br.com.engrenantorres.questionmanager.model.*;
+import br.com.engrenantorres.questionmanager.model.enums.Cargo;
 import br.com.engrenantorres.questionmanager.repository.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,9 +69,10 @@ public class QuestionFormController {
   private void injectAttributesFromBD(Model model) {
     List<SubjectArea> areas = areaRepository.findAll();
     List<Banca> bancas = bancaRepository.findAll();
-    List<Assunto> assuntos = assuntoRepository.findAllByCargoId(1L);
+    List<Assunto> assuntos = assuntoRepository.findAllBySubjectAreaId(1L);
 
     model.addAttribute("areas",areas);
+    model.addAttribute("cargos", Cargo.values());
     model.addAttribute("bancas",bancas);
     model.addAttribute("assuntos",assuntos);
   }

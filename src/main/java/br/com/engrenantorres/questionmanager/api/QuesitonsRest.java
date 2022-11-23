@@ -2,14 +2,9 @@ package br.com.engrenantorres.questionmanager.api;
 
 import br.com.engrenantorres.questionmanager.model.Question;
 import br.com.engrenantorres.questionmanager.repository.QuestionRepository;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -24,7 +19,7 @@ public class QuesitonsRest {
       @PathVariable("areaId") Long areaId,
       @RequestParam(name = "limit",required = false,defaultValue = "1") Integer limit
   ) {
-    Set<Question> all = questionRepository.findAllByCargoId(areaId);
+    Set<Question> all = questionRepository.findAllBySubjectAreaId(areaId);
     Stream<Question> groupOfQuestion = all.stream().limit(2);
     return groupOfQuestion;
   }

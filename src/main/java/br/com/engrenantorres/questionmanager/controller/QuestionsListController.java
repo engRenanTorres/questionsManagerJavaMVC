@@ -64,7 +64,7 @@ public class QuestionsListController {
   ) {
     LOGGER.info("listMyQuetions()...");
 
-    Sort sort = Sort.by("cargo").ascending()
+    Sort sort = Sort.by("subjectArea").ascending()
       .and(Sort.by("date").descending());
 
     String username = principal.getName();
@@ -125,7 +125,7 @@ public class QuestionsListController {
     LOGGER.error("Illegal Argument error...");
     question.ifPresent(question1 -> {
       NewQuestionDTO questionDTO = new NewQuestionDTO(question1);
-      List<Assunto> assuntos = assuntoRepository.findAllByCargoId(questionDTO.getCargo().getId());
+      List<Assunto> assuntos = assuntoRepository.findAllBySubjectAreaId(questionDTO.getSubjectArea().getId());
 
       model.addAttribute("newQuestionDTO", questionDTO);
       model.addAttribute("assuntos", assuntos);
@@ -157,7 +157,7 @@ public class QuestionsListController {
     } else {
       model.addAttribute("areaId", areaId);
       Optional<SubjectArea> area = areaRepository.findById(areaId);
-      questions = questionRepository.findByCargoOrderByDateAsc(area.get(), PageRequest.of(page, paginationSize));
+      questions = questionRepository.findBySubjectAreaOrderByDateAsc(area.get(), PageRequest.of(page, paginationSize));
     }
     return questions;
   }

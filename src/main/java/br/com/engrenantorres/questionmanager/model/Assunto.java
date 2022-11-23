@@ -2,9 +2,7 @@ package br.com.engrenantorres.questionmanager.model;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 public class Assunto {
@@ -19,14 +17,14 @@ public class Assunto {
   private List<Question> questions = new ArrayList<>();
 
   @ManyToOne
-  private SubjectArea cargo;
+  private SubjectArea subjectArea;
 
   public Assunto() {
   }
 
-  public Assunto(String name, SubjectArea cargo, String description) {
+  public Assunto(String name, SubjectArea subjectArea, String description) {
     this.name = name;
-    this.cargo = cargo;
+    this.subjectArea = subjectArea;
     this.description = description;
   }
 

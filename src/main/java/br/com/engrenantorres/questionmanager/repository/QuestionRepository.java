@@ -1,6 +1,5 @@
 package br.com.engrenantorres.questionmanager.repository;
 
-import br.com.engrenantorres.questionmanager.model.Assunto;
 import br.com.engrenantorres.questionmanager.model.Question;
 import br.com.engrenantorres.questionmanager.model.SubjectArea;
 import org.springframework.cache.annotation.Cacheable;
@@ -11,7 +10,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -20,14 +18,14 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
 
   List<Question> findAll();
   @Cacheable("questionsC")
-  Page<Question> findByCargoOrderByDateAsc(SubjectArea areaSelected, Pageable pageable);
+  Page<Question> findBySubjectAreaOrderByDateAsc(SubjectArea areaSelected, Pageable pageable);
   @Query("SELECT q FROM Question q JOIN q.author a WHERE a.username = :username")
   Page<Question> findAllByAuthor(@Param("username") String username, Pageable pageable);
 
-  @Query("SELECT q FROM Question q WHERE q.cargo.name = :cargoname")
-  Page<Question> findAllByCargo(@Param("cargoname") String cargoname, Pageable pageable);
-  @Query("SELECT q FROM Question q WHERE q.cargo.id = :areaId")
-  Set<Question> findAllByCargoId(@Param("areaId") Long areaId);
+  @Query("SELECT q FROM Question q WHERE q.subjectArea.name = :areaname")
+  Page<Question> findAllBySubjectArea(@Param("areaname") String areaname, Pageable pageable);
+  @Query("SELECT q FROM Question q WHERE q.subjectArea.id = :areaId")
+  Set<Question> findAllBySubjectAreaId(@Param("areaId") Long areaId);
 
 
   /*@Query("select a from Question a where a.id in ?1")
