@@ -17,6 +17,8 @@ public class Question {
   private Long id;
   @Enumerated(EnumType.STRING)
   private Cargo cargo = Cargo.Engenharia;
+
+  private Nivel nivel = Nivel.Superior;
   @ManyToOne
   private Banca banca = new Banca();
   @ManyToOne
@@ -56,6 +58,38 @@ public class Question {
     this.author = author;
   }
   public Question() {
+  }
+
+  public Question(Cargo cargo,
+                  Nivel nivel,
+                  Banca banca,
+                  SubjectArea subjectArea,
+                  Assunto assunto,
+                  String enunciado,
+                  String alternativa1,
+                  String alternativa2,
+                  String alternativa3,
+                  String alternativa4,
+                  String alternativa5,
+                  Integer ano,
+                  String concurso,
+                  Alternatives resposta,
+                  User author) {
+    this.cargo = cargo;
+    this.nivel = nivel;
+    this.banca = banca;
+    this.subjectArea = subjectArea;
+    this.assunto = assunto;
+    this.enunciado = enunciado;
+    this.alternativa1 = alternativa1;
+    this.alternativa2 = alternativa2;
+    this.alternativa3 = alternativa3;
+    this.alternativa4 = alternativa4;
+    this.alternativa5 = alternativa5;
+    this.ano = ano;
+    this.concurso = concurso;
+    this.resposta = resposta;
+    this.author = author;
   }
 
   public List<Result> getResults() {
