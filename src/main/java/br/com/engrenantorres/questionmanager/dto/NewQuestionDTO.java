@@ -2,12 +2,14 @@ package br.com.engrenantorres.questionmanager.dto;
 
 import br.com.engrenantorres.questionmanager.model.*;
 import br.com.engrenantorres.questionmanager.model.enums.Alternatives;
+import br.com.engrenantorres.questionmanager.model.enums.Cargo;
 
 import javax.validation.constraints.NotBlank;
 
 public class NewQuestionDTO {
   private Long id = 0L;
-  private SubjectArea cargo = new SubjectArea();
+  private SubjectArea subjectArea = new SubjectArea();
+  private Cargo cargo = Cargo.Engenharia;
   private Banca banca = new Banca();
   private String concurso = "";
 
@@ -34,6 +36,7 @@ public class NewQuestionDTO {
 
   public NewQuestionDTO(Question question) {
     this.id = question.getId();
+    this.subjectArea = question.getSubjectArea();
     this.cargo = question.getCargo();
     this.banca = question.getBanca();
     this.assunto = question.getAssunto();
@@ -46,6 +49,14 @@ public class NewQuestionDTO {
     this.alternativa5 = question.getAlternativa5();
     this.resposta = question.getResposta();
     this.observacao = question.getObservacao();
+  }
+
+  public Cargo getCargo() {
+    return cargo;
+  }
+
+  public void setCargo(Cargo cargo) {
+    this.cargo = cargo;
   }
 
   public Long getId() {
@@ -72,12 +83,12 @@ public class NewQuestionDTO {
     this.observacao = observacao;
   }
 
-  public SubjectArea getCargo() {
-    return cargo;
+  public SubjectArea getSubjectArea() {
+    return subjectArea;
   }
 
-  public void setCargo(SubjectArea cargo) {
-    this.cargo = cargo;
+  public void setSubjectArea(SubjectArea subjectArea) {
+    this.subjectArea = subjectArea;
   }
 
   public Assunto getAssunto() {
@@ -157,6 +168,7 @@ public class NewQuestionDTO {
   public Question toQuestion(User author) {
     Question question = new Question(author);
     question.setId(id);
+    question.setSubjectArea(subjectArea);
     question.setCargo(cargo);
     question.setBanca(banca);
     question.setAssunto(assunto);

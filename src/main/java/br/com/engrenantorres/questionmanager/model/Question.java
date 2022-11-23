@@ -1,6 +1,7 @@
 package br.com.engrenantorres.questionmanager.model;
 
 import br.com.engrenantorres.questionmanager.model.enums.Alternatives;
+import br.com.engrenantorres.questionmanager.model.enums.Cargo;
 import br.com.engrenantorres.questionmanager.repository.QuestionRepository;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +15,12 @@ public class Question {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-
+  @Enumerated(EnumType.STRING)
+  private Cargo cargo = Cargo.Engenharia;
   @ManyToOne
   private Banca banca = new Banca();
   @ManyToOne
-  private SubjectArea cargo = new SubjectArea();
+  private SubjectArea subjectArea;
   @ManyToOne
   private Assunto assunto;
   private String enunciado = "";
@@ -44,23 +46,24 @@ public class Question {
   @JsonIgnore
   private User author;
 
+  @OneToMany(cascade = CascadeType.ALL,
+    mappedBy = "questionDone",fetch = FetchType.LAZY
+  )
+  private List<Result> results;
+
+
+  public Question(User author) {
+    this.author = author;
+  }
+  public Question() {
+  }
+
   public List<Result> getResults() {
     return results;
   }
 
   public void setResults(List<Result> results) {
     this.results = results;
-  }
-
-  @OneToMany(cascade = CascadeType.ALL,
-    mappedBy = "questionDone",fetch = FetchType.LAZY
-  )
-  private List<Result> results;
-
-  public Question(User author) {
-    this.author = author;
-  }
-  public Question() {
   }
 
   public User getAuthor() {
@@ -87,12 +90,19 @@ public class Question {
     this.banca = banca;
   }
 
-  public SubjectArea getCargo() {
+  public SubjectArea getSubjectArea() {
+    return subjectArea;
+  }
+
+  public Cargo getCargo() {
     return cargo;
   }
 
-  public void setCargo(SubjectArea cargo) {
+  public void setCargo(Cargo cargo) {
     this.cargo = cargo;
+  }
+  public void setSubjectArea(SubjectArea subjectArea) {
+    this.subjectArea = subjectArea;
   }
 
   public String getEnunciado() {
