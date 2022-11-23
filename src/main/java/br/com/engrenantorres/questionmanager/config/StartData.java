@@ -118,40 +118,48 @@ public class StartData implements CommandLineRunner {
       List<Banca> bancas = bancaRepository.findAll();
       List<User> users = userRepository.findAll();
       List<Assunto> assuntos = assuntoRepository.findAll();
-
-      Question question = new Question(users.get(0));
-      question.setEnunciado("Quem sou eu?");
-      question.setAlternativa1("a) Eu");
-      question.setAlternativa2("b) Tu");
-      question.setAlternativa3("c) Ele");
-      question.setAlternativa4("d) Nós");
-      question.setAlternativa5("e) Vós");
-      question.setResposta(Alternatives.A);
-      question.setCargo(Cargo.Técnico);
-      question.setConcurso("Petrobras");
-      question.setObservacao("Questão teste");
       Banca banca = bancas.get(0);
-      question.setBanca(banca);
       SubjectArea area = areas.get(0);
-      question.setAssunto(assuntos.get(0));
-      question.setSubjectArea(area);
 
-      Question question1 = new Question(users.get(0));
+      Question question =
+          new Question(
+            Cargo.Técnico,
+            Nivel.Medio,
+            banca,
+            area,
+            assuntos.get(0),
+            "Quem sou eu?",
+            "a) Eu",
+            "b) Tu",
+            "c) Ele",
+            "d) Nós",
+            "e) Vós",
+            2022,
+            "Petrobras",
+            Alternatives.C,
+            users.get(0)
+          );
+
       Banca banca2 = bancas.get(1);
-      question1.setBanca(banca2);
-      question1.setAssunto(assuntos.get(1));
       SubjectArea area2 = areas.get(1);
-      question1.setConcurso("Fundação Saúde RJ");
-      question1.setObservacao("Questão teste2");
-      question1.setCargo(Cargo.Engenharia);
-      question1.setSubjectArea(area2);
-      question1.setEnunciado("Quem és tu?");
-      question1.setAlternativa1("a) Eu");
-      question1.setAlternativa2("b) Tu");
-      question1.setAlternativa3("c) Ele");
-      question1.setAlternativa4("d) Nós");
-      question1.setAlternativa5("e) Vós");
-      question.setResposta(Alternatives.B);
+      Question question1 =
+          new Question(
+              Cargo.Engenharia,
+              Nivel.Superior,
+              banca2,
+              area2,
+              assuntos.get(1),
+              "Quem és tu?",
+              "a) Eu",
+              "b) Tu",
+              "c) Ele",
+              "d) Nós",
+              "e) Vós",
+              2022,
+              "Fundação Saúde RJ",
+              Alternatives.B,
+              users.get(0)
+          );
 
 
       List<Question> questions = Arrays.asList(question, question1);
