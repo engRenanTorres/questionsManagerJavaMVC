@@ -79,8 +79,8 @@
             <div class="form-group col-5 d-flex flex-column">
               <label for="concurso" >Concurso</label>
               <input th:field="*{concurso}" id="concurso"
-                        rows="10" th:errorclass="is-invalid"
-                        class="form-control"></input>
+                        th:errorclass="is-invalid"
+                        class="form-control">
               <small class="invalid-feedback" th:errors="*{concurso}">
                 Mensagem de possíveis erros no enunciado
               </small>

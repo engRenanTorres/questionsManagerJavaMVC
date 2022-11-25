@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Repository
@@ -24,8 +25,11 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
 
   @Query("SELECT q FROM Question q WHERE q.subjectArea.name = :areaname")
   Page<Question> findAllBySubjectArea(@Param("areaname") String areaname, Pageable pageable);
+  @Query("SELECT q FROM Question q WHERE q.subjectArea.name = :areaname")
+  List<Question> findAllBySubjectArea(@Param("areaname") String areaname);
+
   @Query("SELECT q FROM Question q WHERE q.subjectArea.id = :areaId")
-  Set<Question> findAllBySubjectAreaId(@Param("areaId") Long areaId);
+  Optional<List<Question>> findAllBySubjectAreaId(@Param("areaId") Long areaId);
 
 
   /*@Query("select a from Question a where a.id in ?1")

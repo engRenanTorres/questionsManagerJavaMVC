@@ -137,14 +137,19 @@ public class QuestionsListController {
     Page<Question> questions;
     questions = getQuestionsApplyingFilterIfExist(model, page, areaId);
 
+    Long pageMax = ((questions.getTotalElements() - 1) / paginationSize);
+    page = (page > pageMax.intValue()) ? pageMax.intValue() : page;
+
     injectQuestionsAttributes(model, page, questions);
   }
 
   private void injectQuestionsAttributes(Model model, Integer page, Page<Question> questions) {
-    Integer nextPage = (page >= (questions.getTotalElements() - 1) / paginationSize) ? page : page + 1;
+
+    Integer nextPage = (page >= ((questions.getTotalElements() - 1) / paginationSize)) ? page : page + 1;
     Integer previousPage = (page <= 0) ? 0 : page - 1;
     model.addAttribute("questions", questions);
     model.addAttribute("nextPage", nextPage);
+    model.addAttribute("page",page);
     model.addAttribute("previousPage", previousPage);
     model.addAttribute("isFirst", questions.isFirst());
     model.addAttribute("isLast", questions.isLast());

@@ -18,6 +18,14 @@
 <main role="main" class="container">
   <div th:replace="~{sidebar :: sidebar}">
   </div>
+  <nav class="nav d-flex justify-content-around align-items-center">
+    <div class="form-group col-6 d-flex d-flex justify-content-around align-items-center">
+      <label class="text-nowrap pr-2" for="filter" >Buscar por</label>
+      <input value="Digite o trecho desejado aqui..." id="filter"
+             onchange="filterQuestions()"
+             class="form-control">
+    </div>
+  </nav>
 
   <div class="row" th:each="question: ${questions}">
     <div class="col-md-8 col-sm-12 question-main">
@@ -40,15 +48,16 @@
           <blockquote>
             <p th:text="${question.alternativa2}">b) alternative.</p>
           </blockquote>
-          <blockquote>
+          <blockquote th:if="${question.alternativa3}!=null">
             <p th:text="${question.alternativa3}">c) alternative.</p>
           </blockquote>
-          <blockquote>
+          <blockquote th:if="${question.alternativa4}!=null">
             <p th:text="${question.alternativa4}">d) alternative.</p>
           </blockquote>
-          <blockquote>
+          <blockquote th:if="${question.alternativa5}!=null">
             <p th:text="${question.alternativa5}">e) alternative.</p>
           </blockquote>
+
 
           <blockquote>
             Gabarito: <strong th:text="${question.resposta}">e) alternative.</strong>
@@ -59,10 +68,13 @@
               Questão id: <span th:text="${question.id}"></span>
             </div>
             <div class="badge badge-secondary">
-              Enviada por: <span th:text="${question.author.username}"></span>
+              Nível: <span th:text="${question.nivel} + ' - ' +  ${question.cargo}"></span>
             </div>
             <div class="badge badge-secondary">
               Assunto: <span th:text="${question.assunto.name}"></span>
+            </div>
+            <div class="badge badge-secondary">
+              Enviada por: <span th:text="${question.author.username}"></span>
             </div>
             <div class="badge badge-secondary">
               <span>updated at</span>
@@ -110,7 +122,7 @@
 
   </div><!-- /.row -->
   <div th:switch="${areaId}">
-    <nav th:case="nulo" class="question-pagination">
+    <nav th:case="nulo" class="question-pagination d-flex justify-content-around align-items-center">
       <a class="btn btn-outline-primary"
          th:classappend="${isFirst} ? 'disabled'"
          th:href="@{'/questions-list/?page=' + ${previousPage}}"
@@ -118,15 +130,21 @@
         <i class="bx bx-skip-previous nav_icon" style="font-size: 1.5rem;"></i>
         <span th:text="#{question.before}">Older</span>
       </a>
+      <div class="form-group col-2 d-flex flex-column">
+        <label for="page" >Página</label>
+        <input th:value="${page}" id="page"
+               onchange="changePage()"
+               class="form-control">
+      </div>
       <a class="btn btn-outline-primary"
          th:classappend="${isLast} ? 'disabled'"
          th:href="@{'/questions-list/?page=' + ${nextPage}}"
          href="#">
-        <i class="bx bx-skip-next nav_icon" style="font-size: 1.5rem;"></i>
         <span th:text="#{question.next}">Newer</span>
+        <i class="bx bx-skip-next nav_icon" style="font-size: 1.5rem;"></i>
       </a>
     </nav>
-    <nav th:case="${areaId}" class="question-pagination">
+    <nav th:case="${areaId}" class="question-pagination d-flex justify-content-around align-items-center">
       <a class="btn btn-outline-primary"
          th:classappend="${isFirst} ? 'disabled'"
          th:href="@{'/questions-list/?areaId=' + ${areaId} + '&page=' + ${previousPage}}"
@@ -134,12 +152,18 @@
         <i class="bx bx-skip-previous nav_icon" style="font-size: 1.5rem;"></i>
         <span th:text="#{question.before}">Older</span>
       </a>
+      <div class="form-group col-2 d-flex flex-column">
+        <label for="pageArea" >Página</label>
+        <input th:value="${page}" id="pageArea"
+               onchange="changePageArea()"
+               class="form-control">
+      </div>
       <a class="btn btn-outline-primary"
          th:classappend="${isLast} ? 'disabled'"
          th:href="@{'/questions-list/?areaId=' + ${areaId} + '&page=' + ${nextPage}}"
          href="#">
-        <i class="bx bx-skip-next nav_icon" style="font-size: 1.5rem;"></i>
         <span th:text="#{question.next}">Newer</span>
+        <i class="bx bx-skip-next nav_icon" style="font-size: 1.5rem;"></i>
       </a>
     </nav>
   </div>
@@ -154,6 +178,26 @@
 <div th:replace="~{base :: scripts}">
 
 </div>
+<script>
+  function changePage() {
+    const page = document.querySelector('#page');
+    const url = ( (window.location.href.split(window.location.pathname)[0]) +  window.location.pathname)
+    window.location.replace(url + '?page='+ page.value);
+  }
+  function changePageArea() {
+    const page = document.querySelector('#pageArea');
+    const reg = /(page=\d*)/;
+    let pageParam;
+    try{
+     pageParam = reg.exec( window.location.href)[1];
+    } catch(e) {}
+    console.log(window.location.href);
+    const url = pageParam?
+     window.location.href.replace(pageParam,'page=' + page.value)
+     : window.location.href  + '&page='+ page.value;
+    window.location.replace(url);
+  }
+</script>
 </body>
 
 </html>

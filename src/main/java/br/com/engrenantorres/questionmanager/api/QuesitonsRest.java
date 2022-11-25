@@ -1,11 +1,18 @@
 package br.com.engrenantorres.questionmanager.api;
 
 import br.com.engrenantorres.questionmanager.model.Question;
+import br.com.engrenantorres.questionmanager.model.SubjectArea;
 import br.com.engrenantorres.questionmanager.repository.QuestionRepository;
+import br.com.engrenantorres.questionmanager.repository.SubjectAreaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @RestController
@@ -13,15 +20,22 @@ import java.util.stream.Stream;
 public class QuesitonsRest {
   @Autowired
   private QuestionRepository questionRepository;
+  @Autowired
+  private SubjectAreaRepository subjectAreaRepository;
 
   @GetMapping("all/{areaId}")
-  public Stream<Question> getAllQuestionsByArea(
+  public ResponseEntity<List<Question>> getAllQuestionsByArea(
       @PathVariable("areaId") Long areaId,
       @RequestParam(name = "limit",required = false,defaultValue = "1") Integer limit
   ) {
-    Set<Question> all = questionRepository.findAllBySubjectAreaId(areaId);
-    Stream<Question> groupOfQuestion = all.stream().limit(2);
-    return groupOfQuestion;
+
+    Optional<List<Question>> all = questionRepository.findAllBySubjectAreaId(areaId);
+
+    if(all.isPresent()) {
+      List<Question> groupOfQuestion = Arrays.asList(all.get().get(0),all.get().get(1));
+      return ResponseEntity.ok(groupOfQuestion);
+    }
+    return ResponseEntity.notFound().build();
   }
 
 
