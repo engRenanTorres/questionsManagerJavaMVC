@@ -1,12 +1,10 @@
 package br.com.engrenantorres.questionmanager.config;
 
-import br.com.engrenantorres.questionmanager.controller.SignUpController;
 import br.com.engrenantorres.questionmanager.model.*;
 import br.com.engrenantorres.questionmanager.model.enums.Alternatives;
 import br.com.engrenantorres.questionmanager.model.enums.Cargo;
 import br.com.engrenantorres.questionmanager.repository.*;
 import br.com.engrenantorres.questionmanager.service.UserService;
-import jdk.jshell.spi.ExecutionControl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -124,7 +122,7 @@ public class StartData implements CommandLineRunner {
       Question question =
           new Question(
             Cargo.Técnico,
-            Nivel.Medio,
+            Nivel.Médio,
             banca,
             area,
             assuntos.get(0),

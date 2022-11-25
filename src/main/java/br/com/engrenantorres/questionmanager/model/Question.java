@@ -15,15 +15,18 @@ public class Question {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-  @Enumerated(EnumType.STRING)
-  private Cargo cargo = Cargo.Engenharia;
-
+  @Enumerated(value = EnumType.STRING)
   private Nivel nivel = Nivel.Superior;
+  @Enumerated(value = EnumType.STRING)
+  private Cargo cargo = Cargo.Engenharia;
   @ManyToOne
+  @JsonIgnore
   private Banca banca = new Banca();
   @ManyToOne
+  @JsonIgnore
   private SubjectArea subjectArea;
   @ManyToOne
+  @JsonIgnore
   private Assunto assunto;
   private String enunciado = "";
 
@@ -135,6 +138,15 @@ public class Question {
   public void setCargo(Cargo cargo) {
     this.cargo = cargo;
   }
+
+  public Nivel getNivel() {
+    return nivel;
+  }
+
+  public void setNivel(Nivel nivel) {
+    this.nivel = nivel;
+  }
+
   public void setSubjectArea(SubjectArea subjectArea) {
     this.subjectArea = subjectArea;
   }
@@ -235,10 +247,4 @@ public class Question {
     this.date = date;
   }
 
-  @Autowired
-  private static QuestionRepository questionRepository;
-
-  public static List<Question> getAll(){
-    return questionRepository.findAll();
-  }
 }

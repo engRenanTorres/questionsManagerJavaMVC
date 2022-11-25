@@ -9,6 +9,7 @@ import javax.validation.constraints.NotBlank;
 public class NewQuestionDTO {
   private Long id = 0L;
   private SubjectArea subjectArea = new SubjectArea();
+
   private Cargo cargo = Cargo.Engenharia;
   private Banca banca = new Banca();
   private String concurso = "";
@@ -170,6 +171,8 @@ public class NewQuestionDTO {
     question.setId(id);
     question.setSubjectArea(subjectArea);
     question.setCargo(cargo);
+    if(cargo == Cargo.Engenharia) question.setNivel(Nivel.Superior);
+    if(cargo == Cargo.Técnico) question.setNivel(Nivel.Médio);
     question.setBanca(banca);
     question.setAssunto(assunto);
     question.setConcurso(concurso);
