@@ -41,8 +41,6 @@ public class WebSecurityConfig {
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http
-      .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-      .and()
       .authorizeHttpRequests((requests) -> requests
         .antMatchers("/",
             "/home","/signup","/js/**","/static/**",
@@ -52,6 +50,8 @@ public class WebSecurityConfig {
         .antMatchers("/question-form/**").hasRole("ADM")
         .anyRequest().authenticated()
       )
+      .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+      .and()
       .formLogin(form -> form
         .loginPage("/login")
         .defaultSuccessUrl("/",true)

@@ -1,8 +1,10 @@
 package br.com.engrenantorres.questionmanager.controller;
 
 import br.com.engrenantorres.questionmanager.dto.NewQuestionDTO;
+import br.com.engrenantorres.questionmanager.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,17 +17,15 @@ import java.security.Principal;
 @RequestMapping("/")
 public class IndexController {
   private final Logger LOGGER = LoggerFactory.getLogger(IndexController.class);
+  @Autowired
+  private UserService userService;
   @GetMapping
   String index(
       Model model
   ){
     LOGGER.info("index()...");
-    if(SecurityContextHolder.getContext().getAuthentication().getName() != null) {
-      String username = SecurityContextHolder.getContext().getAuthentication().getName();
-
-      model.addAttribute("userName", username);
-
-    }
+    userService.checkAndHandleUserLogged(model);
     return "index";
   }
+
 }
