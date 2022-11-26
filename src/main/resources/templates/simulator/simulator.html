@@ -103,7 +103,7 @@
 </div>
 
 <main role="main" class="container">
-  <div class="row" th:each="question: ${questions}">
+  <div class="row">
       <div class="col-md-8 col-sm-12 question-main">
 
         <div  class="card question-post" >
@@ -157,7 +157,7 @@
               </div>
               <div class="badge badge-secondary">
                 <span>updated at</span>
-                <span th:text="${#temporals.format(question.date,'dd/MM/yyyy')}">2014</span>
+                <span>2014</span>
               </div>
             </div>
 
@@ -171,7 +171,7 @@
       <aside class="col-md-4 col-sm-12 question-sidebar">
         <div class="p-4 mb-3 bg-light rounded">
           <h4 class="font-italic" th:text="#{question.about}">About Author</h4>
-          <p class="mb-0" th:text="${question.banca.name}">Etiam porta.</p>
+          <p class="mb-0" >Etiam porta.</p>
           <hr/>
           <h4 class="font-italic" th:text="#{home.socialMidia}">Social Network</h4>
           <ol class="list-unstyled">

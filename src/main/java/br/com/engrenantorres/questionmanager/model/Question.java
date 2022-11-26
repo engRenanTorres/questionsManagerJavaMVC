@@ -47,6 +47,8 @@ public class Question {
   private String observacao = "";
   private LocalDateTime date = LocalDateTime.now();
 
+  private LocalDateTime updatedAt = date;
+
   @ManyToOne(fetch = FetchType.LAZY)
   @JsonIgnore
   private User author;
@@ -93,6 +95,7 @@ public class Question {
     this.concurso = concurso;
     this.resposta = resposta;
     this.author = author;
+    this.updatedAt = LocalDateTime.now();
   }
 
   public List<Result> getResults() {
@@ -101,6 +104,10 @@ public class Question {
 
   public void setResults(List<Result> results) {
     this.results = results;
+  }
+
+  public LocalDateTime getUpdatedAt() {
+    return updatedAt;
   }
 
   public User getAuthor() {
