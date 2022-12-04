@@ -16,7 +16,7 @@ public class Assunto {
   @OneToMany(mappedBy = "assunto")
   private List<Question> questions = new ArrayList<>();
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   private SubjectArea subjectArea;
 
   public Assunto() {

@@ -2,15 +2,16 @@ package br.com.engrenantorres.questionmanager.model;
 
 import br.com.engrenantorres.questionmanager.model.enums.Alternatives;
 import br.com.engrenantorres.questionmanager.model.enums.Cargo;
-import br.com.engrenantorres.questionmanager.repository.QuestionRepository;
+import br.com.engrenantorres.questionmanager.model.enums.Nivel;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.sun.xml.bind.v2.runtime.unmarshaller.XsiNilLoader;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
+@Inheritance
 public class Question {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,31 +20,35 @@ public class Question {
   private Nivel nivel = Nivel.Superior;
   @Enumerated(value = EnumType.STRING)
   private Cargo cargo = Cargo.Engenharia;
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @JsonIgnore
   private Banca banca = new Banca();
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @JsonIgnore
   private SubjectArea subjectArea;
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @JsonIgnore
   private Assunto assunto;
+  @Column(columnDefinition = "mediumtext")
   private String enunciado = "";
-
+  @Column(columnDefinition = "mediumtext")
   private String alternativa1 = "";
-
+  @Column(columnDefinition = "mediumtext")
   private String alternativa2 = "";
-
+  @Column(columnDefinition = "mediumtext")
   private String alternativa3 = "";
-
+  @Column(columnDefinition = "mediumtext")
   private String alternativa4 = "";
-
+  @Column(columnDefinition = "mediumtext")
   private String alternativa5 = "";
 
   private Integer ano = 2022;
+  @Column(columnDefinition = "varchar(50)")
   private String concurso = "";
   @Enumerated(EnumType.STRING)
+  @Column(columnDefinition = "varchar(5)")
   private Alternatives resposta = Alternatives.A;
+  @Column(columnDefinition = "mediumtext")
   private String observacao = "";
   private LocalDateTime date = LocalDateTime.now();
 

@@ -10,15 +10,18 @@ import java.util.*;
 @Table(name = "users")
 public class User implements UserDetails {
   @Id
+  @Column(columnDefinition = "varchar(50)")
   private String username;
-
+  @Column(columnDefinition = "varchar(50)")
   private String firstName = "";
-
+  @Column(columnDefinition = "varchar(50)")
   private String lastName = "";
-  @Column(nullable = false, unique = true, length = 45)
+  @Column(nullable = false, unique = true, length = 45,columnDefinition = "varchar(50)")
   private String email = "";
   private String password = "";
   private Boolean enabled = true;
+  @Embedded
+  private Contact contact = new Contact();
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(
       name = "users_roles",
