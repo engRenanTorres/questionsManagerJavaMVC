@@ -3,6 +3,7 @@ package br.com.engrenantorres.questionmanager.config;
 import br.com.engrenantorres.questionmanager.model.*;
 import br.com.engrenantorres.questionmanager.model.enums.Alternatives;
 import br.com.engrenantorres.questionmanager.model.enums.Cargo;
+import br.com.engrenantorres.questionmanager.model.enums.Nivel;
 import br.com.engrenantorres.questionmanager.repository.*;
 import br.com.engrenantorres.questionmanager.service.UserService;
 import org.slf4j.Logger;
@@ -101,12 +102,19 @@ public class StartData implements CommandLineRunner {
       var banca = new Banca();
       banca.setName("F.G.V");
       banca.setAbout("Banca com questões multiplas escolha de 5 alternativas");
+      banca.setOfficialSite("https://conhecimento.fgv.br/concursos");
 
       var banca2 = new Banca();
       banca2.setName("CESPE");
-      banca2.setAbout("Banca com questões de verdadeiro, ou falso.");
+      banca2.setAbout("Banca com questões de verdadeiro, ou falso. Onde uma reposta errada anula uma certa.");
+      banca2.setOfficialSite("https://www.cebraspe.org.br/concursos/");
 
-      List<Banca> bancas = Arrays.asList(banca, banca2);
+      var banca3 = new Banca();
+      banca3.setName("CEBRASPE");
+      banca3.setAbout("Banca com questões de verdadeiro, ou falso. Onde uma reposta errada anula uma certa.");
+      banca3.setOfficialSite("https://www.cebraspe.org.br/concursos/");
+
+      List<Banca> bancas = Arrays.asList(banca, banca2, banca3);
       bancaRepository.saveAll(bancas);
     }
   }

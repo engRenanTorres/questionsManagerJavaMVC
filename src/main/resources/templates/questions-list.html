@@ -102,9 +102,10 @@
         <hr/>
         <h4 class="font-italic" th:text="#{home.socialMidia}">Social Network</h4>
         <ol class="list-unstyled">
-          <li><a href="#">Facebook</a></li>
-          <li><a href="#">Twitter</a></li>
-          <li><a href="#">LinkedIn</a></li>
+          <li th:if="${question.banca.officialSite != null}"><a th:href="${question.banca.officialSite}">Site oficial</a></li>
+<!--          <li th:if="${question.banca.twitter != null}"><a th:href="${question.banca.twitter}">Site oficial</a></li>
+          <li th:if="${question.banca.facebook != null}"><a th:href="${question.banca.facebook}">Site oficial</a></li>-->
+
         </ol>
       </div>
 

@@ -11,6 +11,7 @@
 	<groupId>br.com.engrenantorres</groupId>
 	<artifactId>questionmanager</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
 	<name>questionmanager</name>
 	<description>Webapp for questions manager</description>
 	<properties>

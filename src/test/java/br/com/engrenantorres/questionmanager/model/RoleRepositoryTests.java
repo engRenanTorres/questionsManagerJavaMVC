@@ -1,4 +1,4 @@
-package br.com.engrenantorres.questionmanager.model;
+/*package br.com.engrenantorres.questionmanager.model;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -36,4 +36,4 @@ public class RoleRepositoryTests {
 
 
 
-}
+}*/

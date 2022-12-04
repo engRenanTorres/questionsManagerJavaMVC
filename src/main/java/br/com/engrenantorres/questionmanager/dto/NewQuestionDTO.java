@@ -3,6 +3,7 @@ package br.com.engrenantorres.questionmanager.dto;
 import br.com.engrenantorres.questionmanager.model.*;
 import br.com.engrenantorres.questionmanager.model.enums.Alternatives;
 import br.com.engrenantorres.questionmanager.model.enums.Cargo;
+import br.com.engrenantorres.questionmanager.model.enums.Nivel;
 
 import javax.validation.constraints.NotBlank;
 
