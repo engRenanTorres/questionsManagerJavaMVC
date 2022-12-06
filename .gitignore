@@ -34,3 +34,6 @@ build/
 
 ### DB Settings ###
 /src/main/resources/application.properties
+
+### AWS
+src/main/java/br/com/engrenantorres/questionmanager/config/cloud/AmazonConfig.java
