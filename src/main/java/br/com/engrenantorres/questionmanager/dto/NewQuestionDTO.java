@@ -9,10 +9,9 @@ import javax.validation.constraints.NotBlank;
 
 public class NewQuestionDTO {
   private Long id = 0L;
-  private SubjectArea subjectArea = new SubjectArea();
-
   private Cargo cargo = Cargo.Engenharia;
   private Banca banca = new Banca();
+  private SubjectArea subjectArea = new SubjectArea();
   private String concurso = "";
 
   private Assunto assunto = new Assunto();
@@ -22,16 +21,16 @@ public class NewQuestionDTO {
   private String alternativa1 = "";
   @NotBlank
   private String alternativa2 = "";
-
+  @NotBlank
   private String alternativa3 = "";
-
+  @NotBlank
   private String alternativa4 = "";
+  @NotBlank
   private String alternativa5 = "";
   private Alternatives resposta = Alternatives.A;
-
   private String observacao = "";
 
-
+  private Integer ano = 2022;
 
   public NewQuestionDTO() {
   }
@@ -44,6 +43,7 @@ public class NewQuestionDTO {
     this.assunto = question.getAssunto();
     this.enunciado = question.getEnunciado();
     this.concurso = question.getConcurso();
+    this.ano = question.getAno();
     this.alternativa1 = question.getAlternativa1();
     this.alternativa2 = question.getAlternativa2();
     this.alternativa3 = question.getAlternativa3();
@@ -51,6 +51,23 @@ public class NewQuestionDTO {
     this.alternativa5 = question.getAlternativa5();
     this.resposta = question.getResposta();
     this.observacao = question.getObservacao();
+  }
+
+  public Cargo getCargo() {
+    return cargo;
+  }
+
+  public void setCargo(Cargo cargo) {
+    this.cargo = cargo;
+    this.observacao = question.getObservacao();
+  }
+
+  public Integer getAno() {
+    return ano;
+  }
+
+  public void setAno(Integer ano) {
+    this.ano = ano;
   }
 
   public Cargo getCargo() {
@@ -185,6 +202,8 @@ public class NewQuestionDTO {
     question.setAlternativa5(alternativa5);
     question.setResposta(resposta);
     question.setObservacao(observacao);
+    question.setAno(ano);
+
     return question;
   }
 }
