@@ -71,7 +71,6 @@ public class Question {
   }
 
   public Question(Cargo cargo,
-                  Nivel nivel,
                   Banca banca,
                   SubjectArea subjectArea,
                   Assunto assunto,
@@ -86,7 +85,8 @@ public class Question {
                   Alternatives resposta,
                   User author) {
     this.cargo = cargo;
-    this.nivel = nivel;
+    if(cargo == Cargo.Engenharia) this.nivel = Nivel.Superior;
+    if(cargo == Cargo.Técnico) this.nivel = Nivel.Médio;
     this.banca = banca;
     this.subjectArea = subjectArea;
     this.assunto = assunto;
@@ -149,14 +149,12 @@ public class Question {
 
   public void setCargo(Cargo cargo) {
     this.cargo = cargo;
+    if(cargo == Cargo.Engenharia) this.nivel = Nivel.Superior;
+    if(cargo == Cargo.Técnico) this.nivel = Nivel.Médio;
   }
 
   public Nivel getNivel() {
     return nivel;
-  }
-
-  public void setNivel(Nivel nivel) {
-    this.nivel = nivel;
   }
 
   public void setSubjectArea(SubjectArea subjectArea) {

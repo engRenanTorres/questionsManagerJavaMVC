@@ -65,6 +65,9 @@ public class UserDTO {
     user.setFirstName(this.firstName);
     user.setLastName(this.lastName);
     user.setPassword(this.getPassword());
+    user.setFirstName(this.firstName);
+    user.setLastName(this.lastName);
+    user.setEmail(this.email);
     user.setEnabled(false);
 
     return user;

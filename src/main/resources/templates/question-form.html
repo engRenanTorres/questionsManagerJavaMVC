@@ -32,7 +32,15 @@
               <input type="text" th:field="*{id}" class="form-control" readonly>
             </div>
 
-            <div class="form-group col-6 d-flex flex-column">
+            <div class="form-group col-5 d-flex flex-column">
+              <label>Banca</label>
+              <select class="custom-select" aria-label="Select banca" name="banca"
+                      th:field="*{banca}">
+                <option value="1" th:each="sbanca: ${bancas}"
+                        th:value="${sbanca.id}" th:text="${sbanca.name}">One</option>
+              </select>
+            </div>
+            <div class="form-group col-5 d-flex flex-column">
               <label>Cargo</label>
               <select class="custom-select" aria-label="Select cargo"
                       name="cargo" th:field="*{cargo}" id="cargosOptions">
@@ -42,21 +50,21 @@
               </select>
             </div>
 
-            <div class="row my-1">
-              <div class="form-group col-12 d-flex flex-column">
-                <label>Area</label>
-                <select class="custom-select" aria-label="Select engineer area" onChange="onLoad(this.value)"
-                        name="area" th:field="*{subjectArea}" id="areasOptions">
-                  <option value="1" th:each="sarea: ${areas}"
-                          th:value="${sarea.id}" th:text="${sarea.name}"
-                  >One</option>
-                </select>
-              </div>
-            </div>
-
             <!--th:onchange="@{/questions-form/?areaId={id}(id=${cargo.id})}"
             onChange="top.location.href='http://localhost:8080/question-form/?areaId=' + this.options[this.selectedIndex].value;"-->
 
+          </div>
+
+          <div class="row my-1">
+            <div class="form-group col-6 d-flex flex-column">
+              <label>Area</label>
+              <select class="custom-select" aria-label="Select engineer area" onChange="onLoad(this.value)"
+                      name="area" th:field="*{subjectArea}" id="areasOptions">
+                <option value="1" th:each="sarea: ${areas}"
+                        th:value="${sarea.id}" th:text="${sarea.name}"
+                >One</option>
+              </select>
+            </div>
             <div class="form-group col-6 d-flex flex-column">
               <label>Assunto</label>
               <select class="custom-select" aria-label="Select assunto" name="assunto"
@@ -68,21 +76,24 @@
           </div>
 
           <div class="row my-1">
-            <div class="form-group col-5 d-flex flex-column">
-              <label>Banca</label>
-              <select class="custom-select" aria-label="Select banca" name="banca"
-                      th:field="*{banca}">
-                <option value="1" th:each="sbanca: ${bancas}"
-                        th:value="${sbanca.id}" th:text="${sbanca.name}">One</option>
-              </select>
-            </div>
+
             <div class="form-group col-5 d-flex flex-column">
               <label for="concurso" >Concurso</label>
               <input th:field="*{concurso}" id="concurso"
                         th:errorclass="is-invalid"
                         class="form-control">
               <small class="invalid-feedback" th:errors="*{concurso}">
-                Mensagem de possíveis erros no enunciado
+                Mensagem de possíveis erros no concurso
+              </small>
+            </div>
+
+            <div class="form-group col-5 d-flex flex-column">
+              <label for="ano" >Ano</label>
+              <input th:field="*{ano}" id="ano"
+                        th:errorclass="is-invalid"
+                        class="form-control">
+              <small class="invalid-feedback" th:errors="*{ano}">
+                Mensagem de possíveis erros no ano
               </small>
             </div>
 

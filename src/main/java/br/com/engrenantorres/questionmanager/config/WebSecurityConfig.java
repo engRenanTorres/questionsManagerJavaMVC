@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.config.ldap.EmbeddedLdapServerContextSourceFactoryBean;
 import org.springframework.security.config.ldap.LdapBindAuthenticationManagerFactory;
 import org.springframework.security.core.userdetails.User;
@@ -49,7 +50,7 @@ public class WebSecurityConfig {
           .permitAll()
         .antMatchers("/question-form/**").hasRole("ADM")
         .anyRequest().authenticated()
-      )
+      )//.csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
       .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
       .and()
       .formLogin(form -> form
@@ -66,10 +67,10 @@ public class WebSecurityConfig {
   }
 
   //config the static requests like css, js and more.
-  @Bean
+/*  @Bean
   public WebSecurityCustomizer webSecurityCustomizer() {
     return (web) -> web.ignoring().antMatchers("/ignore1", "/ignore2");
-  }
+  }*/
 
 
   @Autowired
