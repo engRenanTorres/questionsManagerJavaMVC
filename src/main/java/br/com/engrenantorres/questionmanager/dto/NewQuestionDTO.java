@@ -59,7 +59,6 @@ public class NewQuestionDTO {
 
   public void setCargo(Cargo cargo) {
     this.cargo = cargo;
-    this.observacao = question.getObservacao();
   }
 
   public Integer getAno() {
@@ -68,14 +67,6 @@ public class NewQuestionDTO {
 
   public void setAno(Integer ano) {
     this.ano = ano;
-  }
-
-  public Cargo getCargo() {
-    return cargo;
-  }
-
-  public void setCargo(Cargo cargo) {
-    this.cargo = cargo;
   }
 
   public Long getId() {

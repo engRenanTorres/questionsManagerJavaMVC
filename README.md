@@ -30,6 +30,18 @@ spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 
 - Aproveite o projeto. =)
 
+## Rodar em Produção
+
+- Para gerar Build pelo Maven CLI: mvn clean package  
+
+- Setar as variáveis de ambiente : QUESTIONM_DB_URL={Endereço do banco de dados}
+  QUESTIONM_DB_USER={nome do usuário}
+  QUESTIONM_DB_PASSWORD={password do usuário}
+- 
+- Rodar: java -jar -Dspring.profiles.active=prod target/questionmanager.jar
+
+- *Ou com as variáveis de ambiente no comando jar: java jar -QUESTIONM_DB_URL={Endereço do banco de dados} -QUESTIONM_DB_USER={nome do usuário} -QUESTIONM_DB_PASSWORD={password do usuário} -Dspring.profiles.active=prod target/questionmanager.jar
+
 ## Tecnologias utilizadas
 
 1- Java

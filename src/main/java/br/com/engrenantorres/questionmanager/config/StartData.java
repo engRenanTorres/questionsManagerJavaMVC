@@ -130,6 +130,7 @@ public class StartData implements CommandLineRunner {
       Question question =
           new Question(
             Cargo.Técnico,
+            Nivel.Médio,
             banca,
             area,
             assuntos.get(0),
@@ -150,6 +151,7 @@ public class StartData implements CommandLineRunner {
       Question question1 =
           new Question(
               Cargo.Engenharia,
+              Nivel.Superior,
               banca2,
               area2,
               assuntos.get(1),
